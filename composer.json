@@ -1,0 +1,27 @@
+{
+    "name": "tms/document-generator-bundle",
+    "type": "symfony-bundle",
+    "description": "TMS DocumentGeneratorBundle",
+    "keywords": [],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "TESSI MARKETING",
+            "email": "contact@tessi.fr",
+            "homepage": "http://www.tessi.fr"
+        }
+    ],
+    "require": {
+        "php":                                 ">=5.3.3",
+        "symfony/framework-bundle":            ">=2.3",
+        "doctrine/orm":                        ">=2.2.3,<2.4-dev",
+        "doctrine/doctrine-bundle":            "1.2.*",
+        "twig/twig":                           "*",
+        "dompdf/dompdf" :                      "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "Tms\\Bundle\\DocumentGeneratorBundle": "" }
+    },
+    "target-dir": "Tms/Bundle/DocumentGeneratorBundle",
+    "minimum-stability": "dev"
+}
