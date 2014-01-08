@@ -1,3 +1,5 @@
-#parameters:
-
-#services:
+services:
+    tms_bundle_documentgeneratorbundle.form.type.document:
+        class: Tms\Bundle\DocumentGeneratorBundle\Form\Type\DocumentType
+        tags:
+            - { name: form.type, alias: document }

@@ -17,7 +17,7 @@
         "doctrine/orm":                        ">=2.2.3,<2.4-dev",
         "doctrine/doctrine-bundle":            "1.2.*",
         "twig/twig":                           "*",
-        "dompdf/dompdf" :                      "dev-master"
+        "dompdf/dompdf":                      "dev-master"
     },
     "autoload": {
         "psr-0": { "Tms\\Bundle\\DocumentGeneratorBundle": "" }
