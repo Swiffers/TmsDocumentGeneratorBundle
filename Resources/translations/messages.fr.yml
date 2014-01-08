@@ -3,10 +3,15 @@
 "Created at": "Date de création"
 "Actions": "Actions"
 
-# Documents list
+# Documents List
 "Documents list": "Liste de documents"
 "No document": "Pas de document"
+
+# Documents Create
 "Create a document": "Créer un document"
+
+# Documents Edit
+"Edit document": "Modifier le document"
 
 # Form buttons
 "Create a new document": "Créer un nouveau document"

@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use Tms\Bundle\DocumentGeneratorBundle\Entity\Document;
-use Tms\Bundle\DocumentGeneratorBundle\Form\Type\DocumentType;
 
 /**
  * @Route("documents/")
@@ -39,7 +38,6 @@ class DocumentController extends Controller
     {
         $document = new Document();
         $form = $this->createForm('document', $document);
-
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
@@ -53,6 +51,38 @@ class DocumentController extends Controller
         }
 
         return array(
+            'form' => $form->createView()
+        );
+    }
+
+    /**
+     * @Route("edit/{id}")
+     * @Template()
+     */
+    public function editAction($id, Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $documentRepository = $entityManager->getRepository('TmsDocumentGeneratorBundle:Document');
+        $document = $documentRepository->find($id);
+        if (!$document) {
+            return $this->redirect($this->generateUrl('tms_documentgenerator_document_list'));
+        }
+
+        $form = $this->createForm('document', $document);
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $document = $form->getData();
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($document);
+                $entityManager->flush();
+
+                return $this->redirect($this->generateUrl('tms_documentgenerator_document_list'));
+            }
+        }
+
+        return array(
+            'document' => $document,
             'form' => $form->createView()
         );
     }

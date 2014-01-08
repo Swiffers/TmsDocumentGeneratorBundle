@@ -18,11 +18,9 @@
                 <td>{{ document.name }}</a></td>
                 <td>{{ document.createdAt|date('Y-m-d') }}</td>
                 <td>
-                    {#
                     <a href="{{ path('tms_documentgenerator_document_edit', { 'id': document.id }) }}" class="btn btn-default btn-sm">
                         {% trans %}Edit{% endtrans %}
                     </a>
-                    #}
                 </td>
             </tr>
         {% endfor %}
