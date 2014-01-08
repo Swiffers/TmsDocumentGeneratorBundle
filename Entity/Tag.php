@@ -2,6 +2,7 @@
 
 /**
  * @author Jean-Philippe Chateau <jp.chateau@trepia.fr>
+ * @licence MIT
  */
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Entity;
@@ -32,15 +33,15 @@ class Tag
     private $name;
 
     /**
-     * @var array<Document>
+     * @var array<Template>
      *
-     * @ORM\ManyToMany(targetEntity="Document", mappedBy="tags")
+     * @ORM\ManyToMany(targetEntity="Template", mappedBy="tags")
      */
-    private $documents;
+    private $templates;
 
     public function __construct()
     {
-        $this->documents = new ArrayCollection();
+        $this->templates = new ArrayCollection();
     }
 
     /**
@@ -51,5 +52,17 @@ class Tag
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 }

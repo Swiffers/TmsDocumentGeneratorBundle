@@ -1,18 +1,18 @@
-# Document
+# Template
 "Name": "Nom"
 "Created at": "Date de création"
 "Actions": "Actions"
 
-# Documents List
-"Documents list": "Liste de documents"
-"No document": "Pas de document"
+# Templates List
+"Templates list": "Liste de templates"
+"No template": "Pas de template"
 
-# Documents Create
-"Create a document": "Créer un document"
+# Templates Create
+"Create a template": "Créer un template"
 
-# Documents Edit
-"Edit document": "Modifier le document"
+# Templates Edit
+"Edit template": "Modifier le template"
 
 # Form buttons
-"Create a new document": "Créer un nouveau document"
+"Create a new template": "Créer un nouveau template"
 "Edit": "Modifier"

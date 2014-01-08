@@ -2,6 +2,7 @@
 
 /**
  * @author Jean-Philippe Chateau <jp.chateau@trepia.fr>
+ * @licence MIT
  */
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Entity;
@@ -11,9 +12,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="document")
+ * @ORM\Table(name="template")
  */
-class Document
+class Template
 {
     /**
      * @var integer
@@ -39,6 +40,13 @@ class Document
     private $createdAt;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $description;
+
+    /**
      * @var text
      *
      * @ORM\Column(type="text", nullable=true)
@@ -48,15 +56,15 @@ class Document
     /**
      * @var array<Tag>
      *
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="documents")
-     * @ORM\JoinTable(name="document_tag")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="templates")
+     * @ORM\JoinTable(name="template_tag")
      */
     private $tags;
 
     /**
      * @var array<MergeTag>
      *
-     * @ORM\OneToMany(targetEntity="MergeTag", mappedBy="document")
+     * @ORM\OneToMany(targetEntity="MergeTag", mappedBy="template")
      */
     private $mergeTags;
 
@@ -98,15 +106,16 @@ class Document
         return $this->createdAt;
     }
 
-    public function getTags()
+    public function getDescription()
     {
-        return $this->tags;
+        return $this->description;
     }
 
-    public function getMergeTags()
+    public function setDescription($description)
     {
-        return $this->mergeTags;
+        $this->description = $description;
 
+        return $this;
     }
 
     public function getBody()
@@ -119,5 +128,15 @@ class Document
         $this->body = $body;
 
         return $this;
+    }
+
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    public function getMergeTags()
+    {
+        return $this->mergeTags;
     }
 }

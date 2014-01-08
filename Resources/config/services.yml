@@ -1,5 +1,5 @@
 services:
-    tms_bundle_documentgeneratorbundle.form.type.document:
-        class: Tms\Bundle\DocumentGeneratorBundle\Form\Type\DocumentType
+    tms_bundle_documentgeneratorbundle.form.type.template:
+        class: Tms\Bundle\DocumentGeneratorBundle\Form\Type\TemplateType
         tags:
-            - { name: form.type, alias: document }
+            - { name: form.type, alias: template }

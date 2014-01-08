@@ -1,52 +1,56 @@
 <?php
 
+/**
+ * @author Jean-Philippe Chateau <jp.chateau@trepia.fr>
+ * @licence MIT
+ */
+
 namespace Tms\Bundle\DocumentGeneratorBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template as SfTemplate;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
-use Tms\Bundle\DocumentGeneratorBundle\Entity\Document;
+use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
 
 /**
- * @Route("documents/")
+ * @Route("templates/")
  */
-class DocumentController extends Controller
+class TemplateController extends Controller
 {
     /**
      * @Route("")
      * @Method("GET")
-     * @Template()
+     * @SfTemplate()
      */
     public function listAction()
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $documentRepository = $entityManager->getRepository('TmsDocumentGeneratorBundle:Document');
+        $templateRepository = $entityManager->getRepository('TmsDocumentGeneratorBundle:Template');
 
         return array(
-            'documents' => $documentRepository->findAll()
+            'templates' => $templateRepository->findAll()
         );
     }
 
     /**
      * @Route("create")
-     * @Template()
+     * @SfTemplate()
      */
     public function createAction(Request $request)
     {
-        $document = new Document();
-        $form = $this->createForm('document', $document);
+        $template = new Template();
+        $form = $this->createForm('template', $template);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $document = $form->getData();
+                $template = $form->getData();
                 $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($document);
+                $entityManager->persist($template);
                 $entityManager->flush();
 
-                return $this->redirect($this->generateUrl('tms_documentgenerator_document_list'));
+                return $this->redirect($this->generateUrl('tms_documentgenerator_template_list'));
             }
         }
 
@@ -57,32 +61,32 @@ class DocumentController extends Controller
 
     /**
      * @Route("edit/{id}")
-     * @Template()
+     * @SfTemplate()
      */
     public function editAction($id, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $documentRepository = $entityManager->getRepository('TmsDocumentGeneratorBundle:Document');
-        $document = $documentRepository->find($id);
-        if (!$document) {
-            return $this->redirect($this->generateUrl('tms_documentgenerator_document_list'));
+        $templateRepository = $entityManager->getRepository('TmsDocumentGeneratorBundle:Template');
+        $template = $templateRepository->find($id);
+        if (!$template) {
+            return $this->redirect($this->generateUrl('tms_documentgenerator_template_list'));
         }
 
-        $form = $this->createForm('document', $document);
+        $form = $this->createForm('template', $template);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $document = $form->getData();
+                $template = $form->getData();
                 $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($document);
+                $entityManager->persist($template);
                 $entityManager->flush();
 
-                return $this->redirect($this->generateUrl('tms_documentgenerator_document_list'));
+                return $this->redirect($this->generateUrl('tms_documentgenerator_template_list'));
             }
         }
 
         return array(
-            'document' => $document,
+            'template' => $template,
             'form' => $form->createView()
         );
     }

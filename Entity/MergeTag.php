@@ -2,6 +2,7 @@
 
 /**
  * @author Jean-Philippe Chateau <jp.chateau@trepia.fr>
+ * @licence MIT
  */
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Entity;
@@ -46,24 +47,14 @@ class MergeTag
     private $identifier;
 
     /**
-     * @var <Document>
+     * @var <Template>
      *
-     * @ORM\ManyToOne(targetEntity="Document", inversedBy="mergeTags")
-     * @ORM\JoinColumn(name="document_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Template", inversedBy="mergeTags")
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
      */
-    private $document;
+    private $template;
 
     public function __construct()
     {
-    }
-
-    /**
-     * toString
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getName();
     }
 }

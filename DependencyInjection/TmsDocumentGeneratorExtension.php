@@ -1,11 +1,8 @@
 <?php
 
 /**
- *
- * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
- * @author:  Jean-Philippe CHATEAU <jp.chateau@trepia.fr>
- * @license: GPL
- *
+ * @author  Jean-Philippe CHATEAU <jp.chateau@trepia.fr>
+ * @license MIT
  */
 
 namespace Tms\Bundle\DocumentGeneratorBundle\DependencyInjection;
