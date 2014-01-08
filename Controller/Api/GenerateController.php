@@ -12,9 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Tms\Bundle\DocumentGeneratorBundle\Extension\HtmlResponse;
-use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
-use Tms\Bundle\DocumentGeneratorBundle\Renderer\HtmlDocument;
 
 /**
  * @Route("generate/")
@@ -22,10 +19,10 @@ use Tms\Bundle\DocumentGeneratorBundle\Renderer\HtmlDocument;
 class GenerateController extends Controller
 {
     /**
-     * @Route("{id}.html")
+     * @Route("{id}.{format}")
      * @Method("GET")
      */
-    public function htmlAction($id, Request $request)
+    public function generateAction($id, $format, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $templateRepository = $entityManager->getRepository('TmsDocumentGeneratorBundle:Template');
@@ -40,8 +37,14 @@ class GenerateController extends Controller
         foreach ($parameters as $key => $value) {
             $mergeTags[sprintf('{%s}', $key)] = $value;
         }
-        $htmlDocument = new HtmlDocument($template->getBody());
 
-        return new HtmlResponse($htmlDocument->render($mergeTags));
+        $documentClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Renderer\%sDocument', ucwords($format));
+        $responseClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Extension\%sResponse', ucwords($format));
+        if (!class_exists($documentClass) || !class_exists($responseClass)) {
+            return new Response('Output format does not exist', 400);
+        }
+        $document = new $documentClass($template->getBody());
+
+        return new $responseClass($document->render($mergeTags));
     }
 }

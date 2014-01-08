@@ -7,11 +7,14 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Renderer;
 
-class HtmlDocument extends AbstractDomDocument
+class PdfDocument extends AbstractDomDocument
 {
+    private $dompdf;
+
     public function __construct($source)
     {
         parent::__construct($source);
+        $this->dompdf = new \DOMPDF();
     }
 
     /**
@@ -22,6 +25,11 @@ class HtmlDocument extends AbstractDomDocument
      */
     public function render(array $parameters)
     {
-        return $this->renderDom($parameters);
+        $html = $this->renderDom($parameters);
+        $this->dompdf->set_paper("a4", "pt");
+        $this->dompdf->load_html($html);
+        $this->dompdf->render();
+
+        return $this->dompdf->output();
     }
 }
