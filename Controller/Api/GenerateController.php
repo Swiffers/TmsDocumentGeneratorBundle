@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class GenerateController extends Controller
 {
     /**
-     * @Route("{id}.{format}")
+     * @Route("{id}.{format}", requirements={"format" = "html|pdf"})
      * @Method("GET")
      */
     public function generateAction($id, $format, Request $request)
