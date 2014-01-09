@@ -8,7 +8,7 @@
 namespace Tms\Bundle\DocumentGeneratorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
 
 /**
  * @ORM\Entity()
@@ -56,5 +56,68 @@ class MergeTag
 
     public function __construct()
     {
+    }
+
+    /**
+     * toString
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+
+        return $this;
+    }
+
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    public function setTemplate(Template $template)
+    {
+        $this->template = $template;
+
+        return $this;
     }
 }
