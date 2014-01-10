@@ -19,17 +19,14 @@ use Symfony\Component\HttpFoundation\Response;
 class GenerateController extends Controller
 {
     /**
-     * @Route("{id}.{format}", requirements={"format" = "html|pdf"})
+     * @Route("{id}.{format}", requirements={"format"="html|pdf"})
      * @Method("GET")
      */
     public function generateAction($id, $format, Request $request)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $templateRepository = $entityManager->getRepository('TmsDocumentGeneratorBundle:Template');
-
-        $template = $templateRepository->find($id);
+        $template = $this->get('tms_documentgenerator.manager.template')->find($id);
         if (!$template) {
-            return new Response('Template not found', 404);
+            return new Response('Document not found', 404);
         }
 
         $parameters = $request->query->all();
@@ -38,12 +35,14 @@ class GenerateController extends Controller
             $mergeTags[sprintf('{%s}', $key)] = $value;
         }
 
-        $documentClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Renderer\%sDocument', ucwords($format));
+        $documentClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Document\%sDocument', ucwords($format));
         $responseClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Extension\%sResponse', ucwords($format));
         if (!class_exists($documentClass) || !class_exists($responseClass)) {
-            return new Response('Output format does not exist', 400);
+            return new Response('Unknown format', 400);
         }
-        $document = new $documentClass($template->getBody());
+
+        $config = $this->container->getParameter('tms_document_generator');
+        $document = new $documentClass($template->getBody(), $this->get($config[strtolower($format)]));
 
         return new $responseClass($document->render($mergeTags));
     }

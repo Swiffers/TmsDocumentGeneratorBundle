@@ -5,7 +5,7 @@
  * @licence MIT
  */
 
-namespace Tms\Bundle\DocumentGeneratorBundle\Renderer;
+namespace Tms\Bundle\DocumentGeneratorBundle\Document;
 
 interface RendererInterface
 {

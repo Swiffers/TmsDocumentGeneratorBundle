@@ -23,6 +23,14 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
+        $rootNode = $treeBuilder->root('tms_document_generator');
+
+        $rootNode
+            ->children()
+                ->scalarNode('pdf')->end()
+                ->scalarNode('html')->end()
+        ->end()
+        ;
 
         return $treeBuilder;
     }

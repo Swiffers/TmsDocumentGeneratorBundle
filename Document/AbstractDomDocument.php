@@ -5,19 +5,29 @@
  * @licence MIT
  */
 
-namespace Tms\Bundle\DocumentGeneratorBundle\Renderer;
+namespace Tms\Bundle\DocumentGeneratorBundle\Document;
+
+use Tms\Bundle\DocumentGeneratorBundle\Generator\GeneratorInterface;
 
 abstract class AbstractDomDocument implements RendererInterface
 {
-    private $source;
+    protected $source;    // DOM source code
+    protected $generator; // Generator service used to generate the document
 
-    public function __construct($source)
+    /**
+     * Constructor
+     *
+     * @param text $source
+     * @param GeneratorInterface $generator
+     */
+    public function __construct($source, GeneratorInterface $generator)
     {
         $this->source = $source;
+        $this->generator = $generator;
     }
 
     /**
-     * Render the source binded with the parameters
+     * Render the DOM binded with the given parameters
      *
      * @param array $parameters
      * @return text

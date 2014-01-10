@@ -19,10 +19,10 @@ use Symfony\Component\HttpFoundation\Response;
 class DownloadController extends Controller
 {
     /**
-     * @Route("{id}.{format}", requirements={"format" = "pdf"})
+     * @Route("{id}/{name}.{format}", requirements={"format"="pdf", "name"="\w+"})
      * @Method("GET")
      */
-    public function downloadAction($id, $format, Request $request)
+    public function downloadAction($id, $name, $format, Request $request)
     {
         $template = $this->get('tms_documentgenerator.manager.template')->find($id);
         if (!$template) {
@@ -35,13 +35,15 @@ class DownloadController extends Controller
             $mergeTags[sprintf('{%s}', $key)] = $value;
         }
 
-        $documentClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Renderer\%sDocument', ucwords($format));
+        $documentClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Document\%sDocument', ucwords($format));
         $responseClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Extension\%sResponse', ucwords($format));
         if (!class_exists($documentClass) || !class_exists($responseClass)) {
             return new Response('Unknown format', 400);
         }
-        $document = new $documentClass($template->getBody(), null);//$this->get('tms_documentgenerator_generator'));
 
-        return new $responseClass($document->download($mergeTags, 'document'));
+        $config = $this->container->getParameter('tms_document_generator');
+        $document = new $documentClass($template->getBody(), $this->get($config[strtolower($format)]));
+
+        return new $responseClass($document->download($mergeTags, $name));
     }
 }
