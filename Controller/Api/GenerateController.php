@@ -42,7 +42,7 @@ class GenerateController extends Controller
         }
 
         $config = $this->container->getParameter('tms_document_generator');
-        $document = new $documentClass($template->getBody(), $this->get($config[strtolower($format)]));
+        $document = new $documentClass($template->getHtml(), $template->getCss(), $this->get($config[strtolower($format)]));
 
         return new $responseClass($document->render($mergeTags));
     }

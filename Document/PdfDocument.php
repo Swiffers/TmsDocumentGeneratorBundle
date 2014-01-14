@@ -9,9 +9,12 @@ namespace Tms\Bundle\DocumentGeneratorBundle\Document;
 
 class PdfDocument extends AbstractDomDocument
 {
-    public function __construct($source, $generator)
+    /**
+     * {@inheritDoc}
+     */
+    public function __construct($html, $css, $generator)
     {
-        parent::__construct($source, $generator);
+        parent::__construct($html, $css, $generator);
     }
 
     /**

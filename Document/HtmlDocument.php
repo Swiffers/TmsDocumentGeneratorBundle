@@ -12,9 +12,9 @@ class HtmlDocument extends AbstractDomDocument
     /**
      * {@inheritDoc}
      */
-    public function __construct($source, $generator)
+    public function __construct($html, $css, $generator)
     {
-        parent::__construct($source, $generator);
+        parent::__construct($html, $css, $generator);
     }
 
     /**
