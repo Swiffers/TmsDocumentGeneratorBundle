@@ -54,10 +54,13 @@ class Template
     private $body;
 
     /**
-     * @var array<Tag>
+     * @var array<Metadata>
      *
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="templates")
-     * @ORM\JoinTable(name="template_tag")
+     * @ORM\ManyToMany(targetEntity="IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata", cascade={"all"})
+     * @ORM\JoinTable(name="template_metadata",
+     *     joinColumns={@ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="cascade")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="metadata_id", referencedColumnName="id", unique=true, onDelete="cascade")}
+     * )
      */
     private $tags;
 
@@ -70,7 +73,6 @@ class Template
 
     public function __construct()
     {
-        $this->tags      = new ArrayCollection();
         $this->createdAt = new \DateTime();
     }
 
