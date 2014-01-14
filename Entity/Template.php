@@ -40,6 +40,13 @@ class Template
     private $createdAt;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    private $updatedAt;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -51,7 +58,14 @@ class Template
      *
      * @ORM\Column(type="text", nullable=true)
      */
-    private $body;
+    private $html;
+
+    /**
+     * @var text
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $css;
 
     /**
      * @var array<Metadata>
@@ -74,6 +88,7 @@ class Template
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
     /**
@@ -91,6 +106,16 @@ class Template
         return $this->id;
     }
 
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     *
+     * @param string $name
+     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -98,14 +123,38 @@ class Template
         return $this;
     }
 
-    public function getName()
-    {
-        return $this->name;
-    }
-
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     *
+     * @param \DateTime $createdAt
+     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
+     */
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     *
+     * @param \DateTime $updatedAt
+     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
+     */
+    public function setUpdatedAt(\DateTime $updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 
     public function getDescription()
@@ -113,6 +162,11 @@ class Template
         return $this->description;
     }
 
+    /**
+     *
+     * @param text $description
+     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
+     */
     public function setDescription($description)
     {
         $this->description = $description;
@@ -120,25 +174,47 @@ class Template
         return $this;
     }
 
-    public function getBody()
+    public function getHtml()
     {
-        return $this->body;
+        return $this->html;
     }
 
-    public function setBody($body)
+    /**
+     *
+     * @param text $html
+     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
+     */
+    public function setHtml($html)
     {
-        $this->body = $body;
+        $this->html = $html;
 
         return $this;
     }
 
-    public function getTags()
+    public function getCss()
     {
-        return $this->tags;
+        return $this->css;
+    }
+
+    /**
+     *
+     * @param text $css
+     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
+     */
+    public function setCss($css)
+    {
+        $this->css = $css;
+
+        return $this;
     }
 
     public function getMergeTags()
     {
         return $this->mergeTags;
+    }
+
+    public function getTags()
+    {
+        return $this->tags;
     }
 }
