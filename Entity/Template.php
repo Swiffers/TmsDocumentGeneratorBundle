@@ -71,12 +71,12 @@ class Template
      * @var array<Metadata>
      *
      * @ORM\ManyToMany(targetEntity="IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata", cascade={"all"})
-     * @ORM\JoinTable(name="template_metadata",
+     * @ORM\JoinTable(name="template_tag",
      *     joinColumns={@ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="cascade")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="metadata_id", referencedColumnName="id", unique=true, onDelete="cascade")}
+     *     inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id", unique=true, onDelete="cascade")}
      * )
      */
-    private $metadatas;
+    private $tags;
 
     /**
      * @var array<MergeTag>
@@ -89,6 +89,7 @@ class Template
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+        $this->tags      = new ArrayCollection();
     }
 
     /**
@@ -218,15 +219,20 @@ class Template
      */
     public function getMetadatas()
     {
-        return $this->metadatas;
+        return $this->getTags();
+    }
+
+    public function getTags()
+    {
+        return $this->tags;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function addMetadata(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $metadata)
+    public function addTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag)
     {
-        $this->metadatas[] = $metadata;
+        $this->tags[] = $tag;
 
         return $this;
     }
@@ -234,8 +240,8 @@ class Template
     /**
      * {@inheritdoc}
      */
-    public function removeMetadata(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $metadata)
+    public function removeTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag)
     {
-        $this->metadatas->removeElement($metadata);
+        $this->tags->removeElement($tag);
     }
 }
