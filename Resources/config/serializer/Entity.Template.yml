@@ -1,0 +1,28 @@
+Tms\Bundle\DocumentGeneratorBundle\Entity\Template:
+    exclusion_policy: ALL
+
+    properties:
+        id:
+            expose: true
+            groups: [list, details]
+
+        name:
+            expose: true
+            groups: [list, details]
+
+        createdAt:
+            expose: true
+            groups: [list, details]
+            serialized_name: createdAt
+
+        description:
+            expose: true
+            groups: [details]
+
+        html:
+            expose: true
+            groups: [details]
+
+        css:
+            expose: true
+            groups: [details]
