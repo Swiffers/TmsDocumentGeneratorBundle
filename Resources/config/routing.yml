@@ -1,0 +1,4 @@
+templates:
+    type:         rest
+    resource:     Tms\Bundle\DocumentGeneratorBundle\Controller\Rest\TemplateController
+    name_prefix:  rest_templates__
