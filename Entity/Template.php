@@ -40,13 +40,6 @@ class Template
     private $createdAt;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime")
-     */
-    private $updatedAt;
-
-    /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -88,7 +81,6 @@ class Template
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
         $this->tags      = new ArrayCollection();
     }
 
@@ -137,23 +129,6 @@ class Template
     public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     *
-     * @param \DateTime $updatedAt
-     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
-     */
-    public function setUpdatedAt(\DateTime $updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }
