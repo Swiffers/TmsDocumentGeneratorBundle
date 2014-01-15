@@ -29,6 +29,7 @@ class PdfDocument extends AbstractDomDocument
     }
 
     /**
+     * Force the document to be downloaded
      *
      * @param array $parameters
      * @param string $filename

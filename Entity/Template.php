@@ -76,7 +76,7 @@ class Template
      *     inverseJoinColumns={@ORM\JoinColumn(name="metadata_id", referencedColumnName="id", unique=true, onDelete="cascade")}
      * )
      */
-    private $tags;
+    private $metadatas;
 
     /**
      * @var array<MergeTag>
@@ -213,8 +213,29 @@ class Template
         return $this->mergeTags;
     }
 
-    public function getTags()
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetadatas()
     {
-        return $this->tags;
+        return $this->metadatas;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addMetadata(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $metadata)
+    {
+        $this->metadatas[] = $metadata;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeMetadata(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $metadata)
+    {
+        $this->metadatas->removeElement($metadata);
     }
 }

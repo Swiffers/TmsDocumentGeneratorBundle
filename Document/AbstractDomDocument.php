@@ -44,7 +44,7 @@ abstract class AbstractDomDocument implements RendererInterface
             array_push($values, $value);
         }
         $body = str_replace($identifiers, $values, $this->html);
-        $body += $this->css;
+        $body .= $this->css;
 
         return $body;
     }
