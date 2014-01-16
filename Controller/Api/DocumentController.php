@@ -14,13 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("generate/")
+ * @Method("GET")
  */
-class GenerateController extends Controller
+class DocumentController extends Controller
 {
     /**
-     * @Route("{id}.{format}", requirements={"format"="html|pdf"})
-     * @Method("GET")
+     * @Route("generate/{id}.{format}", requirements={"format"="html|pdf"})
      */
     public function generateAction($id, $format, Request $request)
     {
@@ -60,5 +59,48 @@ class GenerateController extends Controller
         $document = new $documentClass($template->getHtml(), $template->getCss(), $this->get($config[strtolower($format)]));
 
         return new $responseClass($document->render($mergeTags));
+    }
+
+    /**
+     * @Route("download/{id}/{name}.{format}", requirements={"format"="pdf", "name"="\w+"})
+     */
+    public function downloadAction($id, $name, $format, Request $request)
+    {
+        $template = $this->get('tms_documentgenerator.manager.template')->find($id);
+        if (!$template) {
+            return new Response('Document not found', 404);
+        }
+
+        $data = $request->query->get('data', null);
+        $token = $request->query->get('token', null);
+        if (null === $data || null === $token) {
+            return new Response('Unvalid parameters', 400);
+        }
+
+        $security = $this->get('tms_document_generator.security');
+        $parameters = $security->decodeQueryData($data);
+        if (null === $parameters) {
+            return new Response('Bad parameters', 400);
+        }
+
+        if (false === $security->isValidToken($parameters, $template->getSalt(), $token)) {
+            return new Response('Unvalid token', 403);
+        }
+
+        $mergeTags = array();
+        foreach ($parameters as $key => $value) {
+            $mergeTags[sprintf('{%s}', $key)] = $value;
+        }
+
+        $documentClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Document\%sDocument', ucwords($format));
+        $responseClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Extension\%sResponse', ucwords($format));
+        if (!class_exists($documentClass) || !class_exists($responseClass)) {
+            return new Response('Unknown format', 400);
+        }
+
+        $config = $this->container->getParameter('tms_document_generator');
+        $document = new $documentClass($template->getHtml(), $template->getCss(), $this->get($config[strtolower($format)]));
+
+        return new $responseClass($document->download($mergeTags, $name));
     }
 }
