@@ -57,12 +57,16 @@ Download a PDF document
 
 api/download/{id}/{name}.pdf?data={data}&token={token}
 
+```
 {id} is the ID of the document
 {data} is a base64 stringified json
 {token} is a MD5 hash
 {name} is the filename you gave to the PDF document you want to download
+```
 
 Examples:
+
 http://document-generator-manager.local.digifid.fr/app_dev.php/api/generate/1.html?data=eyJ2YXIxIjoidGVzdDEiLCJ2YXIyIjoidGVzdDIiLCJsYXN0bmFtZSI6ImNoYXRlYXUiLCJmaXJzdG5hbWUiOiJqcCJ9&token=26e84f83b15e24eaa641296d6cba3e91
+
 http://document-generator-manager.local.digifid.fr/app_dev.php/api/download/1/test.pdf?data=eyJ2YXIxIjoidGVzdDEiLCJ2YXIyIjoidGVzdDIiLCJsYXN0bmFtZSI6ImNoYXRlYXUiLCJmaXJzdG5hbWUiOiJqcCJ9&token=26e84f83b15e24eaa641296d6cba3e91
 
