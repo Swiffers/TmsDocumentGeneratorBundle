@@ -42,6 +42,13 @@ class Template
     /**
      * @var string
      *
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private $salt;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
@@ -82,6 +89,7 @@ class Template
     {
         $this->createdAt = new \DateTime();
         $this->tags      = new ArrayCollection();
+        $this->salt      = md5($this->createdAt->format('YmdHis'));
     }
 
     /**
@@ -122,7 +130,6 @@ class Template
     }
 
     /**
-     *
      * @param \DateTime $createdAt
      * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
      */
@@ -133,13 +140,28 @@ class Template
         return $this;
     }
 
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     *
+     * @param string $salt
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
     public function getDescription()
     {
         return $this->description;
     }
 
     /**
-     *
      * @param text $description
      * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
      */
@@ -156,7 +178,6 @@ class Template
     }
 
     /**
-     *
      * @param text $html
      * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
      */
@@ -173,7 +194,6 @@ class Template
     }
 
     /**
-     *
      * @param text $css
      * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
      */

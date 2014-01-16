@@ -29,12 +29,20 @@ class GenerateController extends Controller
             return new Response('Document not found', 404);
         }
 
-        $security = $this->get('tms_document_generator.security');
-        $parameters = $security->decodeQueryData($request->query->get('data', null));
+        $data = $request->query->get('data', null);
         $token = $request->query->get('token', null);
+        if (null === $data || null === $token) {
+            return new Response('Unvalid parameters', 400);
+        }
 
-        if (false === $security->isValidToken($parameters, $token)) {
-            return new Response('Unvalid token', 400);
+        $security = $this->get('tms_document_generator.security');
+        $parameters = $security->decodeQueryData($data);
+        if (null === $parameters) {
+            return new Response('Bad parameters', 400);
+        }
+
+        if (false === $security->isValidToken($parameters, $template->getSalt(), $token)) {
+            return new Response('Unvalid token', 403);
         }
 
         $mergeTags = array();
