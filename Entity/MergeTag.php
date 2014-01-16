@@ -54,10 +54,6 @@ class MergeTag
      */
     private $template;
 
-    public function __construct()
-    {
-    }
-
     /**
      * toString
      *
