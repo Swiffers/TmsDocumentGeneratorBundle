@@ -2,7 +2,6 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Manager;
 
-use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
 use Tms\Bundle\DocumentGeneratorBundle\Event\TemplateEvent;
 use Tms\Bundle\DocumentGeneratorBundle\Event\TemplateEvents;
 

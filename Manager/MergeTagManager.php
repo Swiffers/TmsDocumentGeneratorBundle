@@ -2,7 +2,6 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Manager;
 
-use Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag;
 use Tms\Bundle\DocumentGeneratorBundle\Event\MergeTagEvent;
 use Tms\Bundle\DocumentGeneratorBundle\Event\MergeTagEvents;
 

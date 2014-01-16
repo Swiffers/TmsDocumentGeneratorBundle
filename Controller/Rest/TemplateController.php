@@ -9,7 +9,6 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Controller\Rest;
 
-use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Util\Codes;
