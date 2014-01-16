@@ -33,11 +33,11 @@ class MergeTag
     private $name;
 
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    private $description;
+    private $required;
 
     /**
      * @var string
@@ -73,6 +73,10 @@ class MergeTag
         return $this->id;
     }
 
+    /**
+     * @param string $name
+     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -85,14 +89,18 @@ class MergeTag
         return $this->name;
     }
 
-    public function getDescription()
+    public function isRequired()
     {
-        return $this->description;
+        return $this->required;
     }
 
-    public function setDescription($description)
+    /**
+     * @param boolean $required
+     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
+     */
+    public function setRequired($required)
     {
-        $this->description = $description;
+        $this->required = $required;
 
         return $this;
     }
@@ -102,6 +110,10 @@ class MergeTag
         return $this->identifier;
     }
 
+    /**
+     * @param string $identifier
+     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
+     */
     public function setIdentifier($identifier)
     {
         $this->identifier = $identifier;
@@ -114,6 +126,10 @@ class MergeTag
         return $this->template;
     }
 
+    /**
+     * @param Template $template
+     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
+     */
     public function setTemplate(Template $template)
     {
         $this->template = $template;
