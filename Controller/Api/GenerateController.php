@@ -29,7 +29,14 @@ class GenerateController extends Controller
             return new Response('Document not found', 404);
         }
 
-        $parameters = $request->query->all();
+        $security = $this->get('tms_document_generator.security');
+        $parameters = $security->decodeQueryData($request->query->get('data', null));
+        $token = $request->query->get('token', null);
+
+        if (false === $security->isValidToken($parameters, $token)) {
+            return new Response('Unvalid token', 400);
+        }
+
         $mergeTags = array();
         foreach ($parameters as $key => $value) {
             $mergeTags[sprintf('{%s}', $key)] = $value;
