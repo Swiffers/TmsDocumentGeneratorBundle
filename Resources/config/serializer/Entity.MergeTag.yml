@@ -1,0 +1,19 @@
+Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag:
+    exclusion_policy: ALL
+
+    properties:
+        id:
+            expose: true
+            groups: [details]
+
+        name:
+            expose: true
+            groups: [details]
+        
+        required:
+            expose: true
+            groups: [details]
+
+        identifier:
+            expose: true
+            groups: [list, details]

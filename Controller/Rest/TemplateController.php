@@ -12,6 +12,7 @@ namespace Tms\Bundle\DocumentGeneratorBundle\Controller\Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Util\Codes;
+use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializationContext;
 
 /**
@@ -71,6 +72,30 @@ class TemplateController extends FOSRestController
             ),
             Codes::HTTP_OK
         );
+        $view->setSerializationContext($context);
+
+        return $this->handleView($view);
+    }
+
+    /**
+     * [GET] /templates/{id}/mergetags
+     * Retrieve the merge tags of a template
+     *
+     * @param string $id
+     * @param Request $request
+     */
+    public function getTemplateMergetagsAction($id, Request $request)
+    {
+        $entity = $this->get('tms_document_generator.manager.template')->findOneById($id);
+        if (!$entity) {
+            $view = $this->view(array(), Codes::HTTP_NOT_FOUND);
+
+            return $this->handleView($view);
+        }
+
+        $data = $this->get('tms_rest.entity_handler')->getSubResource($entity, 'merge_tags');
+        $context = SerializationContext::create()->setGroups(array('list'));
+        $view = $this->view($data, Codes::HTTP_OK);
         $view->setSerializationContext($context);
 
         return $this->handleView($view);
