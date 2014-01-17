@@ -51,7 +51,6 @@ class DocumentController extends Controller
         }
 
         $generatorServices = $this->container->getParameter('tms_document_generator');
-        //die(var_dump($this->get($generatorServices[strtolower($format)])));
         $document = new $documentClass($template->getHtml(), $template->getCss(), $template->getMergeTags(), $this->get($generatorServices[strtolower($format)]));
 
         return new $responseClass($document->render($parameters));
@@ -83,20 +82,15 @@ class DocumentController extends Controller
             return new Response('Unvalid token', 403);
         }
 
-        $mergeTags = array();
-        foreach ($parameters as $key => $value) {
-            $mergeTags[sprintf('{%s}', $key)] = $value;
-        }
-
         $documentClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Document\%sDocument', ucwords($format));
         $responseClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Extension\%sResponse', ucwords($format));
         if (!class_exists($documentClass) || !class_exists($responseClass)) {
             return new Response('Unknown format', 400);
         }
 
-        $config = $this->container->getParameter('tms_document_generator');
-        $document = new $documentClass($template->getHtml(), $template->getCss(), $this->get($config[strtolower($format)]));
+        $generatorServices = $this->container->getParameter('tms_document_generator');
+        $document = new $documentClass($template->getHtml(), $template->getCss(), $template->getMergeTags(), $this->get($generatorServices[strtolower($format)]));
 
-        return new $responseClass($document->download($mergeTags, $name));
+        return new $responseClass($document->download($parameters, $name));
     }
 }
