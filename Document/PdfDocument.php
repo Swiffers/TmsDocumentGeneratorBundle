@@ -12,9 +12,9 @@ class PdfDocument extends AbstractDomDocument
     /**
      * {@inheritDoc}
      */
-    public function __construct($html, $css, $generator)
+    public function __construct($html, $css, $mergeTags, $generator)
     {
-        parent::__construct($html, $css, $generator);
+        parent::__construct($html, $css, $mergeTags, $generator);
     }
 
     /**

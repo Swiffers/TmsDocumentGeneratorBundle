@@ -44,11 +44,11 @@ class Security
      */
     public function isValidToken($data, $key, $token)
     {
-        if (empty($data['lastname']) || empty($data['firstname'])) {
+        if (empty($data['last_name']) || empty($data['first_name'])) {
             return false;
         }
 
-        $recalculatedToken = $this->generateToken($data['lastname'] . $data['firstname'], $key);
+        $recalculatedToken = $this->generateToken($data['last_name'] . $data['first_name'], $key);
         if ($recalculatedToken !== $token) {
             return false;
         }
