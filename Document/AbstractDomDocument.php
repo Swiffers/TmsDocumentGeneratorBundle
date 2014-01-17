@@ -48,12 +48,15 @@ abstract class AbstractDomDocument implements RendererInterface
     public function renderDom(array $parameters)
     {
         $body = '';
-        $bindedIdentifiers = $this->bindIdentifiers($parameters);
-        if (!empty($this->css)) {
-            $body .= '<style type="text/css">' . $this->css . '</style>';
+        if (empty($this->html)) {
+            return $body;
         }
-        if (!empty($this->html)) {
-            $body .= str_replace($bindedIdentifiers['identifiers'], $bindedIdentifiers['values'], $this->html);
+
+        $bindedIdentifiers = $this->bindIdentifiers($parameters);
+        $body .= str_replace($bindedIdentifiers['identifiers'], $bindedIdentifiers['values'], $this->html);
+        if (!empty($this->css)) {
+            $insertPosition = strpos($body, '</head>');
+            $body = substr_replace($body, '<style type="text/css">' . $this->css . '</style>', $insertPosition, 0);
         }
 
         return $body;

@@ -23,8 +23,8 @@ class HtmlDocument extends AbstractDomDocument
     public function render(array $parameters)
     {
         $html = $this->renderDom($parameters);
-
         $this->generator->generateFromHtml($html);
+
         return $this->generator->render();
     }
 }
