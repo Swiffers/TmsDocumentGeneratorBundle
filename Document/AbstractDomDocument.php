@@ -54,9 +54,16 @@ abstract class AbstractDomDocument implements RendererInterface
 
         $bindedIdentifiers = $this->bindIdentifiers($parameters);
         $body .= str_replace($bindedIdentifiers['identifiers'], $bindedIdentifiers['values'], $this->html);
+
+        if (false === strpos($body, 'utf-8')) {
+            $metaCharset = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n\t";
+            $insertPosition = strpos($body, '</head>');
+            $body = substr_replace($body, $metaCharset, $insertPosition, 0);
+        }
+
         if (!empty($this->css)) {
             $insertPosition = strpos($body, '</head>');
-            $body = substr_replace($body, '<style type="text/css">' . $this->css . '</style>', $insertPosition, 0);
+            $body = substr_replace($body, "<style type=\"text/css\">\n" . $this->css . "</style>\n", $insertPosition, 0);
         }
 
         return $body;

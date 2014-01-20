@@ -93,4 +93,21 @@ class DocumentController extends Controller
 
         return new $responseClass($document->download($parameters, $name));
     }
+
+    /**
+     * @Route("token/{id}")
+     */
+    public function calculateTokenAction($id, Request $request)
+    {
+        $template = $this->get('tms_documentgenerator.manager.template')->find($id);
+        if (!$template) {
+            return new Response('Document not found', 404);
+        }
+        $data = $request->query->get('data', null);
+        $security = $this->get('tms_document_generator.security');
+        $parameters = $security->decodeQueryData($data);
+        $token = $security->generateToken(implode('.', $parameters), $template->getSalt());
+        var_dump($parameters);
+        return new Response('Token: ' . $token);
+    }
 }

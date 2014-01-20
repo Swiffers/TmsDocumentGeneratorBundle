@@ -42,13 +42,9 @@ class Security
      * @param string $token
      * @return boolean
      */
-    public function isValidToken($data, $key, $token)
+    public function isValidToken(array $data, $key, $token)
     {
-        if (empty($data['last_name']) || empty($data['first_name'])) {
-            return false;
-        }
-
-        $recalculatedToken = $this->generateToken($data['last_name'] . $data['first_name'], $key);
+        $recalculatedToken = $this->generateToken(implode('.', $data), $key);
         if ($recalculatedToken !== $token) {
             return false;
         }
