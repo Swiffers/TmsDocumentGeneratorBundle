@@ -7,34 +7,30 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Document;
 
-use Doctrine\ORM\PersistentCollection;
 use Tms\Bundle\DocumentGeneratorBundle\Generator\GeneratorInterface;
 use Tms\Bundle\DocumentGeneratorBundle\Exception\IdentifierNotFoundException;
 use Tms\Bundle\DocumentGeneratorBundle\Exception\IdentifierRequiredException;
+use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
 
 abstract class AbstractDomDocument implements RendererInterface
 {
-    protected $html;                            // Document DOM
-    protected $css;                             // Style of the document
+    protected $template;                        // Template used to generate the document
     protected $generator;                       // Generator service used to generate the document
-    protected $mergeTags;                       // Merge tags of the document
+    protected $mergeTags;                       // Merge Tags of the document
     protected static $identifierModel = '{%s}'; // Model used to find identifiers
 
     /**
      * Constructor
      *
-     * @param text                 $html
-     * @param text                 $css
-     * @param PersistentCollection $mergeTags
-     * @param GeneratorInterface   $generator
+     * @param Template           $template
+     * @param GeneratorInterface $generator
      */
-    public function __construct($html, $css, PersistentCollection $mergeTags, GeneratorInterface $generator)
+    public function __construct(Template $template, GeneratorInterface $generator)
     {
-        $this->html = $html;
-        $this->css = $css;
+        $this->template = $template;
         $this->generator = $generator;
         $this->mergeTags = array();
-        foreach ($mergeTags as $mergeTag) {
+        foreach ($this->template->getMergeTags() as $mergeTag) {
             $this->mergeTags[$mergeTag->getIdentifier()] = $mergeTag;
         }
     }
@@ -48,12 +44,13 @@ abstract class AbstractDomDocument implements RendererInterface
     public function renderDom(array $parameters)
     {
         $body = '';
-        if (empty($this->html)) {
+        $html = $this->template->getHtml();
+        if (empty($html)) {
             return $body;
         }
 
         $bindedIdentifiers = $this->bindIdentifiers($parameters);
-        $body .= str_replace($bindedIdentifiers['identifiers'], $bindedIdentifiers['values'], $this->html);
+        $body .= str_replace($bindedIdentifiers['identifiers'], $bindedIdentifiers['values'], $html);
 
         if (false === strpos($body, 'utf-8')) {
             $metaCharset = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n\t";
@@ -61,9 +58,10 @@ abstract class AbstractDomDocument implements RendererInterface
             $body = substr_replace($body, $metaCharset, $insertPosition, 0);
         }
 
-        if (!empty($this->css)) {
+        $css = $this->template->getCss();
+        if (!empty($css)) {
             $insertPosition = strpos($body, '</head>');
-            $body = substr_replace($body, "<style type=\"text/css\">\n" . $this->css . "</style>\n", $insertPosition, 0);
+            $body = substr_replace($body, "<style type=\"text/css\">\n" . $css . "</style>\n", $insertPosition, 0);
         }
 
         return $body;
@@ -105,7 +103,7 @@ abstract class AbstractDomDocument implements RendererInterface
 
         return array(
             'identifiers' => $identifiers,
-            'values' => $values
+            'values'      => $values
         );
     }
 }

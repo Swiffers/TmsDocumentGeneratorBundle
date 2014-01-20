@@ -51,9 +51,10 @@ class DocumentController extends Controller
         }
 
         $generatorServices = $this->container->getParameter('tms_document_generator');
-        $document = new $documentClass($template->getHtml(), $template->getCss(), $template->getMergeTags(), $this->get($generatorServices[strtolower($format)]));
+        $document = new $documentClass($template, $this->get($generatorServices[strtolower($format)]));
+        $content = $document->render($parameters);
 
-        return new $responseClass($document->render($parameters));
+        return new $responseClass($content);
     }
 
     /**
@@ -89,15 +90,13 @@ class DocumentController extends Controller
         }
 
         $generatorServices = $this->container->getParameter('tms_document_generator');
-        $document = new $documentClass($template->getHtml(), $template->getCss(), $template->getMergeTags(), $this->get($generatorServices[strtolower($format)]));
+        $document = new $documentClass($template, $this->get($generatorServices[strtolower($format)]));
+        $content = $document->download($parameters, $name);
 
-        return new $responseClass($document->download($parameters, $name));
+        return new $responseClass($content);
     }
 
-    /**
-     * @Route("token/{id}")
-     */
-    public function calculateTokenAction($id, Request $request)
+    public function tokenAction($id, Request $request)
     {
         $template = $this->get('tms_documentgenerator.manager.template')->find($id);
         if (!$template) {
