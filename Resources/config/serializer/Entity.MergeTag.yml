@@ -12,7 +12,7 @@ Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag:
         
         required:
             expose: true
-            groups: [details]
+            groups: [list, details]
 
         identifier:
             expose: true

@@ -12,8 +12,8 @@ interface GeneratorInterface
     /**
      * Generate a document from HTML
      *
-     * @param text $html
-     * @return text
+     * @param string $html
+     * @return string
      */
-    public function generateFromHtml($html);
+    public function generate($html);
 }

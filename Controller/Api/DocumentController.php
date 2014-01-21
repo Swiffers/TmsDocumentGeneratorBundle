@@ -23,7 +23,7 @@ class DocumentController extends Controller
      */
     public function generateAction($id, $format, Request $request)
     {
-        $template = $this->get('tms_documentgenerator.manager.template')->find($id);
+        $template = $this->get('tms_document_generator.manager.template')->find($id);
         if (!$template) {
             return new Response('Document not found', 404);
         }
@@ -34,13 +34,13 @@ class DocumentController extends Controller
             return new Response('Unvalid parameters', 400);
         }
 
-        $security = $this->get('tms_document_generator.security');
-        $parameters = $security->decodeQueryData($data);
+        $security = $this->get('tms_document_generator_security.security');
+        $parameters = $security->decodeQueryDataToParameters($data);
         if (null === $parameters) {
             return new Response('Bad parameters', 400);
         }
 
-        if (false === $security->isValidToken($parameters, $template->getSalt(), $token)) {
+        if (false === $security->checkTokenValidity($parameters, $template->getSalt(), $token)) {
             return new Response('Unvalid token', 403);
         }
 
@@ -52,17 +52,17 @@ class DocumentController extends Controller
 
         $generatorServices = $this->container->getParameter('tms_document_generator');
         $document = new $documentClass($template, $this->get($generatorServices[strtolower($format)]));
-        $content = $document->render($parameters);
+        $content = $document->display($parameters);
 
         return new $responseClass($content);
     }
 
     /**
-     * @Route("download/{id}/{name}.{format}", requirements={"format"="pdf", "name"="\w+"})
+     * @Route("download/{id}.{format}", requirements={"format"="pdf"})
      */
-    public function downloadAction($id, $name, $format, Request $request)
+    public function downloadAction($id, $format, Request $request)
     {
-        $template = $this->get('tms_documentgenerator.manager.template')->find($id);
+        $template = $this->get('tms_document_generator.manager.template')->find($id);
         if (!$template) {
             return new Response('Document not found', 404);
         }
@@ -72,14 +72,15 @@ class DocumentController extends Controller
         if (null === $data || null === $token) {
             return new Response('Unvalid parameters', 400);
         }
+        $name = $request->query->get('name', null);
 
-        $security = $this->get('tms_document_generator.security');
-        $parameters = $security->decodeQueryData($data);
+        $security = $this->get('tms_document_generator_security.security');
+        $parameters = $security->decodeQueryDataToParameters($data);
         if (null === $parameters) {
             return new Response('Bad parameters', 400);
         }
 
-        if (false === $security->isValidToken($parameters, $template->getSalt(), $token)) {
+        if (false === $security->checkTokenValidity($parameters, $template->getSalt(), $token)) {
             return new Response('Unvalid token', 403);
         }
 
@@ -91,9 +92,36 @@ class DocumentController extends Controller
 
         $generatorServices = $this->container->getParameter('tms_document_generator');
         $document = new $documentClass($template, $this->get($generatorServices[strtolower($format)]));
-        $content = $document->download($parameters, $name);
+        $content = $document->display($parameters);
 
-        return new $responseClass($content);
+        $response = new $responseClass($content);
+        $filename = (null !== $name ? $name : $id) . '.' . $format;
+        $response->headers->set("Content-Disposition", "attachment; filename=\"$filename\"");
+
+        return $response;
+    }
+
+    /**
+     * @Route("template/{id}/salt", requirements={"id"="\d+"})
+     */
+    public function templateSaltAction($id, Request $request)
+    {
+        $sentSecurityToken = $request->query->get('token', null);
+        if (null === $sentSecurityToken) {
+            return new Response('Token not given', 400);
+        }
+
+        $security = $this->get('tms_document_generator_security.security');
+        if ($sentSecurityToken !== $security->getSecurityToken()) {
+            return new Response('Unvalid token', 403);
+        }
+
+        $template = $this->get('tms_documentgenerator.manager.template')->find($id);
+        if (!$template) {
+            return new Response('Document not found', 404);
+        }
+
+        return new Response($template->getSalt());
     }
 
     public function tokenAction($id, Request $request)
@@ -103,8 +131,8 @@ class DocumentController extends Controller
             return new Response('Document not found', 404);
         }
         $data = $request->query->get('data', null);
-        $security = $this->get('tms_document_generator.security');
-        $parameters = $security->decodeQueryData($data);
+        $security = $this->get('tms_document_generator_security.security');
+        $parameters = $security->decodeQueryDataToParameters($data);
         $token = $security->generateToken(implode('.', $parameters), $template->getSalt());
         var_dump($parameters);
         return new Response('Token: ' . $token);

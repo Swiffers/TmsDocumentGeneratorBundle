@@ -12,32 +12,10 @@ class PdfDocument extends AbstractDomDocument
     /**
      * {@inheritDoc}
      */
-    public function __construct($template, $generator)
-    {
-        parent::__construct($template, $generator);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function render(array $parameters)
+    public function display(array $parameters)
     {
         $html = $this->renderDom($parameters);
-        $this->generator->generateFromHtml($html);
 
-        return $this->generator->render();
-    }
-
-    /**
-     * Force the document to be downloaded
-     *
-     * @param array $parameters
-     * @param string $filename
-     */
-    public function download(array $parameters, $filename)
-    {
-        $html = $this->renderDom($parameters);
-        $this->generator->generateFromHtml($html);
-        $this->generator->download($filename);
+        return $this->generator->generate($html);
     }
 }

@@ -7,34 +7,20 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Generator;
 
-class DompdfGenerator implements GeneratorInterface, RendererInterface, DownloaderInterface
+class DompdfGenerator implements GeneratorInterface
 {
     private $dompdf;
 
     /**
      * {@inheritDoc}
      */
-    public function render()
-    {
-        return $this->dompdf->output();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function generateFromHtml($html)
+    public function generate($html)
     {
         $this->dompdf = new \DOMPDF();
         $this->dompdf->set_paper("a4", "pt");
         $this->dompdf->load_html($html);
         $this->dompdf->render();
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function download($filename)
-    {
-        $this->dompdf->stream("$filename.pdf", array("Attachment" => true));
+        return $this->dompdf->output();
     }
 }

@@ -7,23 +7,13 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Generator;
 
-class HtmlDefaultGenerator implements GeneratorInterface, RendererInterface
+class HtmlDefaultGenerator implements GeneratorInterface
 {
-    private $html;
-
     /**
      * {@inheritDoc}
      */
-    public function render()
+    public function generate($html)
     {
-        return $this->html;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function generateFromHtml($html)
-    {
-        $this->html = $html;
+        return $html;
     }
 }

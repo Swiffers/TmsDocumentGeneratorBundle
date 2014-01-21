@@ -12,7 +12,7 @@ use Tms\Bundle\DocumentGeneratorBundle\Exception\IdentifierNotFoundException;
 use Tms\Bundle\DocumentGeneratorBundle\Exception\IdentifierRequiredException;
 use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
 
-abstract class AbstractDomDocument implements RendererInterface
+abstract class AbstractDomDocument
 {
     protected $template;                        // Template used to generate the document
     protected $generator;                       // Generator service used to generate the document
@@ -49,8 +49,7 @@ abstract class AbstractDomDocument implements RendererInterface
             return $body;
         }
 
-        $bindedIdentifiers = $this->bindIdentifiers($parameters);
-        $body .= str_replace($bindedIdentifiers['identifiers'], $bindedIdentifiers['values'], $html);
+        $body = $this->mergeHtmlWithParameters($html, $parameters);
 
         if (false === strpos($body, 'utf-8')) {
             $metaCharset = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n\t";
@@ -66,6 +65,21 @@ abstract class AbstractDomDocument implements RendererInterface
 
         return $body;
     }
+
+    /**
+     *
+     * @param string $html
+     * @param array $parameters
+     * @return string
+     */
+    private function mergeHtmlWithParameters($html, array $parameters)
+    {
+        $bindedIdentifiers = $this->bindIdentifiers($parameters);
+        $body = str_replace($bindedIdentifiers['identifiers'], $bindedIdentifiers['values'], $html);
+
+        return $body;
+    }
+
 
     /**
      * Return the identifiers with their values
@@ -106,4 +120,6 @@ abstract class AbstractDomDocument implements RendererInterface
             'values'      => $values
         );
     }
+
+    public abstract function display(array $parameters);
 }

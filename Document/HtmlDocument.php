@@ -12,19 +12,10 @@ class HtmlDocument extends AbstractDomDocument
     /**
      * {@inheritDoc}
      */
-    public function __construct($template, $generator)
-    {
-        parent::__construct($template, $generator);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function render(array $parameters)
+    public function display(array $parameters)
     {
         $html = $this->renderDom($parameters);
-        $this->generator->generateFromHtml($html);
 
-        return $this->generator->render();
+        return $this->generator->generate($html);
     }
 }
