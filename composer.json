@@ -22,7 +22,6 @@
         "symfony/framework-bundle":            ">=2.3",
         "doctrine/orm":                        ">=2.2.3,<2.4-dev",
         "doctrine/doctrine-bundle":            "1.2.*",
-        "friendsofsymfony/rest-bundle":        "dev-master",
         "twig/twig":                           "*",
         "dompdf/dompdf":                       "dev-master",
         "idci/simple-metadata-bundle":         "dev-master",
