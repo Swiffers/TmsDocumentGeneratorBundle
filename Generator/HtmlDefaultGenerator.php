@@ -16,4 +16,12 @@ class HtmlDefaultGenerator implements GeneratorInterface
     {
         return $html;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getMimeType()
+    {
+        return 'text/html';
+    }
 }

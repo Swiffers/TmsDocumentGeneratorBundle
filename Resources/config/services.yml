@@ -4,3 +4,8 @@ services:
 
     tms_document_generator.generator.html_default:
         class: Tms\Bundle\DocumentGeneratorBundle\Generator\HtmlDefaultGenerator
+
+    tms_document_generator.document:
+        class: Tms\Bundle\DocumentGeneratorBundle\Document\DomDocument
+        arguments: [null]
+        abstract: true

@@ -19,42 +19,29 @@ use Symfony\Component\HttpFoundation\Response;
 class DocumentController extends Controller
 {
     /**
-     * @Route("generate/{id}.{format}", requirements={"format"="html|pdf"})
+     * @Route("generate/{id}.{format}")
      */
     public function generateAction($id, $format, Request $request)
     {
         $template = $this->get('tms_document_generator.manager.template')->find($id);
-        if (!$template) {
-            return new Response('Document not found', 404);
+        try {
+            $parameters = $this->checkRequestAndGetParameters($format, $template, $request);
         }
-
-        $data = $request->query->get('data', null);
-        $token = $request->query->get('token', null);
-        if (null === $data || null === $token) {
-            return new Response('Unvalid parameters', 400);
+        catch (\Exception $exception) {
+            return new Response($exception->getMessage(), $exception->getCode());
         }
+        $document = $this->get(sprintf(
+            'tms_document_generator.document.%s',
+            $format
+        ));
+        $content = $document->display($template, $parameters);
 
-        $security = $this->get('tms_document_generator_security.security');
-        $parameters = $security->decodeQueryDataToParameters($data);
-        if (null === $parameters) {
-            return new Response('Bad parameters', 400);
-        }
+        $response = new Response();
+        $response->headers->set('Content-Type', $document->getMimeType());
+        $response->setStatusCode(200);
+        $response->setContent($content);
 
-        if (false === $security->checkTokenValidity($parameters, $template->getSalt(), $token)) {
-            return new Response('Unvalid token', 403);
-        }
-
-        $documentClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Document\%sDocument', ucwords($format));
-        $responseClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Extension\%sResponse', ucwords($format));
-        if (!class_exists($documentClass) || !class_exists($responseClass)) {
-            return new Response('Unknown format', 400);
-        }
-
-        $generatorServices = $this->container->getParameter('tms_document_generator');
-        $document = new $documentClass($template, $this->get($generatorServices[strtolower($format)]));
-        $content = $document->display($parameters);
-
-        return new $responseClass($content);
+        return $response;
     }
 
     /**
@@ -63,40 +50,24 @@ class DocumentController extends Controller
     public function downloadAction($id, $format, Request $request)
     {
         $template = $this->get('tms_document_generator.manager.template')->find($id);
-        if (!$template) {
-            return new Response('Document not found', 404);
+        try {
+            $parameters = $this->checkRequestAndGetParameters($format, $template, $request);
         }
-
-        $data = $request->query->get('data', null);
-        $token = $request->query->get('token', null);
-        if (null === $data || null === $token) {
-            return new Response('Unvalid parameters', 400);
+        catch (\Exception $exception) {
+            return new Response($exception->getMessage(), $exception->getCode());
         }
+        $document = $this->get(sprintf(
+            'tms_document_generator.document.%s',
+            $format
+        ));
+        $content = $document->display($template, $parameters);
         $name = $request->query->get('name', null);
+        $filename = sprintf('%s.%s', ($name ? $name : $id), $format);
 
-        $security = $this->get('tms_document_generator_security.security');
-        $parameters = $security->decodeQueryDataToParameters($data);
-        if (null === $parameters) {
-            return new Response('Bad parameters', 400);
-        }
-
-        if (false === $security->checkTokenValidity($parameters, $template->getSalt(), $token)) {
-            return new Response('Unvalid token', 403);
-        }
-
-        $documentClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Document\%sDocument', ucwords($format));
-        $responseClass = sprintf('Tms\Bundle\DocumentGeneratorBundle\Extension\%sResponse', ucwords($format));
-        if (!class_exists($documentClass) || !class_exists($responseClass)) {
-            return new Response('Unknown format', 400);
-        }
-
-        $generatorServices = $this->container->getParameter('tms_document_generator');
-        $document = new $documentClass($template, $this->get($generatorServices[strtolower($format)]));
-        $content = $document->display($parameters);
-
-        $response = new $responseClass($content);
-        $filename = (null !== $name ? $name : $id) . '.' . $format;
+        $response = new Response();
+        $response->headers->set('Content-Type', $document->getMimeType());
         $response->headers->set("Content-Disposition", "attachment; filename=\"$filename\"");
+        $response->setContent($content);
 
         return $response;
     }
@@ -134,7 +105,48 @@ class DocumentController extends Controller
         $security = $this->get('tms_document_generator_security.security');
         $parameters = $security->decodeQueryDataToParameters($data);
         $token = $security->generateToken(implode('.', $parameters), $template->getSalt());
-        var_dump($parameters);
+        print_r($parameters);
+
         return new Response('Token: ' . $token);
+    }
+
+    /**
+     * Checks if the request is valid and returns the parameters
+     *
+     * @param string $format
+     * @param Object $template
+     * @param Request $request
+     * @throws \Exception
+     * @return array
+     */
+    private function checkRequestAndGetParameters($format, $template, Request $request)
+    {
+        $configuration = $this->container->getParameter('tms_document_generator.configuration');
+
+        if (!in_array($format, array_keys($configuration['formats']))) {
+            throw new \Exception('Format not available', 400);
+        }
+
+        if (!$template) {
+            throw new \Exception('Document Not Found', 404);
+        }
+
+        $data = $request->query->get('data', null);
+        $token = $request->query->get('token', null);
+        if (null === $data || null === $token) {
+            throw new \Exception('Unvalid parameters', 400);
+        }
+
+        $security = $this->get('tms_document_generator_security.security');
+        $parameters = $security->decodeQueryDataToParameters($data);
+        if (!$parameters) {
+            throw new \Exception('Bad parameters', 400);
+        }
+
+        if (!$security->checkTokenValidity($parameters, $template->getSalt(), $token)) {
+            throw new \Exception('Unvalid token', 403);
+        }
+
+        return $parameters;
     }
 }

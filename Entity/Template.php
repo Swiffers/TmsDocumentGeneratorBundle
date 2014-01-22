@@ -85,6 +85,45 @@ class Template
      */
     private $mergeTags;
 
+
+    /**
+     * Return the identifiers with their values
+     *
+     * @param array $parameters
+     * @throws WrongParametersException
+     * @throws IdentifierRequiredException
+     * @return array
+     */
+    public function bind(array $parameters)
+    {
+        $identifiers = array();
+        $values = array();
+
+        $indexedMergeTags = array();
+        foreach ($this->getMergeTags() as $mergeTag) {
+            $indexedMergeTags[$mergeTag->getIdentifier()] = $mergeTag;
+        }
+
+        if (count(array_diff_key($parameters, $indexedMergeTags))) {
+            throw new WrongParametersException();
+        }
+
+        // Check for each defined mergeTag in the template if the identifier is required, and if not and its is not passed in parameters, its value becomes empty
+        foreach ($indexedMergeTags as $identifier => $mergeTag) {
+            if ($mergeTag->isRequired() && !isset($parameters[$identifier])) {
+                throw new IdentifierRequiredException($mergeTag->getName());
+            }
+            $value = isset($parameters[$identifier]) ? $parameters[$identifier] : '';
+            array_push($identifiers, \Tms\Bundle\DocumentGeneratorBundle\Document\DomDocument::formatIdentifier($identifier));
+            array_push($values, $value);
+        }
+
+        return array(
+            'identifiers' => $identifiers,
+            'values'      => $values
+        );
+    }
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();

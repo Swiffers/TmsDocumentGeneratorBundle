@@ -23,4 +23,12 @@ class DompdfGenerator implements GeneratorInterface
 
         return $this->dompdf->output();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getMimeType()
+    {
+        return 'application/pdf';
+    }
 }

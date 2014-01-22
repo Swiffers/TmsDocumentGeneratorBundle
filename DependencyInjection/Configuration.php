@@ -27,9 +27,12 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('pdf')->end()
-                ->scalarNode('html')->end()
-        ->end()
+                ->arrayNode('formats')
+                    ->isRequired()
+                    ->requiresAtLeastOneElement()
+                    ->prototype('variable')->end()
+                ->end()
+            ->end()
         ;
 
         return $treeBuilder;

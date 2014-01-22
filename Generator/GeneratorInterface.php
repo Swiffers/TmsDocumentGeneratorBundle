@@ -16,4 +16,11 @@ interface GeneratorInterface
      * @return string
      */
     public function generate($html);
+
+    /**
+     * Get MimeType
+     *
+     * @return string
+     */
+    public function getMimeType();
 }
