@@ -45,7 +45,7 @@ class DocumentController extends Controller
     }
 
     /**
-     * @Route("download/{id}.{format}", requirements={"format"="pdf"})
+     * @Route("download/{id}.{format}")
      */
     public function downloadAction($id, $format, Request $request)
     {

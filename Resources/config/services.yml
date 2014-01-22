@@ -9,3 +9,8 @@ services:
         class: Tms\Bundle\DocumentGeneratorBundle\Document\DomDocument
         arguments: [null]
         abstract: true
+
+    form.type.ace_textarea:
+        class: Tms\Bundle\DocumentGeneratorBundle\Form\Type\AceTextareaType
+        tags:
+            - { name: form.type, alias: ace_textarea }

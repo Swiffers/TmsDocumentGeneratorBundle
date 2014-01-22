@@ -1,0 +1,76 @@
+{% block tms_bundle_documentgeneratorbundle_editortemplatetype_widget %}
+    <ul class="editor_nav">
+        <li>
+            <a href="#input_{{ form.html.vars.id }}" name="html" class="btn btn-navigate">HTML</a>
+        </li>
+        <li>
+            <a href="#input_{{ form.css.vars.id }}" name="css" class="btn btn-navigate">CSS</a>
+        </li>
+        <li>
+            <a href="#" name="tags" class="btn btn-navigate">Tags</a>
+        </li>
+        <li class="submit"></li>
+    </ul>
+
+
+    <div id="editor_wrapper" class="content">
+        <div class="input" id="input_{{ form.html.vars.id }}">{{ form_widget(form.html) }}</div>
+        <div class="input" id="input_{{ form.css.vars.id }}">{{ form_widget(form.css) }}</div>
+    </div>
+    <div id="preview_wrapper" class="content">
+        <iframe id="preview"></iframe>
+    </div>
+
+   {{ form_rest(form) }}
+
+    <script>
+        jQuery(document).ready(function() {
+            var submit = $('form').find('button[type="submit"]');
+            submit.detach();
+            $("#editor_wrapper").find('.input').hide();
+            $('ul.editor_nav > li.submit').append(submit);
+            $('.editor_nav a').each(function() {
+                $(this).on('click', function(event) {
+                    event.preventDefault();
+                    $("#editor_wrapper").find('.input').hide();
+                    input = $(this).attr("href");
+                    $("#editor_wrapper").find(input).show();
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block ace_textarea_widget %}
+    {% spaceless %}
+        {{ block('collection_widget') }}
+    {% endspaceless %}
+
+    <!-- TODO: include once //-->
+    <script src="{{ asset('bundles/tmsdocumentgenerator/js/ace/ace.js') }}"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            var textarea = $('#{{ id }}');
+            var mode = "{{ editor_mode }}";
+ 
+            var editDiv = $('<div>', {
+                width: "{{ editor_width }}",
+                height: "{{ editor_height }}",
+                'class': textarea.attr('class')
+            }).insertBefore(textarea);
+            textarea.css('visibility', 'hidden');
+ 
+            var editor = ace.edit(editDiv[0]);
+            editor.renderer.setShowGutter({{ editor_show_gutter }});
+            editor.getSession().setValue(textarea.val());
+            editor.getSession().setMode("ace/mode/" + mode);
+            editor.setTheme("ace/theme/github");
+
+            // copy back to textarea on form submit...
+            textarea.closest('form').submit(function () {
+                textarea.val(editor.getSession().getValue());
+            })
+        });
+    </script>
+{% endblock %}

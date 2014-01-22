@@ -1,3 +1,8 @@
+twig:
+    form:
+        resources:
+            - 'TmsDocumentGeneratorBundle:Form:fields.html.twig'
+
 tms_document_generator:
     formats:
         pdf: tms_document_generator.generator.dompdf
