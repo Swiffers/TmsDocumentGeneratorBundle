@@ -9,12 +9,13 @@ namespace Tms\Bundle\DocumentGeneratorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use IDCI\Bundle\SimpleMetadataBundle\Metadata\MetadatableInterface;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="template")
  */
-class Template
+class Template implements MetadatableInterface
 {
     /**
      * @var integer
