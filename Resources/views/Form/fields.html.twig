@@ -12,7 +12,6 @@
         <li class="submit"></li>
     </ul>
 
-
     <div id="editor_wrapper" class="content">
         <div class="input" id="input_{{ form.html.vars.id }}">{{ form_widget(form.html) }}</div>
         <div class="input" id="input_{{ form.css.vars.id }}">{{ form_widget(form.css) }}</div>
@@ -25,17 +24,15 @@
 
     <script>
         jQuery(document).ready(function() {
-            var submit = $('form').find('button[type="submit"]');
-            submit.detach();
+            var $submit = $('form').find('button[type="submit"]');
+            $submit.detach();
             $("#editor_wrapper").find('.input').hide();
-            $('ul.editor_nav > li.submit').append(submit);
-            $('.editor_nav a').each(function() {
-                $(this).on('click', function(event) {
-                    event.preventDefault();
-                    $("#editor_wrapper").find('.input').hide();
-                    input = $(this).attr("href");
-                    $("#editor_wrapper").find(input).show();
-                });
+            $('ul.editor_nav > li.submit').append($submit);
+            $('.editor_nav a').on('click', function(event) {
+                event.preventDefault();
+                $("#editor_wrapper").find('.input').hide();
+                var input = $(this).attr("href");
+                $("#editor_wrapper").find(input).show();
             });
         });
     </script>
@@ -48,29 +45,40 @@
 
     <!-- TODO: include once //-->
     <script src="{{ asset('bundles/tmsdocumentgenerator/js/ace/ace.js') }}"></script>
+    <script src="{{ asset('bundles/tmsdocumentgenerator/js/preview.js') }}"></script>
+    <!--<script src="{{ asset('bundles/tmsdocumentgenerator/js/jquery-ace.min.js') }}"></script>-->
 
     <script type="text/javascript">
         jQuery(document).ready(function() {
-            var textarea = $('#{{ id }}');
+            var $textarea = $('#{{ id }}');
             var mode = "{{ editor_mode }}";
  
-            var editDiv = $('<div>', {
+            var $editDiv = $('<div>', {
                 width: "{{ editor_width }}",
                 height: "{{ editor_height }}",
-                'class': textarea.attr('class')
-            }).insertBefore(textarea);
-            textarea.css('visibility', 'hidden');
- 
-            var editor = ace.edit(editDiv[0]);
+                'class': $textarea.attr('class')
+            }).insertBefore($textarea);
+            $textarea.css('display', 'none');
+
+            
+            var editor = ace.edit($editDiv[0]);
             editor.renderer.setShowGutter({{ editor_show_gutter }});
-            editor.getSession().setValue(textarea.val());
+            editor.getSession().setValue($textarea.val());
             editor.getSession().setMode("ace/mode/" + mode);
             editor.setTheme("ace/theme/github");
 
             // copy back to textarea on form submit...
-            textarea.closest('form').submit(function () {
-                textarea.val(editor.getSession().getValue());
-            })
+            $textarea.closest('form').submit(function () {
+                $textarea.val(editor.getSession().getValue());
+            });
+
+            editor.getSession().on('change', function(){
+                var $textarea = $('#{{ id }}');
+                $textarea.val(editor.getSession().getValue());
+                Preview.render();
+            });
+
+            Preview.render();
         });
     </script>
 {% endblock %}
