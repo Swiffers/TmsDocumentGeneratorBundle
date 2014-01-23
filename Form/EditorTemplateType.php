@@ -19,12 +19,14 @@ class EditorTemplateType extends TemplateType
             ->remove('name')
             ->remove('description')
             ->add('html', 'ace_textarea', array(
-                'editor_mode' => 'html',
-                'required' => false
+                'required'      => false,
+                'editor_mode'   => 'html',
+                'editor_height' => 600
             ))
             ->add('css', 'ace_textarea', array(
-                'editor_mode' => 'css',
-                'required' => false
+                'required'      => false,
+                'editor_mode'   => 'css',
+                'editor_height' => 600
             ))
             ->add('mergeTags')
         ;
