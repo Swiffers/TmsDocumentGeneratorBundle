@@ -5,7 +5,7 @@ function GeneratorPreview($container, editorHtml, editorCss) {
     this.$container = $container;
     this.editorHtml = editorHtml;
     this.editorCss = editorCss;
-    this.definedIdentifiers = ["{last_name}", "{first_name}"];
+    this.definedIdentifiers = [];
     this.initListeners();
     this.render();
 }
@@ -21,10 +21,12 @@ GeneratorPreview.prototype.initListeners = function() {
 }
 
 GeneratorPreview.prototype.renderCss = function(content) {
-    return '<style type="text/css">'+content + '\n' + '.merge_tag_ok {background-color: #00ff00;} .merge_tag_ko {background-color: #ff0000;}</style>';
+    return '<style type="text/css">' + content + '\n' + '.merge_tag_ok {background-color: #00ff00;} .merge_tag_ko {background-color: #ff0000;}</style>';
 }
 
 GeneratorPreview.prototype.renderBody = function(content) {
+    return content;
+
     var regexp = new RegExp("{[_a-z0-9]*}", "g");
     htmlIdentifiers = content.match(regexp);
 
