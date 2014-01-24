@@ -8,6 +8,7 @@
 namespace Tms\Bundle\DocumentGeneratorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Tms\Bundle\LoggerBundle\Logger\LoggableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use IDCI\Bundle\SimpleMetadataBundle\Metadata\MetadatableInterface;
 
@@ -15,7 +16,7 @@ use IDCI\Bundle\SimpleMetadataBundle\Metadata\MetadatableInterface;
  * @ORM\Entity()
  * @ORM\Table(name="template")
  */
-class Template implements MetadatableInterface
+class Template implements MetadatableInterface, LoggableInterface
 {
     /**
      * @var integer

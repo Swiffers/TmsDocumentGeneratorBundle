@@ -8,13 +8,14 @@
 namespace Tms\Bundle\DocumentGeneratorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Tms\Bundle\LoggerBundle\Logger\LoggableInterface;
 use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="merge_tag")
  */
-class MergeTag
+class MergeTag implements LoggableInterface
 {
     /**
      * @var integer
