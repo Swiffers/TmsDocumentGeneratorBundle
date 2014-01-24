@@ -28,7 +28,6 @@ class EditorTemplateType extends TemplateType
                 'editor_mode'   => 'css',
                 'editor_height' => 600
             ))
-            ->add('mergeTags')
         ;
     }
 
