@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DocumentController extends Controller
 {
     /**
-     * @Route("generate/{id}.{format}")
+     * @Route("/generate/{id}.{format}", name="tms_document_generator_api_generate")
      */
     public function generateAction($id, $format, Request $request)
     {
@@ -45,7 +45,7 @@ class DocumentController extends Controller
     }
 
     /**
-     * @Route("download/{id}.{format}")
+     * @Route("/download/{id}.{format}", name="tms_document_generator_api_download")
      */
     public function downloadAction($id, $format, Request $request)
     {
@@ -73,7 +73,7 @@ class DocumentController extends Controller
     }
 
     /**
-     * @Route("template/{id}/salt", requirements={"id"="\d+"})
+     * @Route("/template/{id}/salt", name="tms_document_generator_api_template_salt", requirements={"id"="\d+"})
      */
     public function templateSaltAction($id, Request $request)
     {
@@ -139,7 +139,7 @@ class DocumentController extends Controller
 
         $security = $this->get('tms_document_generator_security.security');
         $parameters = $security->decodeQueryDataToParameters($data);
-        if (!$parameters) {
+        if (null === $parameters) {
             throw new \Exception('Bad parameters', 400);
         }
 
