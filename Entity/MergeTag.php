@@ -51,7 +51,7 @@ class MergeTag implements LoggableInterface
      * @var <Template>
      *
      * @ORM\ManyToOne(targetEntity="Template", inversedBy="mergeTags")
-     * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $template;
 

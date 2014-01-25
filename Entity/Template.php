@@ -15,6 +15,7 @@ use IDCI\Bundle\SimpleMetadataBundle\Metadata\MetadatableInterface;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="template")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Template implements MetadatableInterface, LoggableInterface
 {
@@ -33,13 +34,6 @@ class Template implements MetadatableInterface, LoggableInterface
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $name;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime")
-     */
-    private $createdAt;
 
     /**
      * @var string
@@ -70,6 +64,13 @@ class Template implements MetadatableInterface, LoggableInterface
     private $css;
 
     /**
+     * @var datetime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $createdOn;
+
+    /**
      * @var array<Metadata>
      *
      * @ORM\ManyToMany(targetEntity="IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata", cascade={"all"})
@@ -87,6 +88,20 @@ class Template implements MetadatableInterface, LoggableInterface
      */
     private $mergeTags;
 
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
+
+    /**
+     * toString
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     /**
      * Return the identifiers with their values
@@ -126,21 +141,15 @@ class Template implements MetadatableInterface, LoggableInterface
         );
     }
 
-    public function __construct()
-    {
-        $this->createdAt = new \DateTime();
-        $this->tags      = new ArrayCollection();
-        $this->salt      = md5($this->createdAt->format('YmdHis'));
-    }
-
     /**
-     * toString
-     *
-     * @return string
+     * onCreate
+     * @ORM\PrePersist()
      */
-    public function __toString()
+    public function onCreate()
     {
-        return $this->getName();
+        $now = new \DateTime();
+        $this->setCreatedOn($now);
+        $this->setSalt(md5($now->format('YmdHis')));
     }
 
     public function getId()
@@ -148,136 +157,212 @@ class Template implements MetadatableInterface, LoggableInterface
         return $this->id;
     }
 
+    public function getMetadatas()
+    {
+        return $this->getTags();
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Template
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
     public function getName()
     {
         return $this->name;
     }
 
     /**
+     * Set salt
      *
-     * @param string $name
-     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
+     * @param string $salt
+     * @return Template
      */
-    public function setName($name)
+    public function setSalt($salt)
     {
-        $this->name = $name;
-
+        $this->salt = $salt;
+    
         return $this;
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
     }
 
     /**
-     * @param \DateTime $createdAt
-     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
+     * Get salt
+     *
+     * @return string 
      */
-    public function setCreatedAt(\DateTime $createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
     public function getSalt()
     {
         return $this->salt;
     }
 
     /**
+     * Set description
      *
-     * @param string $salt
+     * @param string $description
+     * @return Template
      */
-    public function setSalt($salt)
+    public function setDescription($description)
     {
-        $this->salt = $salt;
-
+        $this->description = $description;
+    
         return $this;
     }
 
+    /**
+     * Get description
+     *
+     * @return string 
+     */
     public function getDescription()
     {
         return $this->description;
     }
 
     /**
-     * @param text $description
-     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
+     * Set html
+     *
+     * @param string $html
+     * @return Template
      */
-    public function setDescription($description)
+    public function setHtml($html)
     {
-        $this->description = $description;
-
+        $this->html = $html;
+    
         return $this;
     }
 
+    /**
+     * Get html
+     *
+     * @return string 
+     */
     public function getHtml()
     {
         return $this->html;
     }
 
     /**
-     * @param text $html
-     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
+     * Set css
+     *
+     * @param string $css
+     * @return Template
      */
-    public function setHtml($html)
+    public function setCss($css)
     {
-        $this->html = $html;
-
+        $this->css = $css;
+    
         return $this;
     }
 
+    /**
+     * Get css
+     *
+     * @return string 
+     */
     public function getCss()
     {
         return $this->css;
     }
 
     /**
-     * @param text $css
-     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
+     * Add tags
+     *
+     * @param \IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tags
+     * @return Template
      */
-    public function setCss($css)
+    public function addTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tags)
     {
-        $this->css = $css;
-
+        $this->tags[] = $tags;
+    
         return $this;
     }
 
-    public function getMergeTags()
+    /**
+     * Remove tags
+     *
+     * @param \IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tags
+     */
+    public function removeTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tags)
     {
-        return $this->mergeTags;
+        $this->tags->removeElement($tags);
     }
 
     /**
-     * {@inheritdoc}
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getMetadatas()
-    {
-        return $this->getTags();
-    }
-
     public function getTags()
     {
         return $this->tags;
     }
 
     /**
-     * {@inheritdoc}
+     * Add mergeTags
+     *
+     * @param \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTags
+     * @return Template
      */
-    public function addTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag)
+    public function addMergeTag(\Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTags)
     {
-        $this->tags[] = $tag;
-
+        $this->mergeTags[] = $mergeTags;
+    
         return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * Remove mergeTags
+     *
+     * @param \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTags
      */
-    public function removeTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag)
+    public function removeMergeTag(\Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTags)
     {
-        $this->tags->removeElement($tag);
+        $this->mergeTags->removeElement($mergeTags);
+    }
+
+    /**
+     * Get mergeTags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMergeTags()
+    {
+        return $this->mergeTags;
+    }
+
+    /**
+     * Set createdOn
+     *
+     * @param \DateTime $createdOn
+     * @return Template
+     */
+    public function setCreatedOn($createdOn)
+    {
+        $this->createdOn = $createdOn;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdOn
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedOn()
+    {
+        return $this->createdOn;
     }
 }
