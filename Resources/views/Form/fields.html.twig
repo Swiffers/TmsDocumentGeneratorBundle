@@ -34,7 +34,8 @@
             var generatorPreview = new GeneratorPreview(
                 $('#preview'),
                 editor_{{ form.html.vars.id }},
-                editor_{{ form.css.vars.id }}
+                editor_{{ form.css.vars.id }},
+                {{ merge_tags | json_encode | raw }}
             );
 
             $('#editor_wrapper > .input').hide();

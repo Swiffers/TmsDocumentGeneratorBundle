@@ -9,10 +9,27 @@ namespace Tms\Bundle\DocumentGeneratorBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class EditorTemplateType extends TemplateType
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $mergeTags = array();
+        foreach($form->getData()->getMergeTags() as $mergeTag) {
+            $mergeTags[] = $mergeTag->getIdentifier();
+        }
+
+        $view->vars = array_merge($view->vars, array(
+            'merge_tags' => $mergeTags,
+        ));
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

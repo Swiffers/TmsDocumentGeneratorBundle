@@ -1,11 +1,11 @@
 
 // GeneratorPreview
 
-function GeneratorPreview($container, editorHtml, editorCss) {
+function GeneratorPreview($container, editorHtml, editorCss, definedIdentifiers) {
     this.$container = $container;
     this.editorHtml = editorHtml;
     this.editorCss = editorCss;
-    this.definedIdentifiers = [];
+    this.definedIdentifiers = definedIdentifiers;
     this.initListeners();
     this.render();
 }
@@ -25,8 +25,6 @@ GeneratorPreview.prototype.renderCss = function(content) {
 }
 
 GeneratorPreview.prototype.renderBody = function(content) {
-    return content;
-
     var regexp = new RegExp("{[_a-z0-9]*}", "g");
     htmlIdentifiers = content.match(regexp);
 
@@ -36,7 +34,8 @@ GeneratorPreview.prototype.renderBody = function(content) {
         var regexp = new RegExp(pattern, "g");
         var spanClass = 'merge_tag_ko';
 
-        if (jQuery.inArray(htmlIdentifiers[i], this.definedIdentifiers) >= 0){
+        needle = htmlIdentifiers[i].replace('{', '').replace('}', '');
+        if (jQuery.inArray(needle, this.definedIdentifiers) >= 0){
             spanClass = 'merge_tag_ok';
         }
         content = content.replace(regexp, "<span class=\"" + spanClass + "\">" + htmlIdentifiers[i] + "</span>");
