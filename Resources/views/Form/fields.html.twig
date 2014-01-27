@@ -1,43 +1,54 @@
 {% block tms_bundle_documentgeneratorbundle_editortemplatetype_widget %}
     <ul class="editor_nav">
         <li>
-            <a href="#input_{{ form.html.vars.id }}" name="html" class="btn btn-default">HTML</a>
+            <a href="#{{ form.html.vars.id }}" name="html" class="btn btn-default">HTML</a>
         </li>
         <li>
-            <a href="#input_{{ form.css.vars.id }}" name="css" class="btn btn-default">CSS</a>
+            <a href="#{{ form.css.vars.id }}" name="css" class="btn btn-default">CSS</a>
         </li>
         <li class="tags"></li>
         <li class="submit"></li>
     </ul>
 
     <div id="editor_wrapper" class="content">
-        <div class="input" id="input_{{ form.html.vars.id }}">{{ form_widget(form.html) }}</div>
-        <div class="input" id="input_{{ form.css.vars.id }}">{{ form_widget(form.css) }}</div>
+        <div class="input" data-id="{{ form.html.vars.id }}">{{ form_widget(form.html) }}</div>
+        <div class="input" data-id="{{ form.css.vars.id }}">{{ form_widget(form.css) }}</div>
     </div>
     <div id="preview_wrapper" class="content">
         <iframe id="preview"></iframe>
     </div>
 
-   {{ form_rest(form) }}
+    {{ form_rest(form) }}
 
     <script src="{{ asset('bundles/tmsdocumentgenerator/js/generatorPreview.js') }}"></script>
     <script>
+        function showInput(id) {
+            id = id.replace('#', '');
+            $('#editor_wrapper > .input').hide();
+            $('.editor_nav a').removeClass('active');
+            $('.editor_nav a[href="#'+id+'"]').addClass('active');
+            $('#editor_wrapper > .input[data-id="'+id+'"]').show();
+        }
+
         jQuery(document).ready(function() {
-            var $submit = $('form').find('button[type="submit"]');
-            $submit.detach();
-            $("#editor_wrapper").find('> .input').hide();
-            $('ul.editor_nav > li.submit').append($submit);
-            $('.editor_nav a').on('click', function(event) {
-                event.preventDefault();
-                $("#editor_wrapper").find('.input').hide();
-                var input = $(this).attr("href");
-                $("#editor_wrapper").find(input).show();
-            });
             var generatorPreview = new GeneratorPreview(
-                $("#preview"),
+                $('#preview'),
                 editor_{{ form.html.vars.id }},
                 editor_{{ form.css.vars.id }}
             );
+
+            $('#editor_wrapper > .input').hide();
+            showInput('{{ form.html.vars.id }}');
+
+            var $submit = $('form').find('button[type="submit"]');
+            $submit.detach();
+            $('ul.editor_nav > li.submit').append($submit);
+
+            $('.editor_nav a').on('click', function(event) {
+                event.preventDefault();
+                var id = $(this).attr("href");
+                showInput(id);
+            });
         });
     </script>
 {% endblock %}
@@ -49,7 +60,6 @@
 
     <!-- TODO: include once //-->
     <script src="{{ asset('bundles/tmsdocumentgenerator/js/ace/ace.js') }}"></script>
-    <!--<script src="{{ asset('bundles/tmsdocumentgenerator/js/jquery-ace.min.js') }}"></script>-->
 
     <script type="text/javascript">
         var editor_{{ id }} = null;
@@ -68,7 +78,7 @@
             editor_{{ id }}.getSession().setValue($textarea_{{ id }}.val());
             editor_{{ id }}.getSession().setMode("ace/mode/{{ editor_mode }}");
             editor_{{ id }}.setTheme("ace/theme/{{ editor_theme }}");
-
+ 
             // copy back to textarea on form submit...
             $textarea_{{ id }}.closest('form').submit(function () {
                 $textarea_{{ id }}.val(editor_{{ id }}.getSession().getValue());
