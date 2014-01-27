@@ -8,8 +8,6 @@
 namespace Tms\Bundle\DocumentGeneratorBundle\Document;
 
 use Tms\Bundle\DocumentGeneratorBundle\Generator\GeneratorInterface;
-use Tms\Bundle\DocumentGeneratorBundle\Exception\WrongParametersException;
-use Tms\Bundle\DocumentGeneratorBundle\Exception\IdentifierRequiredException;
 use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
 
 class DomDocument

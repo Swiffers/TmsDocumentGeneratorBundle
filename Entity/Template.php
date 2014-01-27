@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Tms\Bundle\LoggerBundle\Logger\LoggableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use IDCI\Bundle\SimpleMetadataBundle\Metadata\MetadatableInterface;
+use Tms\Bundle\DocumentGeneratorBundle\Exception\WrongParametersException;
+use Tms\Bundle\DocumentGeneratorBundle\Exception\IdentifierRequiredException;
 
 /**
  * @ORM\Entity()
@@ -171,14 +173,14 @@ class Template implements MetadatableInterface, LoggableInterface
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -194,14 +196,14 @@ class Template implements MetadatableInterface, LoggableInterface
     public function setSalt($salt)
     {
         $this->salt = $salt;
-    
+
         return $this;
     }
 
     /**
      * Get salt
      *
-     * @return string 
+     * @return string
      */
     public function getSalt()
     {
@@ -217,14 +219,14 @@ class Template implements MetadatableInterface, LoggableInterface
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -240,14 +242,14 @@ class Template implements MetadatableInterface, LoggableInterface
     public function setHtml($html)
     {
         $this->html = $html;
-    
+
         return $this;
     }
 
     /**
      * Get html
      *
-     * @return string 
+     * @return string
      */
     public function getHtml()
     {
@@ -263,14 +265,14 @@ class Template implements MetadatableInterface, LoggableInterface
     public function setCss($css)
     {
         $this->css = $css;
-    
+
         return $this;
     }
 
     /**
      * Get css
      *
-     * @return string 
+     * @return string
      */
     public function getCss()
     {
@@ -286,7 +288,7 @@ class Template implements MetadatableInterface, LoggableInterface
     public function addTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tags)
     {
         $this->tags[] = $tags;
-    
+
         return $this;
     }
 
@@ -303,7 +305,7 @@ class Template implements MetadatableInterface, LoggableInterface
     /**
      * Get tags
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTags()
     {
@@ -319,7 +321,7 @@ class Template implements MetadatableInterface, LoggableInterface
     public function addMergeTag(\Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTags)
     {
         $this->mergeTags[] = $mergeTags;
-    
+
         return $this;
     }
 
@@ -336,7 +338,7 @@ class Template implements MetadatableInterface, LoggableInterface
     /**
      * Get mergeTags
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMergeTags()
     {
@@ -352,14 +354,14 @@ class Template implements MetadatableInterface, LoggableInterface
     public function setCreatedOn($createdOn)
     {
         $this->createdOn = $createdOn;
-    
+
         return $this;
     }
 
     /**
      * Get createdOn
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedOn()
     {
