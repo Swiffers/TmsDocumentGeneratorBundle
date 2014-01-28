@@ -90,9 +90,21 @@ class Template implements MetadatableInterface, LoggableInterface
      */
     private $mergeTags;
 
+    /**
+     * @var array<Media>
+     *
+     * @ORM\ManyToMany(targetEntity="Tms\Bundle\MediaClientBundle\Entity\Media", cascade={"all"})
+     * @ORM\JoinTable(name="template_media",
+     *     joinColumns={@ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="cascade")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id", unique=true, onDelete="cascade")}
+     * )
+     */
+    private $images;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     /**
@@ -366,5 +378,38 @@ class Template implements MetadatableInterface, LoggableInterface
     public function getCreatedOn()
     {
         return $this->createdOn;
+    }
+
+    /**
+     * Add image
+     *
+     * @param \Tms\Bundle\MediaClientBundle\Entity\Media $image
+     * @return Offer
+     */
+    public function addImage(\Tms\Bundle\MediaClientBundle\Entity\Media $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \Tms\Bundle\MediaClientBundle\Entity\Media $image
+     */
+    public function removeImage(\Tms\Bundle\MediaClientBundle\Entity\Media $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }
