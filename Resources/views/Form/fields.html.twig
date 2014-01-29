@@ -29,12 +29,8 @@
             $('.editor_nav a[href="#' + id + '"]').addClass('active');
             $('#editor_wrapper > .input[data-id="' + id + '"]').show();
 
-            var pattern = new RegExp("html");
-            if (true === pattern.test(id)) {
-                editor_{{ form.html.vars.id }}.setValue($('textarea[id="{{ form.html.vars.id }}"]').val());
-            } else {
-                editor_{{ form.css.vars.id }}.setValue($('textarea[id="{{ form.css.vars.id }}"]').val());
-            }
+            var editor = eval("editor_" + id);
+            editor.getSession().setValue($('textarea[id="' + id + '"]').val());
         }
 
         jQuery(document).ready(function() {
