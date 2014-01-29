@@ -95,8 +95,8 @@ class Template implements MetadatableInterface, LoggableInterface
      *
      * @ORM\ManyToMany(targetEntity="Tms\Bundle\MediaClientBundle\Entity\Media", cascade={"all"})
      * @ORM\JoinTable(name="template_media",
-     *     joinColumns={@ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="cascade")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id", unique=true, onDelete="cascade")}
+     *     joinColumns={@ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id", unique=true, onDelete="CASCADE")}
      * )
      */
     private $images;
@@ -384,7 +384,7 @@ class Template implements MetadatableInterface, LoggableInterface
      * Add image
      *
      * @param \Tms\Bundle\MediaClientBundle\Entity\Media $image
-     * @return Offer
+     * @return Template
      */
     public function addImage(\Tms\Bundle\MediaClientBundle\Entity\Media $image)
     {
@@ -411,5 +411,22 @@ class Template implements MetadatableInterface, LoggableInterface
     public function getImages()
     {
         return $this->images;
+    }
+
+    /**
+     * Get imageById
+     *
+     * @param integer $id
+     * @return \Tms\Bundle\MediaClientBundle\Entity\Media
+     */
+    public function getImageById($id)
+    {
+        foreach ($this->images as $image) {
+            if ($image->getId() === $id) {
+                return $image;
+            }
+        }
+
+        return null;
     }
 }

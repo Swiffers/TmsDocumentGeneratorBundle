@@ -17,7 +17,6 @@ class TemplateType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('tags', 'related_to_many_metadata_tags')
-            ->add('images', 'related_to_many_media')
         ;
     }
 
