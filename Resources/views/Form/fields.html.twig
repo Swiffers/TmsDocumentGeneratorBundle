@@ -26,16 +26,23 @@
             id = id.replace('#', '');
             $('#editor_wrapper > .input').hide();
             $('.editor_nav a').removeClass('active');
-            $('.editor_nav a[href="#'+id+'"]').addClass('active');
-            $('#editor_wrapper > .input[data-id="'+id+'"]').show();
+            $('.editor_nav a[href="#' + id + '"]').addClass('active');
+            $('#editor_wrapper > .input[data-id="' + id + '"]').show();
+
+            var pattern = new RegExp("html");
+            if (true === pattern.test(id)) {
+                editor_{{ form.html.vars.id }}.setValue($('textarea[id="{{ form.html.vars.id }}"]').val());
+            } else {
+                editor_{{ form.css.vars.id }}.setValue($('textarea[id="{{ form.css.vars.id }}"]').val());
+            }
         }
 
         jQuery(document).ready(function() {
             var generatorPreview = new GeneratorPreview(
                 $('#preview'),
-                editor_{{ form.html.vars.id }},
-                editor_{{ form.css.vars.id }},
-                {{ merge_tags | json_encode | raw }}
+                $('textarea[id="{{ form.html.vars.id }}"]'),
+                $('textarea[id="{{ form.css.vars.id }}"]'),
+                {{ merge_tags|json_encode|raw }}
             );
 
             $('#editor_wrapper > .input').hide();
@@ -61,32 +68,32 @@
 
     <!-- TODO: include once //-->
     <script src="{{ asset('bundles/tmsdocumentgenerator/js/ace/ace.js') }}"></script>
+    <script src="{{ asset('bundles/tmsdocumentgenerator/js/ace/theme-github.js') }}"></script>
+    <script src="{{ asset('bundles/tmsdocumentgenerator/js/ace/mode-html.js') }}"></script>
+    <script src="{{ asset('bundles/tmsdocumentgenerator/js/ace/mode-css.js') }}"></script>
 
-    <script type="text/javascript">
-        var editor_{{ id }} = null;
-        jQuery(document).ready(function() {
-            var $textarea_{{ id }} = $('#{{ id }}');
- 
-            var $editDiv_{{ id }} = $('<div>', {
-                'width': "{{ editor_width }}",
-                'height': "{{ editor_height }}",
+    <script>
+        $(function () {
+            var $textarea_{{ id }} = $('#{{ id }}')
+    
+            var editDiv_{{ id }} = $('<div>', {
+                position: "absolute",
+                width: "{{ editor_width }}",
+                height: "{{ editor_height }}",
                 'class': $textarea_{{ id }}.attr('class')
-            }).insertBefore($textarea_{{ id }});
-            $textarea_{{ id }}.hide();
+                }).insertBefore($textarea_{{ id }});
 
-            editor_{{ id }} = ace.edit($editDiv_{{ id }}[0]);
+            $textarea_{{ id }}.css('display', 'none');
+
+            editor_{{ id }} = ace.edit(editDiv_{{ id }}[0]);
             editor_{{ id }}.renderer.setShowGutter({{ editor_show_gutter }});
             editor_{{ id }}.getSession().setValue($textarea_{{ id }}.val());
             editor_{{ id }}.getSession().setMode("ace/mode/{{ editor_mode }}");
             editor_{{ id }}.setTheme("ace/theme/{{ editor_theme }}");
- 
-            // copy back to textarea on form submit...
-            $textarea_{{ id }}.closest('form').submit(function () {
-                $textarea_{{ id }}.val(editor_{{ id }}.getSession().getValue());
-            });
 
             editor_{{ id }}.getSession().on('change', function() {
                 $textarea_{{ id }}.val(editor_{{ id }}.getSession().getValue());
+                $textarea_{{ id }}.trigger('change');
             });
         });
     </script>
