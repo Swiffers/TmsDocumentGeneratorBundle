@@ -1,10 +1,10 @@
 
 // GeneratorPreview
 
-function GeneratorPreview($container, editorHtml, editorCss, definedIdentifiers) {
-    this.$container = $container;
-    this.editorHtml = editorHtml;
-    this.editorCss = editorCss;
+function GeneratorPreview($container, $textareaHtml, $textareaCss, definedIdentifiers) {
+    this.$container         = $container;
+    this.$textareaHtml      = $textareaHtml;
+    this.$textareaCss       = $textareaCss;
     this.definedIdentifiers = definedIdentifiers;
     this.initListeners();
     this.render();
@@ -12,10 +12,10 @@ function GeneratorPreview($container, editorHtml, editorCss, definedIdentifiers)
 
 GeneratorPreview.prototype.initListeners = function() {
     var that = this;
-    this.editorHtml.getSession().on('change', function() {
+    this.$textareaHtml.on('change', function(){
         that.render();
     });
-    this.editorCss.getSession().on('change', function() {
+    this.$textareaCss.on('change', function(){
         that.render();
     });
 }
@@ -59,8 +59,7 @@ GeneratorPreview.prototype.renderBody = function(content) {
 }
 
 GeneratorPreview.prototype.render = function() {
-    var css = this.renderCss(this.editorCss.getSession().getValue());
-    var body = this.renderBody(this.editorHtml.getSession().getValue());
-
+    var css = this.renderCss(this.$textareaCss.val());
+    var body = this.renderBody(this.$textareaHtml.val());
     this.$container.contents().find('body').html(body + css);
 }

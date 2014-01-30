@@ -2,7 +2,7 @@
 
 /**
  * @author Jean-Philippe Chateau <jp.chateau@trepia.fr>
- * @licence MIT
+ * @license MIT
  */
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Form\Type;
@@ -22,7 +22,7 @@ class AceTextareaType extends AbstractType
     {
         $resolver->setDefaults(array(
             'editor_width'       => 'auto',
-            'editor_height'      => '140',
+            'editor_height'      => 'auto',
             'editor_mode'        => 'html',
             'editor_theme'       => 'github',
             'editor_show_gutter' => true

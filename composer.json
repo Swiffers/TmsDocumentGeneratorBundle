@@ -15,6 +15,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/Tessi-Tms/TmsRestBundle.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/Tessi-Tms/TmsMediaClientBundle.git"
         }
     ],
     "require": {
@@ -25,7 +29,8 @@
         "twig/twig":                           "*",
         "dompdf/dompdf":                       "dev-master",
         "idci/simple-metadata-bundle":         "dev-master",
-        "tms/rest-bundle":                     "dev-master"
+        "tms/rest-bundle":                     "dev-master",
+        "tms/media-client-bundle":             "dev-master"
     },
     "autoload": {
         "psr-0": { "Tms\\Bundle\\DocumentGeneratorBundle": "" }

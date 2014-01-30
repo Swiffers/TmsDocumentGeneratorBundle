@@ -2,7 +2,7 @@
 
 /**
  * @author Jean-Philippe Chateau <jp.chateau@trepia.fr>
- * @licence MIT
+ * @license MIT
  */
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Controller\Api;

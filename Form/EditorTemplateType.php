@@ -2,7 +2,7 @@
 
 /**
  * @author Jean-Philippe Chateau <jp.chateau@trepia.fr>
- * @licence MIT
+ * @license MIT
  */
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Form;
@@ -38,12 +38,14 @@ class EditorTemplateType extends TemplateType
             ->add('html', 'ace_textarea', array(
                 'required'      => false,
                 'editor_mode'   => 'html',
-                'editor_height' => 800
+                'editor_height' => '800',
+                'editor_width'  => '100%'
             ))
             ->add('css', 'ace_textarea', array(
                 'required'      => false,
                 'editor_mode'   => 'css',
-                'editor_height' => 800
+                'editor_height' => '800',
+                'editor_width'  => '100%'
             ))
         ;
     }
