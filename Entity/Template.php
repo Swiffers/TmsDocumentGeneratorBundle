@@ -412,21 +412,4 @@ class Template implements MetadatableInterface, LoggableInterface
     {
         return $this->images;
     }
-
-    /**
-     * Get imageById
-     *
-     * @param integer $id
-     * @return \Tms\Bundle\MediaClientBundle\Entity\Media
-     */
-    public function getImageById($id)
-    {
-        foreach ($this->images as $image) {
-            if ($image->getId() === $id) {
-                return $image;
-            }
-        }
-
-        return null;
-    }
 }
