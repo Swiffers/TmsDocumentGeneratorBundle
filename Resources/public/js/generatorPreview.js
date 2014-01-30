@@ -41,6 +41,7 @@ GeneratorPreview.prototype.renderBody = function(content) {
         content = content.replace(match[0], "<span class=\"" + spanClass + "\">" + match[2] + "</span>");
     }
 
+    // Remove matching text
     regexp = /{%( )?(if.*?)( )?%}/g; // {% if .. %}
     while (match = regexp.exec(content)) {
         content = content.replace(match[0], "");
