@@ -127,20 +127,17 @@ class Template implements MetadatableInterface, LoggableInterface
             throw new WrongParametersException();
         }
 
+        $boundParameters = array();
         // Check for each defined mergeTag in the template if the identifier is required, and if not and its is not passed in parameters, its value becomes empty
         foreach ($indexedMergeTags as $identifier => $mergeTag) {
             if ($mergeTag->isRequired() && !isset($parameters[$identifier])) {
                 throw new IdentifierRequiredException($mergeTag->getName());
             }
             $value = isset($parameters[$identifier]) ? $parameters[$identifier] : '';
-            array_push($identifiers, \Tms\Bundle\DocumentGeneratorBundle\Document\DomDocument::formatIdentifier($identifier));
-            array_push($values, $value);
+            $boundParameters[$identifier] = $value;
         }
 
-        return array(
-            'identifiers' => $identifiers,
-            'values'      => $values
-        );
+        return $boundParameters;
     }
 
     /**

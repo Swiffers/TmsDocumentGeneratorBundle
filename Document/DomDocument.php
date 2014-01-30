@@ -12,9 +12,8 @@ use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
 
 class DomDocument
 {
-    protected $generator;                        // Generator service used to generate the document
-    protected static $identifierFormat = '{%s}'; // Format used to find identifiers
-
+    protected $generator; // Generator service used to generate the document
+    
     /**
      * Constructor
      *
@@ -34,18 +33,22 @@ class DomDocument
      */
     public function renderDom(Template $template, array $parameters)
     {
-        $body = $template->getHtml();
-        if (!strlen($body)) {
+        if (!strlen($template->getHtml())) {
             return '';
         }
 
         $html = self::initHtml();
 
-        return sprintf(
+        $content = sprintf(
             $html,
             $template->getCss(),
-            $this->mergeHtmlWithParameters($body, $template->bind($parameters))
+            $template->getHtml()
         );
+
+        $loader = new \Twig_Loader_String();
+        $twig = new \Twig_Environment($loader);
+
+        return $twig->render($content, $template->bind($parameters));
     }
 
     /**
@@ -56,28 +59,6 @@ class DomDocument
     private static function initHtml()
     {
         return "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><style type=\"text/css\">%s</style></head><body>%s</body></html>";
-    }
-
-    /**
-     *
-     * @param string $html
-     * @param array $parameters
-     * @return string
-     */
-    private function mergeHtmlWithParameters($html, array $boundIdentifiers)
-    {
-        return str_replace($boundIdentifiers['identifiers'], $boundIdentifiers['values'], $html);
-    }
-
-    /**
-     * Format a given identifier using the identifierFormat
-     *
-     * @param string $identifier
-     * @return string
-     */
-    public static function formatIdentifier($identifier)
-    {
-        return sprintf(self::$identifierFormat, $identifier);
     }
 
     /**

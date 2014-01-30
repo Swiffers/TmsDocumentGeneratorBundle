@@ -21,24 +21,37 @@ GeneratorPreview.prototype.initListeners = function() {
 }
 
 GeneratorPreview.prototype.renderCss = function(content) {
-    return '<style type="text/css">' + content + '\n' + '.merge_tag_ok {background-color: #00ff00;} .merge_tag_ko {background-color: #ff0000;}</style>';
+    return '<style type="text/css">' + content + '\n' +
+               ' .merge_tag_ok {background-color: #00ff00;}'+
+               ' .merge_tag_ko {background-color: #ff0000;}'+
+               ' .merge_tag_alt {background-color: #00ffff;}'+
+           '</style>';
 }
 
 GeneratorPreview.prototype.renderBody = function(content) {
-    var regexp = new RegExp("{[_a-z0-9]*}", "g");
-    htmlIdentifiers = content.match(regexp);
+    var match,regexp;
 
-    var i;
-    for (i in htmlIdentifiers) {
-        var pattern = htmlIdentifiers[i];
-        var regexp = new RegExp(pattern, "g");
+    // Color variables beetween {{ .. }} and remove brackets
+    regexp = /{{( )?([_a-z0-9]*)( )?}}/g;
+    while (match = regexp.exec(content)) {
         var spanClass = 'merge_tag_ko';
-
-        needle = htmlIdentifiers[i].replace('{', '').replace('}', '');
-        if (jQuery.inArray(needle, this.definedIdentifiers) >= 0){
+        if (jQuery.inArray(match[2], this.definedIdentifiers) >= 0){
             spanClass = 'merge_tag_ok';
         }
-        content = content.replace(regexp, "<span class=\"" + spanClass + "\">" + htmlIdentifiers[i] + "</span>");
+        content = content.replace(match[0], "<span class=\"" + spanClass + "\">" + match[2] + "</span>");
+    }
+
+    regexp = /{%( )?(if.*?)( )?%}/g; // {% if .. %}
+    while (match = regexp.exec(content)) {
+        content = content.replace(match[0], "");
+    }
+    regexp = /{%( )?else( )?%}/g;    // {% else %}
+    while (match = regexp.exec(content)) {
+        content = content.replace(match[0], "");
+    }
+    regexp = /{%( )?endif( )?%}/g;   // {% else %}
+    while (match = regexp.exec(content)) {
+        content = content.replace(match[0], "");
     }
 
     return content;
