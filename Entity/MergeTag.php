@@ -71,6 +71,8 @@ class MergeTag implements LoggableInterface
     }
 
     /**
+     * Set Name
+     *
      * @param string $name
      * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
      */
@@ -81,17 +83,29 @@ class MergeTag implements LoggableInterface
         return $this;
     }
 
+    /**
+     * Get Name
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * Is Required
+     *
+     * @return boolean
+     */
     public function isRequired()
     {
         return $this->required;
     }
 
     /**
+     * Set Required
+     *
      * @param boolean $required
      * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
      */
@@ -102,12 +116,19 @@ class MergeTag implements LoggableInterface
         return $this;
     }
 
+    /**
+     * Get Identifier
+     *
+     * @return string
+     */
     public function getIdentifier()
     {
         return $this->identifier;
     }
 
     /**
+     * Set Identifier
+     *
      * @param string $identifier
      * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
      */
@@ -118,12 +139,19 @@ class MergeTag implements LoggableInterface
         return $this;
     }
 
+    /**
+     * Get Template
+     *
+     * @return Template
+     */
     public function getTemplate()
     {
         return $this->template;
     }
 
     /**
+     * Set Template
+     *
      * @param Template $template
      * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
      */

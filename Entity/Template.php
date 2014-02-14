@@ -96,15 +96,21 @@ class Template implements MetadatableInterface, LoggableInterface
      * @ORM\ManyToMany(targetEntity="Tms\Bundle\MediaClientBundle\Entity\Media", cascade={"all"})
      * @ORM\JoinTable(name="template_media",
      *     joinColumns={@ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id", unique=true, onDelete="CASCADE")}
+     *     inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id", onDelete="CASCADE")}
      * )
      */
     private $images;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $now = new \DateTime();
+        $this->setCreatedOn($now);
+        $this->setSalt(md5($now->format('YmdHis')));
     }
 
     /**
@@ -156,21 +162,18 @@ class Template implements MetadatableInterface, LoggableInterface
     }
 
     /**
-     * onCreate
-     * @ORM\PrePersist()
+     * Get Id
+     *
+     * @return integer
      */
-    public function onCreate()
-    {
-        $now = new \DateTime();
-        $this->setCreatedOn($now);
-        $this->setSalt(md5($now->format('YmdHis')));
-    }
-
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getMetadatas()
     {
         return $this->getTags();
@@ -294,24 +297,24 @@ class Template implements MetadatableInterface, LoggableInterface
     /**
      * Add tags
      *
-     * @param \IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tags
+     * @param \IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag
      * @return Template
      */
-    public function addTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tags)
+    public function addTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag)
     {
-        $this->tags[] = $tags;
+        $this->tags[] = $tag;
 
         return $this;
     }
 
     /**
-     * Remove tags
+     * Remove tag
      *
-     * @param \IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tags
+     * @param \IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag
      */
-    public function removeTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tags)
+    public function removeTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag)
     {
-        $this->tags->removeElement($tags);
+        $this->tags->removeElement($tag);
     }
 
     /**
@@ -325,26 +328,26 @@ class Template implements MetadatableInterface, LoggableInterface
     }
 
     /**
-     * Add mergeTags
+     * Add mergeTag
      *
-     * @param \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTags
+     * @param \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTag
      * @return Template
      */
-    public function addMergeTag(\Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTags)
+    public function addMergeTag(\Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTag)
     {
-        $this->mergeTags[] = $mergeTags;
+        $this->mergeTags[] = $mergeTag;
 
         return $this;
     }
 
     /**
-     * Remove mergeTags
+     * Remove mergeTag
      *
-     * @param \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTags
+     * @param \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTag
      */
-    public function removeMergeTag(\Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTags)
+    public function removeMergeTag(\Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTag)
     {
-        $this->mergeTags->removeElement($mergeTags);
+        $this->mergeTags->removeElement($mergeTag);
     }
 
     /**
