@@ -15,22 +15,41 @@ tms_document_generator:
 # Model IO
 tms_model_io:
     models:
-       template:
-           object_manager: doctrine
-           class: Tms\Bundle\DocumentGeneratorBundle\Entity\Template
-           modes:
+        template:
+            object_manager: doctrine
+            class: Tms\Bundle\DocumentGeneratorBundle\Entity\Template
+            modes:
                 full:
                     - name
                     - description
+                    - tags: {mode: simple}
                     - html
                     - css
                     - mergeTags: {mode: simple}
-       merge_tag:
-           object_manager: doctrine
-           class: Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
-           aliases: ["mergeTags"]
-           modes:
+                    - images: {mode: reference}
+        merge_tag:
+            object_manager: doctrine
+            class: Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
+            aliases: ["mergeTags"]
+            modes:
                 simple:
                     - name
                     - required
                     - identifier
+        images:
+            object_manager: doctrine
+            class: Tms\Bundle\MediaClientBundle\Entity\Media
+            modes:
+                reference:
+                    - id
+        tags:
+            object_manager: doctrine
+            class: IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata
+            modes:
+                simple:
+                    - namespace
+                    - key
+                    - value
+                    - hash
+                    - objectClassName
+                    - objectId
