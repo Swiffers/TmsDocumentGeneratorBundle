@@ -86,7 +86,7 @@ class Template implements MetadatableInterface, LoggableInterface
     /**
      * @var array<MergeTag>
      *
-     * @ORM\OneToMany(targetEntity="MergeTag", mappedBy="template")
+     * @ORM\OneToMany(targetEntity="MergeTag", mappedBy="template", cascade={"persist"})
      */
     private $mergeTags;
 

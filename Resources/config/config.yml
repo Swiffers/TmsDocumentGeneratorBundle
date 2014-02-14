@@ -11,3 +11,26 @@ tms_document_generator:
     formats:
         pdf: tms_document_generator.generator.dompdf
         html: tms_document_generator.generator.html_default
+
+# Model IO
+tms_model_io:
+    models:
+       template:
+           object_manager: doctrine
+           class: Tms\Bundle\DocumentGeneratorBundle\Entity\Template
+           modes:
+                full:
+                    - name
+                    - description
+                    - html
+                    - css
+                    - mergeTags: {mode: simple}
+       merge_tag:
+           object_manager: doctrine
+           class: Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
+           aliases: ["mergeTags"]
+           modes:
+                simple:
+                    - name
+                    - required
+                    - identifier
