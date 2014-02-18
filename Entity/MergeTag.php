@@ -65,6 +65,11 @@ class MergeTag implements LoggableInterface
         return $this->getName();
     }
 
+    /**
+     * Get Id
+     *
+     * @return integer
+     */
     public function getId()
     {
         return $this->id;
