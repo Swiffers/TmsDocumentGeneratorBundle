@@ -105,7 +105,6 @@ class DocumentController extends Controller
         $security = $this->get('tms_document_generator_security.security');
         $parameters = $security->decodeQueryDataToParameters($data);
         $token = $security->generateToken(implode('.', $parameters), $template->getSalt());
-        print_r($parameters);
 
         return new Response('Token: ' . $token);
     }

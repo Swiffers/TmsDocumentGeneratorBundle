@@ -133,9 +133,6 @@ class Template implements MetadatableInterface, LoggableInterface
      */
     public function bind(array $parameters)
     {
-        $identifiers = array();
-        $values = array();
-
         $indexedMergeTags = array();
         foreach ($this->getMergeTags() as $mergeTag) {
             $indexedMergeTags[$mergeTag->getIdentifier()] = $mergeTag;

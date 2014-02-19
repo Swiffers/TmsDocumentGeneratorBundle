@@ -2,9 +2,7 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Tms\Bundle\DocumentGeneratorBundle\Exception\MissingRelatedEntityException;
 
 class TemplateMergeTagType extends MergeTagType
