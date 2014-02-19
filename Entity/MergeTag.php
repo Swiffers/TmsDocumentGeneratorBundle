@@ -50,7 +50,7 @@ class MergeTag implements LoggableInterface
     /**
      * @var <Template>
      *
-     * @ORM\ManyToOne(targetEntity="Template", inversedBy="mergeTags")
+     * @ORM\ManyToOne(targetEntity="Template", inversedBy="mergeTags", cascade={"persist"})
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $template;
@@ -65,12 +65,19 @@ class MergeTag implements LoggableInterface
         return $this->getName();
     }
 
+    /**
+     * Get Id
+     *
+     * @return integer
+     */
     public function getId()
     {
         return $this->id;
     }
 
     /**
+     * Set Name
+     *
      * @param string $name
      * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
      */
@@ -81,17 +88,29 @@ class MergeTag implements LoggableInterface
         return $this;
     }
 
+    /**
+     * Get Name
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * Is Required
+     *
+     * @return boolean
+     */
     public function isRequired()
     {
         return $this->required;
     }
 
     /**
+     * Set Required
+     *
      * @param boolean $required
      * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
      */
@@ -102,12 +121,19 @@ class MergeTag implements LoggableInterface
         return $this;
     }
 
+    /**
+     * Get Identifier
+     *
+     * @return string
+     */
     public function getIdentifier()
     {
         return $this->identifier;
     }
 
     /**
+     * Set Identifier
+     *
      * @param string $identifier
      * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
      */
@@ -118,12 +144,19 @@ class MergeTag implements LoggableInterface
         return $this;
     }
 
+    /**
+     * Get Template
+     *
+     * @return Template
+     */
     public function getTemplate()
     {
         return $this->template;
     }
 
     /**
+     * Set Template
+     *
      * @param Template $template
      * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
      */
