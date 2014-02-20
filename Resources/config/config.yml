@@ -26,7 +26,7 @@ tms_model_io:
                     - html
                     - css
                     - mergeTags: {mode: simple}
-                    - images: {mode: reference}
+                    - images: {mode: simple}
         merge_tag:
             object_manager: doctrine
             class: Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag
@@ -40,8 +40,13 @@ tms_model_io:
             object_manager: doctrine
             class: Tms\Bundle\MediaClientBundle\Entity\Media
             modes:
-                reference:
-                    - id
+                simple:
+                    - url
+                    - mimeType
+                    - providerName
+                    - providerReference
+                    - providerData
+                    - extension
         tags:
             object_manager: doctrine
             class: IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata
