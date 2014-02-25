@@ -6,3 +6,7 @@ services:
     tms_document_generator.manager.merge_tag:
         class: Tms\Bundle\DocumentGeneratorBundle\Manager\MergeTagManager
         arguments: [@doctrine.orm.entity_manager, @event_dispatcher]
+
+    tms_document_generator.manager.configuration_tag:
+        class: Tms\Bundle\DocumentGeneratorBundle\Manager\ConfigurationTagManager
+        arguments: [@doctrine.orm.entity_manager, @event_dispatcher]

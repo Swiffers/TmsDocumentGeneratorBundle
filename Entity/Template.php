@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use IDCI\Bundle\SimpleMetadataBundle\Metadata\MetadatableInterface;
 use Tms\Bundle\DocumentGeneratorBundle\Exception\WrongParametersException;
 use Tms\Bundle\DocumentGeneratorBundle\Exception\IdentifierRequiredException;
+use Tms\Bundle\DocumentGeneratorBundle\Entity\ConfigurationTag;
 
 /**
  * @ORM\Entity()
@@ -102,12 +103,24 @@ class Template implements MetadatableInterface, LoggableInterface
     private $images;
 
     /**
+     * @var array<ConfigurationTag>
+     *
+     * @ORM\ManyToMany(targetEntity="ConfigurationTag", cascade={"all"})
+     * @ORM\JoinTable(name="template_configuration_tag",
+     *     joinColumns={@ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="configuration_tag_id", referencedColumnName="id", onDelete="CASCADE")}
+     * )
+     */
+    private $configurationTags;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->configurationTags = new ArrayCollection();
         $now = new \DateTime();
         $this->setCreatedOn($now);
         $this->setSalt(md5($now->format('YmdHis')));
@@ -408,5 +421,67 @@ class Template implements MetadatableInterface, LoggableInterface
     public function getImages()
     {
         return $this->images;
+    }
+
+    /**
+     * Add Configuration Tag
+     *
+     * @param \Tms\Bundle\DocumentGeneratorBundle\Entity\ConfigurationTag $configurationTag
+     * @return Template
+     */
+    public function addConfigurationTag(\Tms\Bundle\DocumentGeneratorBundle\Entity\ConfigurationTag $configurationTag)
+    {
+        $this->configurationTags[] = $configurationTag;
+
+        return $this;
+    }
+
+    /**
+     * Remove Configuration Tag
+     *
+     * @param \Tms\Bundle\DocumentGeneratorBundle\Entity\ConfigurationTag $configurationTag
+     */
+    public function removeConfigurationTag(\Tms\Bundle\DocumentGeneratorBundle\Entity\ConfigurationTag $configurationTag)
+    {
+        $this->configurationTags->removeElement($configurationTag);
+    }
+
+    /**
+     * Get Configuration Tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getConfigurationTags()
+    {
+        return $this->configurationTags;
+    }
+
+    /**
+     * Has Configuration Tag
+     *
+     * @param string $alias
+     */
+    public function hasConfigurationTag(ConfigurationTag $configurationTag)
+    {
+        foreach ($this->configurationTags as $templateConfigurationTag) {
+            if ($templateConfigurationTag->getId() === $configurationTag->getId()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Set Configuration Tags
+     *
+     * @param ConfigurationTag $configurationTag
+     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
+     */
+    public function setConfigurationTags(ConfigurationTag $configurationTag)
+    {
+        $this->addConfigurationTag($configurationTag);
+
+        return $this;
     }
 }

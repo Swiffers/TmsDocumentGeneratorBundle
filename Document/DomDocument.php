@@ -13,7 +13,7 @@ use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
 class DomDocument
 {
     protected $generator; // Generator service used to generate the document
-    
+
     /**
      * Constructor
      *
@@ -47,6 +47,8 @@ class DomDocument
 
         $loader = new \Twig_Loader_String();
         $twig = new \Twig_Environment($loader);
+
+        //die(var_dump($content, $parameters));
 
         return $twig->render($content, $template->bind($parameters));
     }

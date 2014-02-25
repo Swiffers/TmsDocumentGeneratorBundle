@@ -26,6 +26,7 @@ class DocumentController extends Controller
         $template = $this->get('tms_document_generator.manager.template')->find($id);
         try {
             $parameters = $this->checkRequestAndGetParameters($format, $template, $request);
+            $parameters = $this->CheckAndAddMirrorLink($parameters, $template, $request);
         }
         catch (\Exception $exception) {
             return new Response($exception->getMessage(), $exception->getCode());
@@ -34,6 +35,7 @@ class DocumentController extends Controller
             'tms_document_generator.document.%s',
             $format
         ));
+
         $content = $document->display($template, $parameters);
 
         $response = new Response();
@@ -120,6 +122,7 @@ class DocumentController extends Controller
      */
     private function checkRequestAndGetParameters($format, $template, Request $request)
     {
+        /*
         $configuration = $this->container->getParameter('tms_document_generator.configuration');
 
         if (!in_array($format, array_keys($configuration['formats']))) {
@@ -135,6 +138,8 @@ class DocumentController extends Controller
         if (null === $data || null === $token) {
             throw new \Exception('Unvalid parameters', 400);
         }
+        */
+        $data = $request->query->get('data', null);
 
         $security = $this->get('tms_document_generator_security.security');
         $parameters = $security->decodeQueryDataToParameters($data);
@@ -142,8 +147,28 @@ class DocumentController extends Controller
             throw new \Exception('Bad parameters', 400);
         }
 
+        /*
         if (!$security->checkTokenValidity($parameters, $template->getSalt(), $token)) {
             throw new \Exception('Unvalid token', 403);
+        }
+        */
+
+        return $parameters;
+    }
+
+    /**
+     * Check if there is a mirror link to add and then add it
+     *
+     * @param array   $parameters
+     * @param Object  $template
+     * @param Request $request
+     * @return array
+     */
+    private function checkAndAddMirrorLink(array $parameters, $template, Request $request)
+    {
+        $configurationTag = $this->get('tms_document_generator.manager.configuration_tag')->findOneByAlias('mirror_link');
+        if ($template->hasConfigurationTag($configurationTag)) {
+            $parameters['mirror_link'] = $request->getUri();
         }
 
         return $parameters;
