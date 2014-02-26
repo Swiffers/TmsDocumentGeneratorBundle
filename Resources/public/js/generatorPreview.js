@@ -22,21 +22,21 @@ GeneratorPreview.prototype.initListeners = function() {
 
 GeneratorPreview.prototype.renderCss = function(content) {
     return '<style type="text/css">' + content + '\n' +
-               ' .merge_tag_ok {background-color: #00ff00;}'+
-               ' .merge_tag_ko {background-color: #ff0000;}'+
-               ' .merge_tag_alt {background-color: #00ffff;}'+
+               ' .tag_ok {background-color: #00ff00;}'+
+               ' .tag_ko {background-color: #ff0000;}'+
+               ' .tag_alt {background-color: #00ffff;}'+
            '</style>';
 }
 
 GeneratorPreview.prototype.renderBody = function(content) {
-    var match,regexp;
+    var match, regexp;
 
     // Color variables beetween {{ .. }} and remove brackets
     regexp = /{{( )?([_a-z0-9]*)( )?}}/g;
     while (match = regexp.exec(content)) {
-        var spanClass = 'merge_tag_ko';
+        var spanClass = 'tag_ko';
         if (jQuery.inArray(match[2], this.definedIdentifiers) >= 0){
-            spanClass = 'merge_tag_ok';
+            spanClass = 'tag_ok';
         }
         content = content.replace(match[0], "<span class=\"" + spanClass + "\">" + match[2] + "</span>");
     }

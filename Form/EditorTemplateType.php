@@ -18,13 +18,16 @@ class EditorTemplateType extends TemplateType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $mergeTags = array();
+        $tags = array();
         foreach($form->getData()->getMergeTags() as $mergeTag) {
-            $mergeTags[] = $mergeTag->getIdentifier();
+            $tags[] = $mergeTag->getIdentifier();
+        }
+        foreach($form->getData()->getConfigurationTags() as $configurationTag) {
+            $tags[] = $configurationTag->getIdentifier();
         }
 
         $view->vars = array_merge($view->vars, array(
-            'merge_tags' => $mergeTags,
+            'tags' => $tags,
         ));
     }
 
