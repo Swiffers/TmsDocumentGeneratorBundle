@@ -8,9 +8,9 @@
 namespace Tms\Bundle\DocumentGeneratorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Tms\Bundle\LoggerBundle\Logger\LoggableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use IDCI\Bundle\SimpleMetadataBundle\Metadata\MetadatableInterface;
+use Tms\Bundle\LoggerBundle\Logger\LoggableInterface;
 use Tms\Bundle\DocumentGeneratorBundle\Exception\WrongParametersException;
 use Tms\Bundle\DocumentGeneratorBundle\Exception\IdentifierRequiredException;
 use Tms\Bundle\DocumentGeneratorBundle\Entity\ConfigurationTag;
@@ -118,12 +118,21 @@ class Template implements MetadatableInterface, LoggableInterface
      */
     public function __construct()
     {
-        $this->tags = new ArrayCollection();
-        $this->images = new ArrayCollection();
+        $this->tags              = new ArrayCollection();
+        $this->images            = new ArrayCollection();
         $this->configurationTags = new ArrayCollection();
+
         $now = new \DateTime();
         $this->setCreatedOn($now);
         $this->setSalt(md5($now->format('YmdHis')));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetadatas()
+    {
+        return $this->getTags();
     }
 
     /**
@@ -156,7 +165,9 @@ class Template implements MetadatableInterface, LoggableInterface
         }
 
         $boundParameters = array();
-        // Check for each defined mergeTag in the template if the identifier is required, and if not and its is not passed in parameters, its value becomes empty
+        /* Checks for each defined mergeTag in the template if the identifier is required.
+         * If not and it is not passed in parameters, its value becomes empty.
+         */
         foreach ($indexedMergeTags as $identifier => $mergeTag) {
             if ($mergeTag->isRequired() && !isset($parameters[$identifier])) {
                 throw new IdentifierRequiredException($mergeTag->getName());
@@ -176,14 +187,6 @@ class Template implements MetadatableInterface, LoggableInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMetadatas()
-    {
-        return $this->getTags();
     }
 
     /**
@@ -299,39 +302,6 @@ class Template implements MetadatableInterface, LoggableInterface
     public function getCss()
     {
         return $this->css;
-    }
-
-    /**
-     * Add tags
-     *
-     * @param \IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag
-     * @return Template
-     */
-    public function addTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag)
-    {
-        $this->tags[] = $tag;
-
-        return $this;
-    }
-
-    /**
-     * Remove tag
-     *
-     * @param \IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag
-     */
-    public function removeTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag)
-    {
-        $this->tags->removeElement($tag);
-    }
-
-    /**
-     * Get tags
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTags()
-    {
-        return $this->tags;
     }
 
     /**
@@ -483,5 +453,38 @@ class Template implements MetadatableInterface, LoggableInterface
         $this->addConfigurationTag($configurationTag);
 
         return $this;
+    }
+
+    /**
+     * Add tag
+     *
+     * @param \IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag
+     * @return Template
+     */
+    public function addTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag)
+    {
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param \IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag
+     */
+    public function removeTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }
