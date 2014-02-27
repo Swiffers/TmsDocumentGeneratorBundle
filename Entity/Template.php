@@ -16,7 +16,7 @@ use Tms\Bundle\DocumentGeneratorBundle\Exception\IdentifierRequiredException;
 use Tms\Bundle\DocumentGeneratorBundle\Entity\ConfigurationTag;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Tms\Bundle\DocumentGeneratorBundle\Entity\Repository\TemplateRepository")
  * @ORM\Table(name="template")
  * @ORM\HasLifecycleCallbacks()
  */

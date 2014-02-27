@@ -25,24 +25,33 @@ class TemplateController extends FOSRestController
      * Retrieve a set of templates
      *
      * @QueryParam(name="name", nullable=true, description="(optional) Template name")
+     * @QueryParam(name="tags", array=true, nullable=true, requirements="\w+", description="List of tags")
      * @QueryParam(name="limit", requirements="\d+", default=20, strict=true, nullable=true, description="(optional) Pagination limit")
      * @QueryParam(name="offset", requirements="\d+", strict=true, nullable=true, description="(optional) Pagination offet")
      *
      * @param string $name
+     * @param array  $tags
      * @param string $limit
      * @param string $offset
      */
     public function getTemplatesAction(
         $name               = null,
+        $tags               = array(),
         $limit              = null,
         $offset             = null
     )
     {
         $criteria = $this->get('tms_rest.criteria_builder')->clean(array(
             'name' => $name,
+            'tags' => $tags
         ));
-
-        $entities = $this->get('tms_document_generator.manager.template')->findBy($criteria, null, $limit, $offset);
+        var_dump('criteria: ', $criteria);
+        if (!empty($criteria['tags'])) {
+            $entities = $this->get('tms_document_generator.manager.template')->findByNameAndTagNames(isset($criteria['name']) ? $criteria['name'] : null, $criteria['tags'], $limit, $offset);
+        } else {
+            $entities = $this->get('tms_document_generator.manager.template')->findBy($criteria, null, $limit, $offset);
+        }
+        die(var_dump($entities));
         $context = SerializationContext::create()->setGroups(array('list'));
         $view = $this->view($entities, Codes::HTTP_OK);
         $view->setSerializationContext($context);
