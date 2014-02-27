@@ -159,19 +159,27 @@ class Template implements MetadatableInterface, LoggableInterface
         foreach ($this->getMergeTags() as $mergeTag) {
             $indexedMergeTags[$mergeTag->getIdentifier()] = $mergeTag;
         }
+        $indexedConfigurationTags = array();
+        foreach ($this->getConfigurationTags() as $configurationTag) {
+            $indexedConfigurationTags[$configurationTag->getIdentifier()] = $configurationTag;
+        }
 
-        if (count(array_diff_key($parameters, $indexedMergeTags))) {
+        if (count(array_diff_key($parameters, $indexedMergeTags + $indexedConfigurationTags))) {
             throw new WrongParametersException();
         }
 
-        $boundParameters = array();
         /* Checks for each defined mergeTag in the template if the identifier is required.
          * If not and it is not passed in parameters, its value becomes empty.
-         */
+        */
+        $boundParameters = array();
         foreach ($indexedMergeTags as $identifier => $mergeTag) {
             if ($mergeTag->isRequired() && !isset($parameters[$identifier])) {
                 throw new IdentifierRequiredException($mergeTag->getName());
             }
+            $value = isset($parameters[$identifier]) ? $parameters[$identifier] : '';
+            $boundParameters[$identifier] = $value;
+        }
+        foreach ($indexedConfigurationTags as $identifier => $configurationTag) {
             $value = isset($parameters[$identifier]) ? $parameters[$identifier] : '';
             $boundParameters[$identifier] = $value;
         }
