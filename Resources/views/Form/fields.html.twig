@@ -38,7 +38,8 @@
                 $('#preview'),
                 $('textarea[id="{{ form.html.vars.id }}"]'),
                 $('textarea[id="{{ form.css.vars.id }}"]'),
-                {{ tags|json_encode|raw }}
+                {{ mergeTags|json_encode|raw }},
+                {{ configurationTags|json_encode|raw }}
             );
 
             $('#editor_wrapper > .input').hide();

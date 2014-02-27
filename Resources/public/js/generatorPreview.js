@@ -1,11 +1,12 @@
 
 // GeneratorPreview
 
-function GeneratorPreview($container, $textareaHtml, $textareaCss, definedIdentifiers) {
-    this.$container         = $container;
-    this.$textareaHtml      = $textareaHtml;
-    this.$textareaCss       = $textareaCss;
-    this.definedIdentifiers = definedIdentifiers;
+function GeneratorPreview($container, $textareaHtml, $textareaCss, definedMergeIdentifiers, definedConfigurationIdentifiers) {
+    this.$container                      = $container;
+    this.$textareaHtml                   = $textareaHtml;
+    this.$textareaCss                    = $textareaCss;
+    this.definedMergeIdentifiers         = definedMergeIdentifiers;
+    this.definedConfigurationIdentifiers = definedConfigurationIdentifiers;
     this.initListeners();
     this.render();
 }
@@ -35,24 +36,27 @@ GeneratorPreview.prototype.renderBody = function(content) {
     regexp = /{{( )?([_a-z0-9]*)( )?}}/g;
     while (match = regexp.exec(content)) {
         var spanClass = 'tag_ko';
-        if (jQuery.inArray(match[2], this.definedIdentifiers) >= 0){
+        if (jQuery.inArray(match[2], this.definedMergeIdentifiers) >= 0){
             spanClass = 'tag_ok';
         }
-        content = content.replace(match[0], "<span class=\"" + spanClass + "\">" + match[2] + "</span>");
+        // The content is replaced only if it is not a configuration tag (because potentially it has to add span tag in another tag)
+        if (jQuery.inArray(match[2], this.definedConfigurationIdentifiers) < 0){
+            content = content.replace(match[0], '<span class="' + spanClass + '">' + match[2] + '</span>');
+        }
     }
 
     // Remove matching text
     regexp = /{%( )?(if.*?)( )?%}/g; // {% if .. %}
     while (match = regexp.exec(content)) {
-        content = content.replace(match[0], "");
+        content = content.replace(match[0], '');
     }
     regexp = /{%( )?else( )?%}/g;    // {% else %}
     while (match = regexp.exec(content)) {
-        content = content.replace(match[0], "");
+        content = content.replace(match[0], '');
     }
     regexp = /{%( )?endif( )?%}/g;   // {% else %}
     while (match = regexp.exec(content)) {
-        content = content.replace(match[0], "");
+        content = content.replace(match[0], '');
     }
 
     return content;
