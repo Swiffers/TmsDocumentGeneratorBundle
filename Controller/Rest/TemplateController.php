@@ -45,12 +45,12 @@ class TemplateController extends FOSRestController
             'name' => $name,
             'tags' => $tags
         ));
-        var_dump('criteria: ', $criteria);
-        if (!empty($criteria['tags'])) {
-            $entities = $this->get('tms_document_generator.manager.template')->findByNameAndTagNames(isset($criteria['name']) ? $criteria['name'] : null, $criteria['tags'], $limit, $offset);
-        } else {
-            $entities = $this->get('tms_document_generator.manager.template')->findBy($criteria, null, $limit, $offset);
-        }
+        $entities = $this->get('tms_document_generator.manager.template')->findByNameAndTagNames(
+            isset($criteria['name']) ? $criteria['name'] : null,
+            isset($criteria['tags']) ? $criteria['tags'] : array(),
+            $limit,
+            $offset
+        );
         die(var_dump($entities));
         $context = SerializationContext::create()->setGroups(array('list'));
         $view = $this->view($entities, Codes::HTTP_OK);

@@ -38,7 +38,6 @@ class DomDocument
         }
 
         $html = self::initHtml();
-
         $content = sprintf(
             $html,
             $template->getCss(),
@@ -47,8 +46,6 @@ class DomDocument
 
         $loader = new \Twig_Loader_String();
         $twig = new \Twig_Environment($loader);
-
-        //die(var_dump($content, $parameters));
 
         return $twig->render($content, $template->bind($parameters));
     }
