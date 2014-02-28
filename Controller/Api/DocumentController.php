@@ -12,6 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
+use Tms\Bundle\DocumentGeneratorBundle\Entity\ConfigurationTag;
 
 /**
  * @Method("GET")
@@ -23,10 +25,10 @@ class DocumentController extends Controller
      */
     public function generateAction($id, $format, Request $request)
     {
-        $template = $this->get('tms_document_generator.manager.template')->find($id);
         try {
+            $template = $this->get('tms_document_generator.manager.template')->find($id);
             $parameters = $this->checkRequestAndGetParameters($format, $template, $request);
-            $parameters = $this->CheckAndAddMirrorLink($parameters, $template, $request);
+            $this->checkConfigurationTags($parameters, $template, $request);
         }
         catch (\Exception $exception) {
             return new Response($exception->getMessage(), $exception->getCode());
@@ -114,13 +116,13 @@ class DocumentController extends Controller
     /**
      * Checks if the request is valid and returns the parameters
      *
-     * @param string $format
-     * @param Object $template
-     * @param Request $request
+     * @param string   $format
+     * @param Template $template
+     * @param Request  $request
      * @throws \Exception
      * @return array
      */
-    private function checkRequestAndGetParameters($format, $template, Request $request)
+    private function checkRequestAndGetParameters($format, Template $template, Request $request)
     {
         $configuration = $this->container->getParameter('tms_document_generator.configuration');
 
@@ -152,20 +154,37 @@ class DocumentController extends Controller
     }
 
     /**
-     * Check if there is a mirror link to add and then add it
+     * Check the Configuration tags
      *
-     * @param array   $parameters
-     * @param Object  $template
-     * @param Request $request
-     * @return array
+     * @param array    $parameters
+     * @param Template $template
+     * @param Request  $request
      */
-    private function checkAndAddMirrorLink(array $parameters, $template, Request $request)
+    private function checkConfigurationTags(array &$parameters, Template $template, Request $request)
     {
-        $configurationTag = $this->get('tms_document_generator.manager.configuration_tag')->findOneByAlias('mirror_link');
-        if ($template->hasConfigurationTag($configurationTag)) {
-            $parameters['mirror_link'] = $request->getUri();
+        $configurationTags = $this->get('tms_document_generator.manager.configuration_tag')->findAll();
+        if (!$configurationTags) {
+            return;
         }
 
-        return $parameters;
+        foreach ($configurationTags as $configurationTag) {
+            if ($template->hasConfigurationTag($configurationTag)) {
+                $this->addConfigurationTag($configurationTag, $parameters, $request);
+            }
+        }
+    }
+
+    /**
+     * Add the Configuration tags
+     *
+     * @param ConfigurationTag $configurationTag
+     * @param array            $parameters
+     * @param Request          $request
+     */
+    private function addConfigurationTag(ConfigurationTag $configurationTag, array &$parameters, Request $request)
+    {
+        if ('mirror_link' === $configurationTag->getAlias()) {
+            $parameters['mirror_link'] = $request->getUri();
+        }
     }
 }
