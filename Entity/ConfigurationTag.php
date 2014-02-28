@@ -12,7 +12,7 @@ use Tms\Bundle\LoggerBundle\Logger\LoggableInterface;
 use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Tms\Bundle\DocumentGeneratorBundle\Entity\Repository\ConfigurationTagRepository")
  * @ORM\Table(name="configuration_tag")
  */
 class ConfigurationTag implements LoggableInterface

@@ -36,11 +36,11 @@ GeneratorPreview.prototype.renderBody = function(content) {
     regexp = /{{( )?([_a-z0-9]*)( )?}}/g;
     while (match = regexp.exec(content)) {
         var spanClass = 'tag_ko';
-        if (jQuery.inArray(match[2], this.definedMergeIdentifiers) >= 0){
+        if (jQuery.inArray(match[2], this.definedMergeIdentifiers) >= 0) {
             spanClass = 'tag_ok';
         }
         // The content is replaced only if it is not a configuration tag (because potentially it has to add span tag in another tag)
-        if (jQuery.inArray(match[2], this.definedConfigurationIdentifiers) < 0){
+        if (jQuery.inArray(match[2], this.definedConfigurationIdentifiers) < 0) {
             content = content.replace(match[0], '<span class="' + spanClass + '">' + match[2] + '</span>');
         }
     }
