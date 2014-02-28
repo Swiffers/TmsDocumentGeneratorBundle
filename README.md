@@ -67,7 +67,7 @@ Download a PDF document
 Examples:
 
 - /api/generate/1.html?data=eyJ2YXIxIjoidGVzdDEiLCJ2YXIyIjoidGVzdDIiLCJsYXN0bmFtZSI6ImNoYXRlYXUiLCJmaXJzdG5hbWUiOiJqcCJ9&token=26e84f83b15e24eaa641296d6cba3e91
-- 
+
 - /api/download/1/test.pdf?data=eyJ2YXIxIjoidGVzdDEiLCJ2YXIyIjoidGVzdDIiLCJsYXN0bmFtZSI6ImNoYXRlYXUiLCJmaXJzdG5hbWUiOiJqcCJ9&token=26e84f83b15e24eaa641296d6cba3e91
 
 In your dev environnement, you can get the token with that method:
