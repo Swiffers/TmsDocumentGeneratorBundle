@@ -10,7 +10,6 @@
 namespace Tms\Bundle\DocumentGeneratorBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
 
 /**
  * ConfigurationTagRepository
