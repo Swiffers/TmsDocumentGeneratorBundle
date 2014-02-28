@@ -25,13 +25,13 @@ class TemplateRepository extends EntityRepository
      * @param integer|null  $limit
      * @param integer|null  $offset
      */
-    public function findByNameAndTagNames($name, array $tagNames, $limit = null, $offset = null)
+    public function findByNameAndTagNames($name = null, array $tagNames, $limit = null, $offset = null)
     {
         $queryBuilder = $this->createQueryBuilder('template');
         if (!empty($tagNames)) {
             $queryBuilder
-            ->join('template.tags', 'tags')
-            ->where($queryBuilder->expr()->in('tags.value', $tagNames))
+                ->join('template.tags', 'tags')
+                ->where($queryBuilder->expr()->in('tags.value', $tagNames))
             ;
         }
         if ($name) {

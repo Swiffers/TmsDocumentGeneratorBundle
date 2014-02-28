@@ -51,7 +51,7 @@ class TemplateController extends FOSRestController
             $limit,
             $offset
         );
-        die(var_dump($entities));
+
         $context = SerializationContext::create()->setGroups(array('list'));
         $view = $this->view($entities, Codes::HTTP_OK);
         $view->setSerializationContext($context);

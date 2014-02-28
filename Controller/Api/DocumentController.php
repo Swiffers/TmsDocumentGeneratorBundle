@@ -122,7 +122,6 @@ class DocumentController extends Controller
      */
     private function checkRequestAndGetParameters($format, $template, Request $request)
     {
-        /*
         $configuration = $this->container->getParameter('tms_document_generator.configuration');
 
         if (!in_array($format, array_keys($configuration['formats']))) {
@@ -138,8 +137,6 @@ class DocumentController extends Controller
         if (null === $data || null === $token) {
             throw new \Exception('Unvalid parameters', 400);
         }
-        */
-        $data = $request->query->get('data', null);
 
         $security = $this->get('tms_document_generator_security.security');
         $parameters = $security->decodeQueryDataToParameters($data);
@@ -147,11 +144,9 @@ class DocumentController extends Controller
             throw new \Exception('Bad parameters', 400);
         }
 
-        /*
         if (!$security->checkTokenValidity($parameters, $template->getSalt(), $token)) {
             throw new \Exception('Unvalid token', 403);
         }
-        */
 
         return $parameters;
     }
