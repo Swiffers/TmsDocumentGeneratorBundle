@@ -25,7 +25,7 @@ class TemplateController extends FOSRestController
      * Retrieve a set of templates
      *
      * @QueryParam(name="name", nullable=true, description="(optional) Template name")
-     * @QueryParam(name="limit", requirements="\d+", default=20, strict=true, nullable=true, description="(optional) Pagination limit")
+     * @QueryParam(name="limit", requirements="\d+", strict=true, nullable=true, description="(optional) Pagination limit")
      * @QueryParam(name="offset", requirements="\d+", strict=true, nullable=true, description="(optional) Pagination offet")
      *
      * @param string $name
