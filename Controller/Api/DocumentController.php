@@ -28,7 +28,6 @@ class DocumentController extends Controller
         try {
             $template = $this->get('tms_document_generator.manager.template')->find($id);
             $parameters = $this->checkRequestAndGetParameters($format, $template, $request);
-            $this->checkConfigurationTags($parameters, $template, $request);
         }
         catch (\Exception $exception) {
             return new Response($exception->getMessage(), $exception->getCode());
@@ -38,7 +37,7 @@ class DocumentController extends Controller
             $format
         ));
 
-        $content = $document->display($template, $parameters);
+        $content = $document->display($template, $parameters, $request);
 
         $response = new Response();
         $response->headers->set('Content-Type', $document->getMimeType());
@@ -151,40 +150,5 @@ class DocumentController extends Controller
         }
 
         return $parameters;
-    }
-
-    /**
-     * Check the Configuration tags
-     *
-     * @param array    $parameters
-     * @param Template $template
-     * @param Request  $request
-     */
-    private function checkConfigurationTags(array &$parameters, Template $template, Request $request)
-    {
-        $configurationTags = $this->get('tms_document_generator.manager.configuration_tag')->findAll();
-        if (!$configurationTags) {
-            return;
-        }
-
-        foreach ($configurationTags as $configurationTag) {
-            if ($template->hasConfigurationTag($configurationTag)) {
-                $this->addConfigurationTag($configurationTag, $parameters, $request);
-            }
-        }
-    }
-
-    /**
-     * Add the Configuration tags
-     *
-     * @param ConfigurationTag $configurationTag
-     * @param array            $parameters
-     * @param Request          $request
-     */
-    private function addConfigurationTag(ConfigurationTag $configurationTag, array &$parameters, Request $request)
-    {
-        if ('mirror_link' === $configurationTag->getAlias()) {
-            $parameters['mirror_link'] = $request->getUri();
-        }
     }
 }

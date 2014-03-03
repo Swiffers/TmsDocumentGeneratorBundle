@@ -14,6 +14,7 @@ use Tms\Bundle\LoggerBundle\Logger\LoggableInterface;
 use Tms\Bundle\DocumentGeneratorBundle\Exception\WrongParametersException;
 use Tms\Bundle\DocumentGeneratorBundle\Exception\IdentifierRequiredException;
 use Tms\Bundle\DocumentGeneratorBundle\Entity\ConfigurationTag;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @ORM\Entity(repositoryClass="Tms\Bundle\DocumentGeneratorBundle\Entity\Repository\TemplateRepository")
@@ -22,6 +23,8 @@ use Tms\Bundle\DocumentGeneratorBundle\Entity\ConfigurationTag;
  */
 class Template implements MetadatableInterface, LoggableInterface
 {
+    const CONFIGURATION_MIRROR_LINK = 'mirror_link';    // Mirror Link Configuration Tag Alias
+
     /**
      * @var integer
      *
@@ -143,6 +146,24 @@ class Template implements MetadatableInterface, LoggableInterface
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Add configuration tags if needed
+     *
+     * @param array $parameters
+     * @param Request $request
+     * @return array
+     */
+    public function configure(array $parameters, Request $request)
+    {
+        foreach ($this->configurationTags as $configurationTag) {
+            if (self::CONFIGURATION_MIRROR_LINK === $configurationTag->getAlias()) {
+                $parameters[self::CONFIGURATION_MIRROR_LINK] = $request->getUri();
+            }
+        }
+
+        return $parameters;
     }
 
     /**
