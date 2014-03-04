@@ -27,7 +27,7 @@ class TemplateController extends FOSRestController
      * @QueryParam(name="name", nullable=true, description="(optional) Template name")
      * @QueryParam(name="tags", array=true, nullable=true, requirements="\w+", description="List of tags")
      * @QueryParam(name="limit", requirements="\d+", strict=true, nullable=true, description="(optional) Pagination limit")
-     * @QueryParam(name="offset", requirements="\d+", strict=true, nullable=true, description="(optional) Pagination offet")
+     * @QueryParam(name="offset", requirements="\d+", strict=true, nullable=true, description="(optional) Pagination offset")
      *
      * @param string $name
      * @param array  $tags
@@ -35,10 +35,10 @@ class TemplateController extends FOSRestController
      * @param string $offset
      */
     public function getTemplatesAction(
-        $name               = null,
-        $tags               = array(),
-        $limit              = null,
-        $offset             = null
+        $name    = null,
+        $tags    = array(),
+        $limit   = null,
+        $offset  = null
     )
     {
         $criteria = $this->get('tms_rest.criteria_builder')->clean(array(
