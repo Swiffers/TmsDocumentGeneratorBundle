@@ -41,14 +41,18 @@ class TemplateController extends FOSRestController
         $offset  = null
     )
     {
-        $criteria = $this->get('tms_rest.criteria_builder')->clean(array(
-            'name' => $name,
-            'tags' => $tags
-        ));
+        $criteria = $this->get('tms_rest.criteria_builder')->clean(
+            array(
+                'name'  => $name,
+                'tags'  => $tags,
+                'limit' => $limit,
+            ),
+            $this->get('request')->get('_route')
+        );
         $entities = $this->get('tms_document_generator.manager.template')->findByNameAndTagNames(
             isset($criteria['name']) ? $criteria['name'] : null,
             isset($criteria['tags']) ? $criteria['tags'] : array(),
-            $limit,
+            $criteria['limit'],
             $offset
         );
 

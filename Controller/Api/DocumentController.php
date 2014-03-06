@@ -63,7 +63,7 @@ class DocumentController extends Controller
             'tms_document_generator.document.%s',
             $format
         ));
-        $content = $document->display($template, $parameters);
+        $content = $document->display($template, $parameters, $request);
         $name = $request->query->get('name', null);
         $filename = sprintf('%s.%s', ($name ? $name : $id), $format);
 
