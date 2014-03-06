@@ -108,7 +108,7 @@ class Template implements MetadatableInterface, LoggableInterface
     /**
      * @var array<ConfigurationTag>
      *
-     * @ORM\ManyToMany(targetEntity="ConfigurationTag", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="ConfigurationTag", inversedBy="templates", cascade={"all"})
      * @ORM\JoinTable(name="template_configuration_tag",
      *     joinColumns={@ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="configuration_tag_id", referencedColumnName="id", onDelete="CASCADE")}
