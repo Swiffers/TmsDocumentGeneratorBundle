@@ -12,6 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
+use Tms\Bundle\DocumentGeneratorBundle\Entity\ConfigurationTag;
 
 /**
  * @Method("GET")
@@ -23,8 +25,8 @@ class DocumentController extends Controller
      */
     public function generateAction($id, $format, Request $request)
     {
-        $template = $this->get('tms_document_generator.manager.template')->find($id);
         try {
+            $template = $this->get('tms_document_generator.manager.template')->find($id);
             $parameters = $this->checkRequestAndGetParameters($format, $template, $request);
         }
         catch (\Exception $exception) {
@@ -34,7 +36,8 @@ class DocumentController extends Controller
             'tms_document_generator.document.%s',
             $format
         ));
-        $content = $document->display($template, $parameters);
+
+        $content = $document->display($template, $parameters, $request);
 
         $response = new Response();
         $response->headers->set('Content-Type', $document->getMimeType());
@@ -60,7 +63,7 @@ class DocumentController extends Controller
             'tms_document_generator.document.%s',
             $format
         ));
-        $content = $document->display($template, $parameters);
+        $content = $document->display($template, $parameters, $request);
         $name = $request->query->get('name', null);
         $filename = sprintf('%s.%s', ($name ? $name : $id), $format);
 
@@ -112,13 +115,13 @@ class DocumentController extends Controller
     /**
      * Checks if the request is valid and returns the parameters
      *
-     * @param string $format
-     * @param Object $template
-     * @param Request $request
+     * @param string   $format
+     * @param Template $template
+     * @param Request  $request
      * @throws \Exception
      * @return array
      */
-    private function checkRequestAndGetParameters($format, $template, Request $request)
+    private function checkRequestAndGetParameters($format, Template $template, Request $request)
     {
         $configuration = $this->container->getParameter('tms_document_generator.configuration');
 

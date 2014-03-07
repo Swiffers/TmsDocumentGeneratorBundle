@@ -22,9 +22,14 @@ class EditorTemplateType extends TemplateType
         foreach($form->getData()->getMergeTags() as $mergeTag) {
             $mergeTags[] = $mergeTag->getIdentifier();
         }
+        $configurationTags = array();
+        foreach($form->getData()->getConfigurationTags() as $configurationTag) {
+            $configurationTags[] = $configurationTag->getIdentifier();
+        }
 
         $view->vars = array_merge($view->vars, array(
-            'merge_tags' => $mergeTags,
+            'mergeTags'         => $mergeTags,
+            'configurationTags' => $configurationTags,
         ));
     }
 

@@ -1,11 +1,12 @@
 
 // GeneratorPreview
 
-function GeneratorPreview($container, $textareaHtml, $textareaCss, definedIdentifiers) {
-    this.$container         = $container;
-    this.$textareaHtml      = $textareaHtml;
-    this.$textareaCss       = $textareaCss;
-    this.definedIdentifiers = definedIdentifiers;
+function GeneratorPreview($container, $textareaHtml, $textareaCss, definedMergeIdentifiers, definedConfigurationIdentifiers) {
+    this.$container                      = $container;
+    this.$textareaHtml                   = $textareaHtml;
+    this.$textareaCss                    = $textareaCss;
+    this.definedMergeIdentifiers         = definedMergeIdentifiers;
+    this.definedConfigurationIdentifiers = definedConfigurationIdentifiers;
     this.initListeners();
     this.render();
 }
@@ -22,37 +23,40 @@ GeneratorPreview.prototype.initListeners = function() {
 
 GeneratorPreview.prototype.renderCss = function(content) {
     return '<style type="text/css">' + content + '\n' +
-               ' .merge_tag_ok {background-color: #00ff00;}'+
-               ' .merge_tag_ko {background-color: #ff0000;}'+
-               ' .merge_tag_alt {background-color: #00ffff;}'+
+               ' .tag_ok {background-color: #00ff00;}'+
+               ' .tag_ko {background-color: #ff0000;}'+
+               ' .tag_alt {background-color: #00ffff;}'+
            '</style>';
 }
 
 GeneratorPreview.prototype.renderBody = function(content) {
-    var match,regexp;
+    var match, regexp;
 
     // Color variables beetween {{ .. }} and remove brackets
     regexp = /{{( )?([_a-z0-9]*)( )?}}/g;
     while (match = regexp.exec(content)) {
-        var spanClass = 'merge_tag_ko';
-        if (jQuery.inArray(match[2], this.definedIdentifiers) >= 0){
-            spanClass = 'merge_tag_ok';
+        var spanClass = 'tag_ko';
+        if (jQuery.inArray(match[2], this.definedMergeIdentifiers) >= 0) {
+            spanClass = 'tag_ok';
         }
-        content = content.replace(match[0], "<span class=\"" + spanClass + "\">" + match[2] + "</span>");
+        // The content is replaced only if it is not a configuration tag (because potentially it has to add span tag in another tag)
+        if (jQuery.inArray(match[2], this.definedConfigurationIdentifiers) < 0) {
+            content = content.replace(match[0], '<span class="' + spanClass + '">' + match[2] + '</span>');
+        }
     }
 
     // Remove matching text
     regexp = /{%( )?(if.*?)( )?%}/g; // {% if .. %}
     while (match = regexp.exec(content)) {
-        content = content.replace(match[0], "");
+        content = content.replace(match[0], '');
     }
     regexp = /{%( )?else( )?%}/g;    // {% else %}
     while (match = regexp.exec(content)) {
-        content = content.replace(match[0], "");
+        content = content.replace(match[0], '');
     }
     regexp = /{%( )?endif( )?%}/g;   // {% else %}
     while (match = regexp.exec(content)) {
-        content = content.replace(match[0], "");
+        content = content.replace(match[0], '');
     }
 
     return content;

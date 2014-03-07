@@ -3,10 +3,6 @@ twig:
         resources:
             - 'TmsDocumentGeneratorBundle:Form:fields.html.twig'
 
-# Metadata
-idci_simple_metadata:
-    namespaces: [tags]
-
 tms_document_generator:
     formats:
         pdf: tms_document_generator.generator.dompdf

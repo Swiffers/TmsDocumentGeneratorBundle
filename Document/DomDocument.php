@@ -9,11 +9,12 @@ namespace Tms\Bundle\DocumentGeneratorBundle\Document;
 
 use Tms\Bundle\DocumentGeneratorBundle\Generator\GeneratorInterface;
 use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 class DomDocument
 {
     protected $generator; // Generator service used to generate the document
-    
+
     /**
      * Constructor
      *
@@ -31,14 +32,13 @@ class DomDocument
      * @param array $parameters
      * @return string
      */
-    public function renderDom(Template $template, array $parameters)
+    public function renderDom(Template $template, array $parameters, Request $request)
     {
         if (!strlen($template->getHtml())) {
             return '';
         }
 
         $html = self::initHtml();
-
         $content = sprintf(
             $html,
             $template->getCss(),
@@ -48,7 +48,9 @@ class DomDocument
         $loader = new \Twig_Loader_String();
         $twig = new \Twig_Environment($loader);
 
-        return $twig->render($content, $template->bind($parameters));
+        $parametersConfigured = $template->configure($parameters, $request);
+
+        return $twig->render($content, $template->bind($parametersConfigured));
     }
 
     /**
@@ -65,12 +67,13 @@ class DomDocument
      * Display
      *
      * @param Template $template
-     * @param array $parameters
+     * @param array    $parameters
+     * @param Request  $request
      * @return string
      */
-    public function display(Template $template, array $parameters)
+    public function display(Template $template, array $parameters, Request $request)
     {
-        $html = $this->renderDom($template, $parameters);
+        $html = $this->renderDom($template, $parameters, $request);
 
         return $this->generator->generate($html);
     }
