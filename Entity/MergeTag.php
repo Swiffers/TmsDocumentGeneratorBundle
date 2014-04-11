@@ -14,6 +14,7 @@ use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="merge_tag")
+ * @ORM\HasLifecycleCallbacks()
  */
 class MergeTag implements LoggableInterface
 {
@@ -56,6 +57,20 @@ class MergeTag implements LoggableInterface
     private $template;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+    /**
      * toString
      *
      * @return string
@@ -63,6 +78,26 @@ class MergeTag implements LoggableInterface
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function onCreate()
+    {
+        $now = new \DateTime("now");
+        $this
+            ->setCreatedAt($now)
+            ->setUpdatedAt($now)
+        ;
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function onUpdate()
+    {
+        $this->setUpdatedAt(new \DateTime("now"));
     }
 
     /**
@@ -163,6 +198,52 @@ class MergeTag implements LoggableInterface
     public function setTemplate(Template $template)
     {
         $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Offer
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Offer
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

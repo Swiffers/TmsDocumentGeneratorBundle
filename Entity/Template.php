@@ -70,13 +70,6 @@ class Template implements MetadatableInterface, LoggableInterface
     private $css;
 
     /**
-     * @var datetime
-     *
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $createdOn;
-
-    /**
      * @var array<Metadata>
      *
      * @ORM\ManyToMany(targetEntity="IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata", cascade={"all"})
@@ -117,6 +110,20 @@ class Template implements MetadatableInterface, LoggableInterface
     private $configurationTags;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -126,8 +133,27 @@ class Template implements MetadatableInterface, LoggableInterface
         $this->configurationTags = new ArrayCollection();
 
         $now = new \DateTime();
-        $this->setCreatedOn($now);
         $this->setSalt(md5($now->format('YmdHis')));
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function onCreate()
+    {
+        $now = new \DateTime("now");
+        $this
+            ->setCreatedAt($now)
+            ->setUpdatedAt($now)
+        ;
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function onUpdate()
+    {
+        $this->setUpdatedAt(new \DateTime("now"));
     }
 
     /**
@@ -367,29 +393,6 @@ class Template implements MetadatableInterface, LoggableInterface
     }
 
     /**
-     * Set createdOn
-     *
-     * @param \DateTime $createdOn
-     * @return Template
-     */
-    public function setCreatedOn($createdOn)
-    {
-        $this->createdOn = $createdOn;
-
-        return $this;
-    }
-
-    /**
-     * Get createdOn
-     *
-     * @return \DateTime
-     */
-    public function getCreatedOn()
-    {
-        return $this->createdOn;
-    }
-
-    /**
      * Add image
      *
      * @param \Tms\Bundle\MediaClientBundle\Entity\Media $image
@@ -515,5 +518,51 @@ class Template implements MetadatableInterface, LoggableInterface
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Offer
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Offer
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 }
