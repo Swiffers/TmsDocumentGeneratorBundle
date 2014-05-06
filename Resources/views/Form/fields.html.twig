@@ -9,17 +9,86 @@
         <li class="tags"></li>
         <li class="submit"></li>
     </ul>
-
-    <div id="editor_wrapper" class="content">
-        <div class="input" data-id="{{ form.html.vars.id }}">{{ form_widget(form.html) }}</div>
-        <div class="input" data-id="{{ form.css.vars.id }}">{{ form_widget(form.css) }}</div>
+    <div class="splitWindow">
+        <div id="editor_wrapper" class="content LeftPane">
+            <div class="input" data-id="{{ form.html.vars.id }}">{{ form_widget(form.html) }}</div>
+            <div class="input" data-id="{{ form.css.vars.id }}">{{ form_widget(form.css) }}</div>
+        </div>
+        <div class="splitter"></div>
+        <div id="preview_wrapper" class="content RightPane">
+            <iframe id="preview"></iframe>
+        </div>
     </div>
-    <div id="preview_wrapper" class="content">
-        <iframe id="preview"></iframe>
-    </div>
+    
 
     {{ form_rest(form) }}
+    <script>
+var mouseIsDown = false;
+var defaultWidth = 320;
+var minLeft = 30;
+var minRight = 250;
+var total = 1100;
 
+$().ready(function () {
+  $('.LeftPane').css('width', defaultWidth);
+  $('.RightPane').css('width', total - (defaultWidth + total));
+  
+  $(".splitter").mousedown(function (e) {
+    if ((!mouseIsDown) ) {
+      mouseIsDown = true;      
+    }
+  }).mousemove(function (e) {
+    if (mouseIsDown) {    
+      var posX = e.pageX;
+
+      var allWidth = total;
+
+      var useX = (posX < minLeft) ? minLeft :
+        (allWidth - posX < minRight) ? allWidth - minRight :
+        posX;
+      var winit = $('.LeftPane').css('width');
+      $('.LeftPane').css('width', useX - 200- $('.splitter').width()).css('user-select', 'none');
+
+      $('.RightPane').css('width', allWidth - (useX - 4)).css('user-select', 'none');
+    }
+  })
+  .click(function () {
+    console.info('cliock');
+    mouseIsDown = false;
+    $('.LeftPane').css('user-select', 'none');
+    $('.RightPane').css('user-select', 'none');
+  }).mouseup(function (e) {
+    console.info('splitter mouseup');
+    e.preventDefault();
+    mouseIsDown = false;
+    $('.LeftPane').css('user-select', 'none');
+    $('.RightPane').css('user-select', 'none');
+  });
+
+  $(window).mouseup(function (e) {
+    console.info('doc mouseup');
+    e.preventDefault();
+    mouseIsDown = false;
+    $('.LeftPane').css('user-select', 'none');
+    $('.RightPane').css('user-select', 'none');
+  }).mousemove(function (e) {
+    if (mouseIsDown) {    
+      var posX = e.pageX;
+
+      var allWidth = total;
+
+      var useX = (posX < minLeft) ? minLeft :
+        (allWidth - posX < minRight) ? allWidth - minRight :
+        posX;
+      var winit = $('.LeftPane').css('width');
+      $('.LeftPane').css('width', useX - 200- $('.splitter').width()).css('user-select', 'none');
+
+      $('.RightPane').css('width', allWidth - (useX - 4)).css('user-select', 'none');
+    }
+    }   );
+
+});
+    </script>
     <script src="{{ asset('bundles/tmsdocumentgenerator/js/generatorPreview.js') }}"></script>
     <script>
         function showInput(id) {
