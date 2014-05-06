@@ -53,12 +53,12 @@ $().ready(function () {
     }
   })
   .click(function () {
-    console.info('cliock');
+    
     mouseIsDown = false;
     $('.LeftPane').css('user-select', 'none');
     $('.RightPane').css('user-select', 'none');
   }).mouseup(function (e) {
-    console.info('splitter mouseup');
+    
     e.preventDefault();
     mouseIsDown = false;
     $('.LeftPane').css('user-select', 'none');
@@ -66,7 +66,7 @@ $().ready(function () {
   });
 
   $(window).mouseup(function (e) {
-    console.info('doc mouseup');
+    
     e.preventDefault();
     mouseIsDown = false;
     $('.LeftPane').css('user-select', 'none');
