@@ -9,12 +9,11 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository;
 
 /**
  * TemplateRepository
  */
-class TemplateRepository extends EntityRepository
+class TemplateRepository extends AbstractEntityRepository
 {
     /**
      * findByNameAndTagNames
