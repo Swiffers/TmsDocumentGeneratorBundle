@@ -27,6 +27,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('api_public_endpoint')->isRequired()->end()
                 ->arrayNode('formats')
                     ->isRequired()
                     ->requiresAtLeastOneElement()

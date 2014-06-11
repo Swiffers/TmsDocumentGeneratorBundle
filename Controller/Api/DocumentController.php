@@ -21,15 +21,49 @@ use Tms\Bundle\DocumentGeneratorBundle\Entity\ConfigurationTag;
 class DocumentController extends Controller
 {
     /**
+     * GetEndpoint
+     *
+     * @Route("/endpoint.{_format}", name="tms_document_generator_api_endpoint", defaults={"_format"="json"})
+     * @Method({"GET"})
+     */
+    public function getEndpointAction(Request $request, $_format)
+    {
+        $configuration = $this->container->getParameter('tms_document_generator.configuration');
+        $data = array(
+            'publicEndpoint' => $configuration['api_public_endpoint']
+        );
+
+        $response = new Response();
+        $response->setPublic();
+        $response->setStatusCode(200);
+        // Cache for one year
+        $response->setMaxAge(31536000);
+        $response->setSharedMaxAge(31536000);
+
+        if ($_format == 'json') {
+            $response->headers->set('Content-Type', 'application/json');
+            $response->setContent(json_encode($data));
+        } elseif ($_format == 'xml') {
+            $xml = new \SimpleXMLElement('<root/>');
+            $data = array_flip($data);
+            array_walk_recursive($data, array($xml, 'addChild'));
+            $response->headers->set('Content-Type', 'text/xml');
+            $response->setContent($xml->asXML());
+        }
+
+        return $response;
+    }
+
+    /**
      * @Route("/generate/{id}.{format}", name="tms_document_generator_api_generate")
+     * @Method({"GET"})
      */
     public function generateAction($id, $format, Request $request)
     {
         try {
             $template = $this->get('tms_document_generator.manager.template')->find($id);
             $parameters = $this->checkRequestAndGetParameters($format, $template, $request);
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             return new Response($exception->getMessage(), $exception->getCode());
         }
         $document = $this->get(sprintf(
@@ -49,14 +83,14 @@ class DocumentController extends Controller
 
     /**
      * @Route("/download/{id}.{format}", name="tms_document_generator_api_download")
+     * @Method({"GET"})
      */
     public function downloadAction($id, $format, Request $request)
     {
         $template = $this->get('tms_document_generator.manager.template')->find($id);
         try {
             $parameters = $this->checkRequestAndGetParameters($format, $template, $request);
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             return new Response($exception->getMessage(), $exception->getCode());
         }
         $document = $this->get(sprintf(
@@ -77,6 +111,7 @@ class DocumentController extends Controller
 
     /**
      * @Route("/template/{id}/salt", name="tms_document_generator_api_template_salt", requirements={"id"="\d+"})
+     * @Method({"GET"})
      */
     public function templateSaltAction($id, Request $request)
     {

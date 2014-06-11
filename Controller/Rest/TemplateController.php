@@ -80,8 +80,9 @@ class TemplateController extends FOSRestController
 
         $context = SerializationContext::create()->setGroups(array('details'));
         $view = $this->view(
-            array('class' => get_class($entity),
-                  'data'  => $entity,
+            array(
+                'class' => get_class($entity),
+                'data'  => $entity,
             ),
             Codes::HTTP_OK
         );
