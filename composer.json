@@ -33,9 +33,9 @@
         "twig/twig":                           "1.*",
         "dompdf/dompdf":                       "dev-master",
         "idci/simple-metadata-bundle":         "dev-master",
-        "tms/rest-bundle":                     "1.0.*",
-        "tms/media-client-bundle":             ">=1.0.2",
-        "tms/modelio-bundle":                  "1.0.*"
+        "tms/rest-bundle":                     "1.2.*",
+        "tms/media-client-bundle":             "1.1.*",
+        "tms/modelio-bundle":                  "1.1.*"
     },
     "autoload": {
         "psr-0": { "Tms\\Bundle\\DocumentGeneratorBundle": "" }
