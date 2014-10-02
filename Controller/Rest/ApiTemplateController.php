@@ -20,7 +20,7 @@ use Tms\Bundle\RestBundle\Formatter\AbstractHypermediaFormatter;
 /**
  * Template REST Controller
  */
-class TemplateController extends FOSRestController
+class ApiTemplateController extends FOSRestController
 {
     /**
      * [GET] /templates
@@ -125,75 +125,6 @@ class TemplateController extends FOSRestController
 
             return $this->handleView($view);
 
-        } catch(NotFoundHttpException $e) {
-            return $this->handleView($this->view(
-                array(),
-                $e->getStatusCode()
-            ));
-        }
-    }
-
-    /**
-     * [GET] /templates/{id}/mergetags
-     * Retrieve the merge tags of a template
-     *
-     * @Route(requirements={"id" = "^\d+$"})
-     *
-     * @QueryParam(name="limit", requirements="^\d+$", strict=true, nullable=true, description="(optional) Pagination limit")
-     * @QueryParam(name="offset", requirements="^\d+$", strict=true, nullable=true, description="(optional) Pagination offset")
-     * @QueryParam(name="page", requirements="^\d+$", strict=true, nullable=true, description="(optional) Page number")
-     * @QueryParam(name="sort", array=true, nullable=true, description="(optional) Sort")
-     *
-     * @param integer $id
-     * @param integer $limit
-     * @param integer $offset
-     * @param integer $page
-     * @param array   $sort
-     */
-    public function getTemplateMergetagsAction(
-        $id,
-        $limit  = null,
-        $offset = null,
-        $page   = null,
-        $sort   = null
-    )
-    {
-        try {
-            $view = $this->view(
-                $this
-                    ->get('tms_rest.formatter.factory')
-                    ->create(
-                        'orm_collection',
-                        $this->getRequest()->get('_route'),
-                        $this->getRequest()->getRequestFormat(),
-                        array('id' => $id)
-                    )
-                    ->setObjectManager(
-                        $this->get('doctrine.orm.entity_manager'),
-                        $this
-                            ->get('tms_document_generator.manager.merge_tag')
-                            ->getEntityClass()
-                    )
-                    ->setCriteria(array(
-                        'template' => $id,
-                    ))
-                    ->setSort($sort)
-                    ->setLimit($limit)
-                    ->setOffset($offset)
-                    ->setPage($page)
-                    ->format()
-                ,
-                Codes::HTTP_OK
-            );
-
-            $serializationContext = SerializationContext::create()
-                ->setGroups(array(
-                    AbstractHypermediaFormatter::SERIALIZER_CONTEXT_GROUP_COLLECTION
-                ))
-            ;
-            $view->setSerializationContext($serializationContext);
-
-            return $this->handleView($view);
         } catch(NotFoundHttpException $e) {
             return $this->handleView($this->view(
                 array(),

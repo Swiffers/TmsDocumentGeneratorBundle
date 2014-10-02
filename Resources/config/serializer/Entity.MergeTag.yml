@@ -4,16 +4,16 @@ Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag:
     properties:
         id:
             expose: true
-            groups: [details]
+            groups: [tms_rest.collection, tms_rest.item]
 
         name:
             expose: true
-            groups: [details]
-        
+            groups: [tms_rest.collection, tms_rest.item]
+
         required:
             expose: true
-            groups: [list, details]
+            groups: [tms_rest.collection, tms_rest.item]
 
         identifier:
             expose: true
-            groups: [list, details]
+            groups: [tms_rest.collection, tms_rest.item]
