@@ -4,25 +4,25 @@ Tms\Bundle\DocumentGeneratorBundle\Entity\Template:
     properties:
         id:
             expose: true
-            groups: [list, details]
+            groups: [tms_rest.collection, tms_rest.item]
 
         name:
             expose: true
-            groups: [list, details]
+            groups: [tms_rest.collection, tms_rest.item]
 
         createdAt:
             expose: true
-            groups: [list, details]
+            groups: [tms_rest.collection, tms_rest.item]
             serialized_name: createdAt
 
         description:
             expose: true
-            groups: [details]
+            groups: [tms_rest.item]
 
         html:
             expose: true
-            groups: [details]
+            groups: [tms_rest.item]
 
         css:
             expose: true
-            groups: [details]
+            groups: [tms_rest.item]
