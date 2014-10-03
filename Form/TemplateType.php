@@ -14,6 +14,7 @@ class TemplateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('customerId')
             ->add('name')
             ->add('description')
             ->add('tags', 'related_to_many_metadata_tags')

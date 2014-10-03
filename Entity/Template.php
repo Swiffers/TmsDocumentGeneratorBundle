@@ -124,6 +124,13 @@ class Template implements MetadatableInterface, LoggableInterface
     private $updatedAt;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="customer_id", type="string", length=32, nullable=true)
+     */
+    private $customerId;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -562,6 +569,29 @@ class Template implements MetadatableInterface, LoggableInterface
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get customerId
+     *
+     * @return string
+     */
+    public function getCustomerId()
+    {
+        return $this->customerId;
+    }
+
+    /**
+     * Set offerId
+     *
+     * @param string $offerId
+     * @return Complaint
+     */
+    public function setOfferId($offerId)
+    {
+        $this->offerId = $offerId;
 
         return $this;
     }

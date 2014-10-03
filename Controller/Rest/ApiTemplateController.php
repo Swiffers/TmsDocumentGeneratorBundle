@@ -26,6 +26,7 @@ class ApiTemplateController extends FOSRestController
      * [GET] /templates
      * Retrieve a set of templates
      *
+     * @QueryParam(name="customer_id", nullable=true, description="(optional) The customer identifiant")
      * @QueryParam(name="name", nullable=true, description="(optional) Name")
      * @QueryParam(name="tags", array=true, nullable=true, description="(optional) Tags.")
      * @QueryParam(name="limit", requirements="^\d+$", strict=true, nullable=true, description="(optional) Pagination limit")
@@ -33,6 +34,7 @@ class ApiTemplateController extends FOSRestController
      * @QueryParam(name="page", requirements="^\d+$", strict=true, nullable=true, description="(optional) Page number")
      * @QueryParam(name="sort", array=true, nullable=true, description="(optional) Sort")
      *
+     * @param string  $customer_id
      * @param string  $name
      * @param array   $tags
      * @param integer $limit
@@ -41,12 +43,13 @@ class ApiTemplateController extends FOSRestController
      * @param array   $sort
      */
     public function getTemplatesAction(
-        $name   = null,
-        $tags   = array(),
-        $limit  = null,
-        $offset = null,
-        $page   = null,
-        $sort   = null
+        $customer_id = null,
+        $name        = null,
+        $tags        = array(),
+        $limit       = null,
+        $offset      = null,
+        $page        = null,
+        $sort        = null
     )
     {
         $view = $this->view(
@@ -64,8 +67,9 @@ class ApiTemplateController extends FOSRestController
                         ->getEntityClass()
                 )
                 ->setCriteria(array(
-                    'name'  => $name,
-                    'tags'  => $tags,
+                    'customerId' => $customer_id,
+                    'name'       => $name,
+                    'tags'       => $tags,
                 ))
                 ->setSort($sort)
                 ->setLimit($limit)

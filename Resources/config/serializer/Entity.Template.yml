@@ -10,11 +10,6 @@ Tms\Bundle\DocumentGeneratorBundle\Entity\Template:
             expose: true
             groups: [tms_rest.collection, tms_rest.item]
 
-        createdAt:
-            expose: true
-            groups: [tms_rest.collection, tms_rest.item]
-            serialized_name: createdAt
-
         description:
             expose: true
             groups: [tms_rest.item]
@@ -30,3 +25,18 @@ Tms\Bundle\DocumentGeneratorBundle\Entity\Template:
         css:
             expose: true
             groups: [tms_rest.item]
+
+        createdAt:
+            expose: true
+            groups: [tms_rest.collection, tms_rest.item]
+            serialized_name: createdAt
+
+        updatedAt:
+            expose: true
+            groups: [tms_rest.collection, tms_rest.item]
+            serialized_name: updatedAt
+
+        customerId:
+            expose: true
+            groups: [tms_rest.collection, tms_rest.item]
+            serialized_name: customerId
