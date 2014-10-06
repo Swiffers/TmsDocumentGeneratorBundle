@@ -14,15 +14,24 @@ Tms\Bundle\DocumentGeneratorBundle\Entity\Template:
             expose: true
             groups: [tms_rest.item]
 
+        tags:
+            expose: true
+            groups: [tms_rest.collection, tms_rest.item]
+
         mergeTags:
             expose: true
             groups: [tms_rest.item]
+            serialized_name: mergeTags
 
         html:
             expose: true
             groups: [tms_rest.item]
 
         css:
+            expose: true
+            groups: [tms_rest.item]
+
+        images:
             expose: true
             groups: [tms_rest.item]
 
