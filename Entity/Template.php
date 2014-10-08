@@ -541,7 +541,7 @@ class Template implements MetadatableInterface, LoggableInterface
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return Offer
+     * @return Template
      */
     public function setCreatedAt($createdAt)
     {
@@ -564,7 +564,7 @@ class Template implements MetadatableInterface, LoggableInterface
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return Offer
+     * @return Template
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -587,11 +587,11 @@ class Template implements MetadatableInterface, LoggableInterface
      * Set offerId
      *
      * @param string $offerId
-     * @return Complaint
+     * @return Template
      */
-    public function setOfferId($offerId)
+    public function setCustomerId($customerId)
     {
-        $this->offerId = $offerId;
+        $this->customerId = $customerId;
 
         return $this;
     }
