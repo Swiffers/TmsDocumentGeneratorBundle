@@ -35,7 +35,8 @@
         "idci/simple-metadata-bundle":         "dev-master",
         "tms/rest-bundle":                     "1.2.*",
         "tms/media-client-bundle":             "1.1.*",
-        "tms/modelio-bundle":                  "1.1.*"
+        "tms/modelio-bundle":                  "1.1.*",
+        "knplabs/knp-snappy-bundle":           "dev-master"
     },
     "autoload": {
         "psr-0": { "Tms\\Bundle\\DocumentGeneratorBundle": "" }
