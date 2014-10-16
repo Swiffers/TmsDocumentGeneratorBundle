@@ -5,8 +5,18 @@ twig:
 
 tms_document_generator:
     formats:
-        pdf: tms_document_generator.generator.dompdf
+        pdf: tms_document_generator.generator.wkhtml2pdf
         html: tms_document_generator.generator.html_default
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltopdf
+        options:
+            margin_bottom: 0
+            margin_left: 0
+            margin_right: 0
+            margin_top: 0
 
 # Model IO
 tms_model_io:
