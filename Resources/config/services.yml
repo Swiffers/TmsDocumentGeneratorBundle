@@ -1,20 +1,4 @@
 services:
-    tms_document_generator.generator.dompdf:
-        class: Tms\Bundle\DocumentGeneratorBundle\Generator\DompdfGenerator
-
-    tms_document_generator.generator.wkhtml2pdf:
-        class: Tms\Bundle\DocumentGeneratorBundle\Generator\Wkhtml2PdfGenerator
-        arguments: [@knp_snappy.pdf]
-
-    tms_document_generator.generator.html_default:
-        class: Tms\Bundle\DocumentGeneratorBundle\Generator\HtmlDefaultGenerator
-
-    tms_document_generator.document:
-        class: Tms\Bundle\DocumentGeneratorBundle\Document\DomDocument
-        arguments: [null]
-        abstract: true
-
-    form.type.ace_textarea:
-        class: Tms\Bundle\DocumentGeneratorBundle\Form\Type\AceTextareaType
-        tags:
-            - { name: form.type, alias: ace_textarea }
+#    tms_document_generator.example:
+#        class: Tms\Bundle\DocumentGeneratorBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

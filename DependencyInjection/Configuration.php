@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @author Jean-Philippe Chateau <jp.chateau@trepia.fr>
- * @license MIT
- */
-
 namespace Tms\Bundle\DocumentGeneratorBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -18,23 +13,16 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('tms_document_generator');
 
-        $rootNode
-            ->children()
-                ->scalarNode('api_public_endpoint')->isRequired()->end()
-                ->arrayNode('formats')
-                    ->isRequired()
-                    ->requiresAtLeastOneElement()
-                    ->prototype('variable')->end()
-                ->end()
-            ->end()
-        ;
+        // Here you should define the parameters that are allowed to
+        // configure your bundle. See the documentation linked above for
+        // more information on that topic.
 
         return $treeBuilder;
     }

@@ -12,32 +12,10 @@
         }
     ],
     "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/Tessi-Tms/TmsRestBundle.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/Tessi-Tms/TmsMediaClientBundle.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/Tessi-Tms/TmsModelIOBundle.git"
-        }
+        
     ],
     "require": {
-        "php":                                 ">=5.3.3",
-        "symfony/framework-bundle":            ">=2.3",
-        "doctrine/orm":                        ">=2.2.3,<2.4-dev",
-        "doctrine/doctrine-bundle":            "1.2.*",
-        "twig/twig":                           "1.*",
-        "idci/simple-metadata-bundle":         "dev-master",
-        "tms/rest-bundle":                     "1.2.*",
-        "tms/media-client-bundle":             "1.1.*",
-        "tms/modelio-bundle":                  "1.1.*",
-        "knplabs/knp-snappy-bundle":           "dev-master",
-        "h4cc/wkhtmltopdf-amd64":              "0.12.x",
-        "dompdf/dompdf":                       "dev-master"
+        
     },
     "autoload": {
         "psr-0": { "Tms\\Bundle\\DocumentGeneratorBundle": "" }

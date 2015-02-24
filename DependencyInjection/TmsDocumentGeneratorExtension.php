@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @author  Jean-Philippe CHATEAU <jp.chateau@trepia.fr>
- * @license MIT
- */
-
 namespace Tms\Bundle\DocumentGeneratorBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,7 +15,7 @@ use Symfony\Component\DependencyInjection\Loader;
 class TmsDocumentGeneratorExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -29,8 +24,5 @@ class TmsDocumentGeneratorExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-        $loader->load('managers.yml');
-
-        $container->setParameter('tms_document_generator.configuration', $config);
     }
 }

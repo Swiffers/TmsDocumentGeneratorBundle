@@ -1,4 +1,3 @@
-templates:
-    type:         rest
-    resource:     Tms\Bundle\DocumentGeneratorBundle\Controller\Rest\ApiTemplateController
-    name_prefix:  api_templates_
+tms_document_generator_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: TmsDocumentGeneratorBundle:Default:index }
