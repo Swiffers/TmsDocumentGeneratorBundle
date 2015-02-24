@@ -14,7 +14,7 @@ interface HtmlConverterRegistyInterface
      * @param string $format the supported format of converter
      * @param HtmlConverterInterface $htmlconverter
      *
-     * @return string
+     * @return HtmlConverterInterface
      */
     public function setHtmlConverter(string $format,HtmlConverterInterface $htmlconverter);
 
@@ -23,7 +23,7 @@ interface HtmlConverterRegistyInterface
      *
      * @param string $format
      *
-     * @return string
+     * @return HtmlConverterInterface
      */
     public function getHtmlConverter(string $format);
 
