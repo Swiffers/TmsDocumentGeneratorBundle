@@ -9,10 +9,20 @@ namespace Tms\Bundle\DocumentGeneratorBundle\DataFetcher;
 class UserDataFetcher implements DataFetcherInterface
 {
     /**
-     * {@inheritDoc}
-     * exemple: $datum={"user_id" => $user_id}
+     * Constructor
+     *
+     * @param ...
      */
-    public function fetch(array $datum){
+    public function __construct()
+    {
+        // TODO: inject an api crawler.
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function fetch(array $data)
+    {
 
     }
 }

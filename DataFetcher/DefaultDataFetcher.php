@@ -10,9 +10,9 @@ class DefaultDataFetcher implements DataFetcherInterface
 {
     /**
      * {@inheritDoc}
-     * exemple: $datum={"parameter" => $parameter}
      */
-    public function fetch(array $datum){
-        return $datum;
+    public function fetch(array $data)
+    {
+        return $data;
     }
 }

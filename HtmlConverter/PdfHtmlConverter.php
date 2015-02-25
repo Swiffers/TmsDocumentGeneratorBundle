@@ -11,7 +11,8 @@ class PdfHtmlConverter implements HtmlConverterInterface
     /**
      * {@inheritDoc}
      */
-    public function convert(string $html){
+    public function convert(string $html)
+    {
 
     }
 }

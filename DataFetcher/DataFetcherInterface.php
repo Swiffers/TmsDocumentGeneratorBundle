@@ -9,11 +9,18 @@ namespace Tms\Bundle\DocumentGeneratorBundle\DataFetcher;
 interface DataFetcherInterface
 {
     /**
-     * fetch
+     * Fetch.
      *
-     * @param array datum
+     * @param array data The data used as the fetcher source to look at.
      *
      * @return array
      */
-    public function fetch(array $datum);
+    public function fetch(array $data);
+
+    /**
+     * Returns the searched data keys.
+     *
+     * @return array
+     */
+    public function getSearchedDataKeys();
 }

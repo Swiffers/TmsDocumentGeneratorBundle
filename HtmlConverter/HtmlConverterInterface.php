@@ -9,7 +9,7 @@ namespace Tms\Bundle\DocumentGeneratorBundle\HtmlConverter;
 interface HtmlConverterInterface
 {
     /**
-     * convert html page to document
+     * Convert html page to document.
      *
      * @param string $html
      *

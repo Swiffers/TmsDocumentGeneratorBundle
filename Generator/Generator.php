@@ -6,21 +6,54 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Generator;
 
+// use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
+use Tms\Bundle\DocumentGeneratorBundle\HtmlConverter\HtmlConverterRegistryInterface;
+use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistryInterface;
 
 class Generator implements GeneratorInterface
 {
     /**
-     * {@inheritDoc}
+     * @var HtmlConverterRegistryInterface
      */
-    public function genrate(integer $template_id, array $data, array $options){
+    private $htmlConverterRegistry;
 
+    /**
+     * @var DataFetcherRegistryInterface
+     */
+    private $dataFetcherRegistry;
+
+    /**
+     * Constructor
+     *
+     * @param HtmlConverterRegistryInterface $htmlConverterRegistry
+     * @param DataFetcherRegistryInterface   $dataFetcherRegistry
+     */
+    public function __construct(
+        HtmlConverterRegistryInterface $htmlConverterRegistry,
+        DataFetcherRegistryInterface   $dataFetcherRegistry
+    )
+    {
+        // TODO:
     }
 
     /**
-     * @param template Template
-     * @param fechedData array
+     * {@inheritDoc}
      */
-    private function render(){
+    public function generate($template_id, array $data = array(), array $options = array())
+    {
+        // TODO: look at the sequence diagram
+    }
 
+    /**
+     * Returns the rendered Html
+     *
+     * @param Template $template   The template.
+     * @param array    $fechedData The fetched data.
+     *
+     * @return string
+     */
+    private function render(Template $template, array $fetchedData)
+    {
+        // TODO: Use twig engine to merge the template with fetched data.
     }
 }
