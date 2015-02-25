@@ -3,15 +3,21 @@
 namespace Tms\Bundle\DocumentGeneratorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use IDCI\Bundle\SimpleMetadataBundle\Metadata\MetadatableInterface;
+use Tms\Bundle\LoggerBundle\Logger\LoggableInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata;
+use Tms\Bundle\MediaClientBundle\Entity\Media;
 
 /**
  * Template
  *
- * @ORM\Table()
+ * @ORM\Table(name="template")
  * @ORM\Entity(repositoryClass="Tms\Bundle\DocumentGeneratorBundle\Entity\TemplateRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
-class Template
-{
+class Template implements MetadatableInterface, LoggableInterface {
+
     /**
      * @var integer
      *
@@ -64,27 +70,113 @@ class Template
     private $updatedAt;
 
     /**
-     * @var array
+     * @var array<Metadata>
      *
-     * @ORM\Column(name="images", type="array")
+     * @ORM\ManyToMany(targetEntity="IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata", cascade={"all"})
+     * @ORM\JoinTable(name="template_tag",
+     *      joinColumns={@ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="cascade")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id", unique=true, onDelete="cascade")}
+     * )
+     */
+    private $tags;
+
+    /**
+     * @var array<MergeTag>
+     * 
+     * @ORM\OneToMany(targetEntity="MergeTag", mappedBy="template_id", cascade={"all"})
+     */
+    private $mergeTags;
+
+    /**
+     * @var array<Media>
+     * 
+     * @ORM\ManyToMany(targetEntity="Tms\Bundle\MediaClientBundle\Entity\Media", cascade={"all"})
+     * @ORM\JoinTable(name="template_media",
+     *      joinColumns={@ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="cascade")},
+     *      inverseJoinColumns={@ORM\JoinColum(name="media_id", referencedColumnName="id", unique=true, onDelete="cascade")}
+     * )
      */
     private $images;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(name="tags", type="array")
+     * Constructor
      */
-    private $tags;
+    public function __construct() {
+        $this->tags = new ArrayCollection();
+        $this->images = new ArrayCollection();
+        $this->mergeTags = new ArrayCollection();
+    }
 
+    /**
+     * @ORM\PrePersist()
+     */
+    public function onCreate() {
+        $now = new \DateTime("now");
+        $this
+                ->setCreatedAt($now)
+                ->setUpdatedAt($now)
+        ;
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function onUpdate() {
+        $this->setUpdatedAt(new \DateTime("now"));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetadatas() {
+        return $this->getTags();
+    }
+
+    /**
+     * toString
+     * 
+     * @return string
+     */
+    public function __toString() {
+        return $this->getName();
+    }
+
+    /**
+     * Add mergeTag
+     * 
+     * @param MergeTag $mergeTag
+     * @return Template
+     */
+    public function addMergeTag(MergeTag $mergeTag) {
+        $this->mergeTags[] = $mergeTag;
+
+        return $this;
+    }
+
+    /**
+     * Remove mergeTag
+     * 
+     * @param MergeTag $mergeTag
+     */
+    public function removeMergeTag(MergeTag $mergeTag) {
+        $this->mergeTags->removeElement($mergeTag);
+    }
+
+    /**
+     * Get mergeTags
+     * 
+     * @return Collection
+     */
+    public function getMergeTags() {
+        return $this->mergeTags;
+    }
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -94,8 +186,7 @@ class Template
      * @param string $name
      * @return Template
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -106,8 +197,7 @@ class Template
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -117,8 +207,7 @@ class Template
      * @param string $description
      * @return Template
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -129,8 +218,7 @@ class Template
      *
      * @return string 
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -140,8 +228,7 @@ class Template
      * @param string $html
      * @return Template
      */
-    public function setHtml($html)
-    {
+    public function setHtml($html) {
         $this->html = $html;
 
         return $this;
@@ -152,8 +239,7 @@ class Template
      *
      * @return string 
      */
-    public function getHtml()
-    {
+    public function getHtml() {
         return $this->html;
     }
 
@@ -163,8 +249,7 @@ class Template
      * @param string $css
      * @return Template
      */
-    public function setCss($css)
-    {
+    public function setCss($css) {
         $this->css = $css;
 
         return $this;
@@ -175,8 +260,7 @@ class Template
      *
      * @return string 
      */
-    public function getCss()
-    {
+    public function getCss() {
         return $this->css;
     }
 
@@ -186,8 +270,7 @@ class Template
      * @param \DateTime $createdAt
      * @return Template
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -198,8 +281,7 @@ class Template
      *
      * @return \DateTime 
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -209,8 +291,7 @@ class Template
      * @param \DateTime $updatedAt
      * @return Template
      */
-    public function setUpdatedAt($updatedAt)
-    {
+    public function setUpdatedAt($updatedAt) {
         $this->updatedAt = $updatedAt;
 
         return $this;
@@ -221,45 +302,59 @@ class Template
      *
      * @return \DateTime 
      */
-    public function getUpdatedAt()
-    {
+    public function getUpdatedAt() {
         return $this->updatedAt;
     }
 
     /**
-     * Set images
+     * Add image
      *
-     * @param array $images
+     * @param Media $image
      * @return Template
      */
-    public function setImages($images)
-    {
-        $this->images = $images;
+    public function addImage(Media $image) {
+        $this->images[] = $image;
 
         return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param Media $image
+     */
+    public function removeImage(Media $image) {
+        $this->images->removeElement($image);
     }
 
     /**
      * Get images
      *
-     * @return array 
+     * @return Collection 
      */
-    public function getImages()
-    {
+    public function getImages() {
         return $this->images;
     }
 
     /**
-     * Set tags
+     * Add tag
      *
-     * @param array $tags
+     * @param Metadata $tag
      * @return Template
      */
-    public function setTags($tags)
-    {
-        $this->tags = $tags;
+    public function addTag(Metadata $tag) {
+        $this->tags = $tag;
 
         return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param Metadata $tag
+     */
+    public function removeTag(Metadata $tag) {
+        $this->tags->removeElement($tag);
     }
 
     /**
@@ -267,8 +362,8 @@ class Template
      *
      * @return array 
      */
-    public function getTags()
-    {
+    public function getTags() {
         return $this->tags;
     }
+
 }
