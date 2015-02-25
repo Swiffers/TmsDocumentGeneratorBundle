@@ -22,7 +22,7 @@
         }
     ],
     "require": {
-        "idci/simple-metadata-bundle": "dev-master",
+        "idci/simple-metadata-bundle": "dev-master@dev",
         "tms/media-client-bundle": "1.1.*",
         "tms/modelio-bundle": "1.1.*"
     },
