@@ -16,4 +16,11 @@ class Generator implements GeneratorInterface
 
     }
 
+    /**
+     * @param template Template
+     * @param fechedData array
+     */
+    private function render(){
+
+    }
 }
