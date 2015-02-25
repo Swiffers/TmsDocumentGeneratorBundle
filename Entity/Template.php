@@ -13,7 +13,7 @@ use Tms\Bundle\MediaClientBundle\Entity\Media;
  * Template
  *
  * @ORM\Table(name="template")
- * @ORM\Entity(repositoryClass="Tms\Bundle\DocumentGeneratorBundle\Entity\TemplateRepository")
+ * @ORM\Entity(repositoryClass="Tms\Bundle\DocumentGeneratorBundle\Entity\Repository\TemplateRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Template implements MetadatableInterface, LoggableInterface {
