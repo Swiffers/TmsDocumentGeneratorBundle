@@ -12,13 +12,24 @@
         }
     ],
     "repositories": [
-        
+        {
+            "type": "vcs",
+            "url": "https://github.com/Tessi-Tms/TmsMediaClientBundle.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/Tessi-Tms/TmsModelIOBundle.git"
+        }
     ],
     "require": {
-        
+        "idci/simple-metadata-bundle": "dev-master",
+        "tms/media-client-bundle": "1.1.*",
+        "tms/modelio-bundle": "1.1.*"
     },
     "autoload": {
-        "psr-0": { "Tms\\Bundle\\DocumentGeneratorBundle": "" }
+        "psr-0": {
+            "Tms\\Bundle\\DocumentGeneratorBundle": ""
+        }
     },
     "target-dir": "Tms/Bundle/DocumentGeneratorBundle",
     "minimum-stability": "dev"
