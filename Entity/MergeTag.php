@@ -3,7 +3,6 @@
 namespace Tms\Bundle\DocumentGeneratorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Tms\Bundle\LoggerBundle\Logger\LoggableInterface;
 
 /**
  * MergeTag
@@ -51,8 +50,25 @@ class MergeTag
      * @ORM\Column(name="fetcher_alias", type="string", length=255)
      */
     private $fetcherAlias;
+    
+    /**
+     * @var integer
+     * 
+     * @ORM\ManyToOne(targetEntity="Template", inversedBy="mergeTags", cascade={"persist"})
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id", nullable=false, onDelete="Cascade")
+     */
+    private $templateId;
 
-
+    /**
+     * toString
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getIdentifier();
+    }
+        
     /**
      * Get id
      *
@@ -100,13 +116,36 @@ class MergeTag
     }
 
     /**
-     * Get required
+     * Is required
      *
      * @return boolean 
      */
-    public function getRequired()
+    public function isRequired()
     {
         return $this->required;
+    }
+    
+    /**
+     * Get templateId
+     * 
+     * @return integer
+     */
+    public function getTemplate()
+    {
+        return $this->templateId;
+    }
+    
+    /**
+     * Set templateId
+     * 
+     * @param integer $templateId
+     * @return MergeTag
+     */
+    public function setTemplateId(integer $templateId)
+    {
+        $this->templateId = $templateId;
+        
+        return $this;
     }
 
     /**
