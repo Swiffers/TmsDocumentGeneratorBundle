@@ -1,10 +1,11 @@
 <?php
+
 namespace Tms\Bundle\DocumentGeneratorBundle\Event;
 
 /**
  * Description of TemplateEvents
  *
- * @author Linok
+ * @author Antoine Ribola <antoine.ribola@gmail.com>
  */
 class TemplateEvents
 {

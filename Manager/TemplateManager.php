@@ -1,15 +1,18 @@
 <?php
+
 namespace Tms\Bundle\DocumentGeneratorBundle\Manager;
 
 use Tms\Bundle\DocumentGeneratorBundle\Event\TemplateEvents;
 use Tms\Bundle\DocumentGeneratorBundle\Event\TemplateEvent;
+
 /**
  * TemplateManager
  *
- * @author Linok
+ * @author Antoine Ribola <antoine.ribola@gmail.com>
  */
 class TemplateManager extends AbstractManager
 {
+    
     /**
      * {@inheritdoc}
      */
@@ -33,6 +36,7 @@ class TemplateManager extends AbstractManager
             new TemplateEvent($entity)
         );
     }
+    
     /**
      * {@inheritdoc}
      */
@@ -48,6 +52,7 @@ class TemplateManager extends AbstractManager
             new TemplateEvent($entity)
         );
     }
+    
     /**
      * {@inheritdoc}
      */

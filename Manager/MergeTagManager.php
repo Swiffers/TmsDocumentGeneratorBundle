@@ -1,15 +1,18 @@
 <?php
+
 namespace Tms\Bundle\DocumentGeneratorBundle\Manager;
 
 use Tms\Bundle\DocumentGeneratorBundle\Event\MergeTagEvents;
 use Tms\Bundle\DocumentGeneratorBundle\Event\MergeTagEvent;
+
 /**
  * Description of MergeTagManager
  *
- * @author Linok
+ * @author Antoine Ribola <antoine.ribola@gmail.com>
  */
 class MergeTagManager extends AbstractManager
 {
+    
     /**
      * {@inheritdoc}
      */
@@ -33,6 +36,7 @@ class MergeTagManager extends AbstractManager
             new MergeTagEvent($entity)
         );
     }
+    
     /**
      * {@inheritdoc}
      */
@@ -48,6 +52,7 @@ class MergeTagManager extends AbstractManager
             new MergeTagEvent($entity)
         );
     }
+    
     /**
      * {@inheritdoc}
      */

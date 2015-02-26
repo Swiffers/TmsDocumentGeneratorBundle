@@ -1,16 +1,19 @@
 <?php
+
 namespace Tms\Bundle\DocumentGeneratorBundle\Event;
 
 use Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag;
 use Symfony\Component\EventDispatcher\Event;
+
 /**
  * Description of MergeTagEvent
  *
- * @author Linok
+ * @author Antoine Ribola <antoine.ribola@gmail.com>
  */
 class MergeTagEvent extends Event
 {
     protected $mergeTag;
+    
     /**
      * Constructor
      *

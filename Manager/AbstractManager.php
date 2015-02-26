@@ -1,4 +1,5 @@
 <?php
+
 namespace Tms\Bundle\DocumentGeneratorBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
@@ -6,6 +7,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Tms\Bundle\LoggerBundle\Logger\LoggableInterface;
 use Tms\Bundle\LoggerBundle\Event\LogEvents;
 use Tms\Bundle\LoggerBundle\Event\LogEvent;
+
 /**
  * Abstract manager.
  *
@@ -15,6 +17,7 @@ abstract class AbstractManager
 {
     protected $entityManager;
     protected $eventDispatcher;
+    
     /**
      * Constructor
      *
@@ -26,6 +29,7 @@ abstract class AbstractManager
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
     }
+    
     /**
      * Get EntityManager
      *
@@ -35,6 +39,7 @@ abstract class AbstractManager
     {
         return $this->entityManager;
     }
+    
     /**
      * Get EventDispatcher
      *
@@ -44,6 +49,7 @@ abstract class AbstractManager
     {
         return $this->eventDispatcher;
     }
+    
     /**
      * Get Repository
      *
@@ -53,6 +59,7 @@ abstract class AbstractManager
     {
         return $this->getEntityManager()->getRepository($this->getEntityClass());
     }
+    
     /**
      * Magic call
      * Triger to repository methods call
@@ -61,6 +68,7 @@ abstract class AbstractManager
     {
         return call_user_func_array(array($this->getRepository(), $method), $args);
     }
+    
     /**
      * Add
      * Use the entity manager to add (persist) the given object
@@ -84,6 +92,7 @@ abstract class AbstractManager
             );
         }
     }
+    
     /**
      * Update
      * Use the entity manager to update (persist) the given object
@@ -107,6 +116,7 @@ abstract class AbstractManager
             );
         }
     }
+    
     /**
      * Delete
      * Use the entity manager to delete (remove) the given object
@@ -130,6 +140,7 @@ abstract class AbstractManager
             );
         }
     }
+    
     /**
      * Get Entity class name
      *
