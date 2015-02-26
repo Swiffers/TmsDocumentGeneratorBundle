@@ -1,5 +1,6 @@
 <?php
-namespace Tms\Bundle\OperationBundle\Manager;
+namespace Tms\Bundle\DocumentGeneratorBundle\Manager;
+
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Tms\Bundle\LoggerBundle\Logger\LoggableInterface;
