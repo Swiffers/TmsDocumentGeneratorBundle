@@ -14,23 +14,26 @@ interface DataFetcherRegistryInterface
      * @param string               $alias       The fetcher alias.
      * @param DataFetcherInterface $datafetcher The DataFetcher object.
      *
-     * @return DataFetcherInterface
+     * @return DataFetcherRegistryInterface
      */
     public function setDataFetcher($alias, DataFetcherInterface $datafetcher);
 
     /**
      * Returns the DataFetcher relevant to the alias.
      *
-     * @param string $alias
+     * @param string $alias The fetcher alias
      *
      * @return DataFetcherInterface
+     *
+     * @throws Exception\UnexpectedTypeException if the passed alias is not a string.
+     * @throws \InvalidArgumentException         if the data fetcher can not be retrieved.
      */
     public function getDataFetcher($alias);
 
     /**
      * Checks the existence of DataFetcher relevant to the alias.
      *
-     * @param string $alias check the converter relevant to the alias.
+     * @param  string $alias check the converter relevant to the alias.
      *
      * @return bool
      */

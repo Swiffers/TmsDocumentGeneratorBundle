@@ -11,7 +11,7 @@ interface DataFetcherInterface
     /**
      * Fetch.
      *
-     * @param array data The data used as the fetcher source to look at.
+     * @param  array data The data used as the fetcher source to look at.
      *
      * @return array
      */

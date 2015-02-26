@@ -6,6 +6,8 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\DataFetcher;
 
+use Tms\Bundle\DocumentGeneratorBundle\Exception\UnexpectedTypeException;
+
 class DataFetcherRegistry implements DataFetcherRegistryInterface
 {
     /**
@@ -13,12 +15,19 @@ class DataFetcherRegistry implements DataFetcherRegistryInterface
      */
     private $fetchers;
 
+    public function __construct()
+    {
+        $this->fetchers = array();
+    }
+
     /**
      * {@inheritDoc}
      */
     public function setDataFetcher($alias, DataFetcherInterface $datafetcher)
     {
-        // TODO
+        $this->fetchers[$alias] = $datafetcher;
+
+        return $this;
     }
 
     /**
@@ -26,7 +35,15 @@ class DataFetcherRegistry implements DataFetcherRegistryInterface
      */
     public function getDataFetcher($alias)
     {
-        // TODO
+        if (!is_string($alias)) {
+            throw new UnexpectedTypeException($alias, 'string');
+        }
+
+        if (!$this->hasDataFetcher($alias)) {
+            throw new \InvalidArgumentException(sprintf('Could not load data fetcher "%s"', $alias));
+        }
+
+        return $this->fetchers[$alias];
     }
 
     /**
@@ -34,6 +51,10 @@ class DataFetcherRegistry implements DataFetcherRegistryInterface
      */
     public function hasDataFetcher($alias)
     {
-        // TODO
+        if (!isset($this->fetchers[$alias])){
+            return false;
+        }
+
+        return true;
     }
 }

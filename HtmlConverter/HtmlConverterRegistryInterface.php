@@ -11,28 +11,31 @@ interface HtmlConverterRegistryInterface
     /**
      * Register the htmlConverter.
      *
-     * @param string $format the supported format of converter.
-     * @param HtmlConverterInterface $htmlconverter
+     * @param string                 $alias         The alias converter.
+     * @param HtmlConverterInterface $htmlconverter The converter.
      *
-     * @return HtmlConverterInterface
+     * @return HtmlConverterRegistryInterface
      */
-    public function setHtmlConverter($format, HtmlConverterInterface $htmlconverter);
+    public function setHtmlConverter($alias, HtmlConverterInterface $htmlconverter);
 
     /**
-     * Returns the htmlConverter relevant to the format.
+     * Returns the htmlConverter relevant to the alias.
      *
-     * @param string $format
+     * @param string $alias
      *
      * @return HtmlConverterInterface
+     *
+     * @throws Exception\UnexpectedTypeException if the passed alias is not a string.
+     * @throws \InvalidArgumentException         if the converter can not be retrieved.
      */
-    public function getHtmlConverter($format);
+    public function getHtmlConverter($alias);
 
     /**
-     * Checks the existence of htmlConverter relevant to the format.
+     * Checks the existence of htmlConverter relevant to the alias.
      *
-     * @param string $format check the converter relevant to the format.
+     * @param  string $alias check the converter relevant to the alias.
      *
      * @return bool
      */
-    public function hasHtmlConverter($format);
+    public function hasHtmlConverter($alias);
 }
