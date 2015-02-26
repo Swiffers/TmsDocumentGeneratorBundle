@@ -16,8 +16,8 @@ use Tms\Bundle\MediaClientBundle\Entity\Media;
  * @ORM\Entity(repositoryClass="Tms\Bundle\DocumentGeneratorBundle\Entity\Repository\TemplateRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Template implements MetadatableInterface, LoggableInterface {
-
+class Template implements MetadatableInterface, LoggableInterface
+{
     /**
      * @var integer
      *
@@ -93,43 +93,29 @@ class Template implements MetadatableInterface, LoggableInterface {
      * @ORM\ManyToMany(targetEntity="Tms\Bundle\MediaClientBundle\Entity\Media", cascade={"all"})
      * @ORM\JoinTable(name="template_media",
      *      joinColumns={@ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="cascade")},
-     *      inverseJoinColumns={@ORM\JoinColum(name="media_id", referencedColumnName="id", unique=true, onDelete="cascade")}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id", unique=true, onDelete="cascade")}
      * )
      */
     private $images;
 
     /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->tags = new ArrayCollection();
-        $this->images = new ArrayCollection();
-        $this->mergeTags = new ArrayCollection();
-    }
-
-    /**
      * @ORM\PrePersist()
      */
-    public function onCreate() {
+    public function onCreate()
+    {
         $now = new \DateTime("now");
         $this
-                ->setCreatedAt($now)
-                ->setUpdatedAt($now)
+            ->setCreatedAt($now)
+            ->setUpdatedAt($now)
         ;
     }
 
     /**
      * @ORM\PreUpdate()
      */
-    public function onUpdate() {
+    public function onUpdate()
+    {
         $this->setUpdatedAt(new \DateTime("now"));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMetadatas() {
-        return $this->getTags();
     }
 
     /**
@@ -137,58 +123,41 @@ class Template implements MetadatableInterface, LoggableInterface {
      * 
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getName();
     }
-
-    /**
-     * Add mergeTag
-     * 
-     * @param MergeTag $mergeTag
-     * @return Template
-     */
-    public function addMergeTag(MergeTag $mergeTag) {
-        $this->mergeTags[] = $mergeTag;
-
-        return $this;
-    }
-
-    /**
-     * Remove mergeTag
-     * 
-     * @param MergeTag $mergeTag
-     */
-    public function removeMergeTag(MergeTag $mergeTag) {
-        $this->mergeTags->removeElement($mergeTag);
-    }
-
-    /**
-     * Get mergeTags
-     * 
-     * @return Collection
-     */
-    public function getMergeTags() {
-        return $this->mergeTags;
-    }
-
+    
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mergeTags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Set name
      *
      * @param string $name
      * @return Template
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
-
+    
         return $this;
     }
 
@@ -197,7 +166,8 @@ class Template implements MetadatableInterface, LoggableInterface {
      *
      * @return string 
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -207,9 +177,10 @@ class Template implements MetadatableInterface, LoggableInterface {
      * @param string $description
      * @return Template
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
-
+    
         return $this;
     }
 
@@ -218,7 +189,8 @@ class Template implements MetadatableInterface, LoggableInterface {
      *
      * @return string 
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
@@ -228,9 +200,10 @@ class Template implements MetadatableInterface, LoggableInterface {
      * @param string $html
      * @return Template
      */
-    public function setHtml($html) {
+    public function setHtml($html)
+    {
         $this->html = $html;
-
+    
         return $this;
     }
 
@@ -239,7 +212,8 @@ class Template implements MetadatableInterface, LoggableInterface {
      *
      * @return string 
      */
-    public function getHtml() {
+    public function getHtml()
+    {
         return $this->html;
     }
 
@@ -249,9 +223,10 @@ class Template implements MetadatableInterface, LoggableInterface {
      * @param string $css
      * @return Template
      */
-    public function setCss($css) {
+    public function setCss($css)
+    {
         $this->css = $css;
-
+    
         return $this;
     }
 
@@ -260,7 +235,8 @@ class Template implements MetadatableInterface, LoggableInterface {
      *
      * @return string 
      */
-    public function getCss() {
+    public function getCss()
+    {
         return $this->css;
     }
 
@@ -270,9 +246,10 @@ class Template implements MetadatableInterface, LoggableInterface {
      * @param \DateTime $createdAt
      * @return Template
      */
-    public function setCreatedAt($createdAt) {
+    public function setCreatedAt($createdAt)
+    {
         $this->createdAt = $createdAt;
-
+    
         return $this;
     }
 
@@ -281,7 +258,8 @@ class Template implements MetadatableInterface, LoggableInterface {
      *
      * @return \DateTime 
      */
-    public function getCreatedAt() {
+    public function getCreatedAt()
+    {
         return $this->createdAt;
     }
 
@@ -291,9 +269,10 @@ class Template implements MetadatableInterface, LoggableInterface {
      * @param \DateTime $updatedAt
      * @return Template
      */
-    public function setUpdatedAt($updatedAt) {
+    public function setUpdatedAt($updatedAt)
+    {
         $this->updatedAt = $updatedAt;
-
+    
         return $this;
     }
 
@@ -302,68 +281,116 @@ class Template implements MetadatableInterface, LoggableInterface {
      *
      * @return \DateTime 
      */
-    public function getUpdatedAt() {
+    public function getUpdatedAt()
+    {
         return $this->updatedAt;
-    }
-
-    /**
-     * Add image
-     *
-     * @param Media $image
-     * @return Template
-     */
-    public function addImage(Media $image) {
-        $this->images[] = $image;
-
-        return $this;
-    }
-
-    /**
-     * Remove image
-     *
-     * @param Media $image
-     */
-    public function removeImage(Media $image) {
-        $this->images->removeElement($image);
-    }
-
-    /**
-     * Get images
-     *
-     * @return Collection 
-     */
-    public function getImages() {
-        return $this->images;
     }
 
     /**
      * Add tag
      *
-     * @param Metadata $tag
+     * @param \IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag
      * @return Template
      */
-    public function addTag(Metadata $tag) {
-        $this->tags = $tag;
-
+    public function addTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag)
+    {
+        $this->tags[] = $tag;
+    
         return $this;
     }
 
     /**
      * Remove tag
      *
-     * @param Metadata $tag
+     * @param \IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag
      */
-    public function removeTag(Metadata $tag) {
+    public function removeTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag)
+    {
         $this->tags->removeElement($tag);
     }
 
     /**
      * Get tags
      *
-     * @return array 
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getTags() {
+    public function getTags()
+    {
         return $this->tags;
+    }
+
+    /**
+     * Add mergeTag
+     *
+     * @param \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTag
+     * @return Template
+     */
+    public function addMergeTag(\Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTag)
+    {
+        $this->mergeTags[] = $mergeTag;
+    
+        return $this;
+    }
+
+    /**
+     * Remove mergeTag
+     *
+     * @param \Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTag
+     */
+    public function removeMergeTag(\Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTag)
+    {
+        $this->mergeTags->removeElement($mergeTag);
+    }
+
+    /**
+     * Get mergeTags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMergeTags()
+    {
+        return $this->mergeTags;
+    }
+
+    /**
+     * Add image
+     *
+     * @param \Tms\Bundle\MediaClientBundle\Entity\Media $image
+     * @return Template
+     */
+    public function addImage(\Tms\Bundle\MediaClientBundle\Entity\Media $image)
+    {
+        $this->images[] = $image;
+    
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \Tms\Bundle\MediaClientBundle\Entity\Media $image
+     */
+    public function removeImage(\Tms\Bundle\MediaClientBundle\Entity\Media $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetadatas()
+    {
+        $this->getTags();
     }
 
 }
