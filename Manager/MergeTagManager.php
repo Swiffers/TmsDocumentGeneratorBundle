@@ -1,21 +1,21 @@
 <?php
 namespace Tms\Bundle\DocumentGeneratorBundle\Manager;
 
-use Tms\Bundle\DocumentGeneratorBundle\Event\TemplateEvents;
-use Tms\Bundle\DocumentGeneratorBundle\Event\TemplateEvent;
+use Tms\Bundle\DocumentGeneratorBundle\Event\MergeTagEvents;
+use Tms\Bundle\DocumentGeneratorBundle\Event\MergeTagEvent;
 /**
- * TemplateManager
+ * Description of MergeTagManager
  *
  * @author Linok
  */
-class TemplateManager extends AbstractManager
+class MergeTagManager extends AbstractManager
 {
     /**
      * {@inheritdoc}
      */
     public function getEntityClass()
     {
-        return "TmsDocumentGeneratorBundle:Template";
+        return "TmsDocumentGeneratorBundle:MergeTag";
     }
     
     /**
@@ -24,13 +24,13 @@ class TemplateManager extends AbstractManager
     public function add($entity)
     {
         $this->getEventDispatcher()->dispatch(
-            TemplateEvents::PRE_CREATE,
-            new TemplateEvent($entity)
+            MergeTagEvents::PRE_CREATE,
+            new MergeTagEvent($entity)
         );
         parent::add($entity);
         $this->getEventDispatcher()->dispatch(
-            TemplateEvents::POST_CREATE,
-            new TemplateEvent($entity)
+            MergeTagEvents::POST_CREATE,
+            new MergeTagEvent($entity)
         );
     }
     /**
@@ -39,13 +39,13 @@ class TemplateManager extends AbstractManager
     public function update($entity)
     {
         $this->getEventDispatcher()->dispatch(
-            TemplateEvents::PRE_UPDATE,
-            new TemplateEvent($entity)
+            MergeTagEvents::PRE_UPDATE,
+            new MergeTagEvent($entity)
         );
         parent::update($entity);
         $this->getEventDispatcher()->dispatch(
-            TemplateEvents::POST_UPDATE,
-            new TemplateEvent($entity)
+            MergeTagEvents::POST_UPDATE,
+            new MergeTagEvent($entity)
         );
     }
     /**
@@ -54,13 +54,13 @@ class TemplateManager extends AbstractManager
     public function delete($entity)
     {
         $this->getEventDispatcher()->dispatch(
-            TemplateEvents::PRE_DELETE,
-            new TemplateEvent($entity)
+            MergeTagEvents::PRE_DELETE,
+            new MergeTagEvent($entity)
         );
         parent::delete($entity);
         $this->getEventDispatcher()->dispatch(
-           TemplateEvents::POST_DELETE,
-            new TemplateEvent($entity)
+            MergeTagEvents::POST_DELETE,
+            new MergeTagEvent($entity)
         );
     }
 }
