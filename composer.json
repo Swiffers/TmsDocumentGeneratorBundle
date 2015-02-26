@@ -23,13 +23,18 @@
         {
             "type": "vcs",
             "url": "https://github.com/Tessi-Tms/TmsModelIOBundle.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/Tessi-Tms/TmsRestClientBundle.git"
         }
     ],
     "require": {
-        "idci/simple-metadata-bundle": "dev-master",
+        "idci/simple-metadata-bundle": "1.0.4",
         "tms/media-client-bundle": "1.1.*",
         "tms/modelio-bundle": "1.1.*",
-        "tms/logger-bundle": "1.0.*"
+        "tms/logger-bundle": "1.0.*",
+        "tms/rest-client-bundle": "1.0.*"
     },
     "autoload": {
         "psr-0": {
