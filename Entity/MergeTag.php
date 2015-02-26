@@ -68,7 +68,7 @@ class MergeTag
     {
         return $this->getIdentifier();
     }
-        
+
     /**
      * Get id
      *
@@ -116,36 +116,13 @@ class MergeTag
     }
 
     /**
-     * Is required
+     * Get required
      *
      * @return boolean 
      */
-    public function isRequired()
+    public function getRequired()
     {
         return $this->required;
-    }
-    
-    /**
-     * Get templateId
-     * 
-     * @return integer
-     */
-    public function getTemplate()
-    {
-        return $this->templateId;
-    }
-    
-    /**
-     * Set templateId
-     * 
-     * @param integer $templateId
-     * @return MergeTag
-     */
-    public function setTemplateId(integer $templateId)
-    {
-        $this->templateId = $templateId;
-        
-        return $this;
     }
 
     /**
@@ -192,5 +169,28 @@ class MergeTag
     public function getFetcherAlias()
     {
         return $this->fetcherAlias;
+    }
+
+    /**
+     * Set templateId
+     *
+     * @param \Tms\Bundle\DocumentGeneratorBundle\Entity\Template $templateId
+     * @return MergeTag
+     */
+    public function setTemplateId(\Tms\Bundle\DocumentGeneratorBundle\Entity\Template $templateId)
+    {
+        $this->templateId = $templateId;
+    
+        return $this;
+    }
+
+    /**
+     * Get templateId
+     *
+     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template 
+     */
+    public function getTemplateId()
+    {
+        return $this->templateId;
     }
 }
