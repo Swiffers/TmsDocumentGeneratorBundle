@@ -30,7 +30,7 @@
         }
     ],
     "require": {
-        "idci/simple-metadata-bundle": "1.0.4",
+        "idci/simple-metadata-bundle": "dev-master",
         "tms/media-client-bundle": "1.1.*",
         "tms/modelio-bundle": "1.1.*",
         "tms/logger-bundle": "1.0.*",
