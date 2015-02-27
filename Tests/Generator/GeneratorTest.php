@@ -15,24 +15,32 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase {
     /*
      * Need to define all test values !
      */
-    public function testGenerate()
+    
+    /**
+     * @dataProvider generateProvider
+     */
+    public function testGenerate($template_id, array $data, array $options)
     {
         $generator = new Generator(
             new HtmlConverterRegistry(),
             new DataFetcherRegistry()
         );
         
-        //Default case (return pdf? html?)
         $document = $generator->generate($template_id, $data);
         $this->assertEquals($expectedDocument, $document);
-        
-        //Request pdf
-        $document = $generator->generate($template_id, $data, array("_format"=>"pdf"));
-        $this->assertEquals($expectedDocument, $document);
-        
-        //Request with data need to be fetch
-        $document = $generator->generate($template_id, $data);
-        $this->assertEquals($expectedDocument, $document);
+    }
+    
+    /**
+     * testGenerate params provider
+     */
+    public function generateProvider()
+    {
+        return array(
+            array(null,null,null), //test : id + all data + no option
+            array(null,null,null), //test : id + fetcher needed + no option
+            array(null,null,array("_format"=>"application/pdf")), //test : pdf format
+            array(null,null,array("_format"=>"text/html")) //test : html format
+        );
     }
     
     /**
@@ -47,8 +55,22 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase {
         //Constructor without data, useful ?
         $document = $generator->generate($template_id);
         
-        //Case with empty data
+        //Case with empty data => generate exception ?
         $document = $generator->generate($template_id, array());
+    }
+    
+    /**
+     * @expectedException TemplateNotFound
+     */
+    public function testTemplateNotFound()
+    {
+        $generator = new Generator(
+            new HtmlConverterRegistry(),
+            new DataFetcherRegistry()
+        );
+        
+        //Id which not exist
+        $document = $generator->generate(null, null, null);
     }
     
     public function testRender()
