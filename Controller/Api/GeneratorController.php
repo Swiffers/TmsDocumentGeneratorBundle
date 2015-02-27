@@ -22,4 +22,18 @@ class GeneratorController extends Controller
        );
     }
 
+    public function generateAction()
+    {
+
+    }
+
+    public function downloadAction()
+    {
+
+    }
+
+    public function previewAction()
+    {
+
+    }
 }

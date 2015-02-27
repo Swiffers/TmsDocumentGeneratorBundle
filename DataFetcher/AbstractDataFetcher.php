@@ -25,14 +25,6 @@ abstract class AbstractDataFetcher implements DataFetcherInterface
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function getSearchedDataKeys()
-    {
-        return array();
-    }
-
-    /**
      * Do fetch.
      *
      * @param  array data The data used as the fetcher source to look at.
@@ -40,4 +32,12 @@ abstract class AbstractDataFetcher implements DataFetcherInterface
      * @return array
      */
     public abstract function doFetch(array $data);
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSearchedDataKeys()
+    {
+        return array();
+    }
 }
