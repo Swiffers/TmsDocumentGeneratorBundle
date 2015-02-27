@@ -15,6 +15,9 @@ class DataFetcherRegistry implements DataFetcherRegistryInterface
      */
     private $fetchers;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->fetchers = array();

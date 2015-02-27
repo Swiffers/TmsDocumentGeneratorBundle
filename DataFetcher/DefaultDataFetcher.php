@@ -6,12 +6,12 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\DataFetcher;
 
-class DefaultDataFetcher implements DataFetcherInterface
+class DefaultDataFetcher extends AbstractDataFetcher
 {
     /**
      * {@inheritDoc}
      */
-    public function fetch(array $data)
+    public function doFetch(array $data)
     {
         return $data;
     }

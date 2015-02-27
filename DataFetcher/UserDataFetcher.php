@@ -6,23 +6,38 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\DataFetcher;
 
-class UserDataFetcher implements DataFetcherInterface
+use Tms\Bundle\RestClientBundle\Hypermedia\Crawling\CrawlerInterface;
+
+class UserDataFetcher extends AbstractDataFetcher
 {
+    /**
+     * @var CrawlerInterface
+     */
+    protected $crawler;
+
     /**
      * Constructor
      *
-     * @param ...
+     * @param CrawlerInterface $crawler
      */
-    public function __construct()
+    public function __construct(CrawlerInterface $crawler)
     {
-        // TODO: inject an api crawler.
+        $this->crawler = $crawler;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function fetch(array $data)
+    public function doFetch(array $data)
     {
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSearchedDataKeys()
+    {
+        return array('user_id');
     }
 }
