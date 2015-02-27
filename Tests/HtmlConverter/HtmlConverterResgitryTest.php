@@ -17,7 +17,6 @@ class HtmlConverterResgitryTest extends \PHPUnit_Framework_TestCase
         
         //valid alias test
         $htmlConverter = $htmlConverterRegistry->getHtmlConverter(null);
-        
         $this->assertEquals(null,$htmlConverter);
     }
     
