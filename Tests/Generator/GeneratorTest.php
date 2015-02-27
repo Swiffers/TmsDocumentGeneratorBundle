@@ -3,8 +3,8 @@
 namespace Tms\Bundle\DocumentGeneratorBundle\Tests\Generator;
 
 use Tms\Bundle\DocumentGeneratorBundle\Generator\Generator;
-use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistry;
 use Tms\Bundle\DocumentGeneratorBundle\HtmlConverter\HtmlConverterRegistry;
+use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistry;
 
 /**
  * Description of GeneratorTest
@@ -53,10 +53,10 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase {
         );
         
         //Constructor without data, useful ?
-        $document = $generator->generate($template_id);
+        $generator->generate($template_id);
         
         //Case with empty data => generate exception ?
-        $document = $generator->generate($template_id, array());
+        $generator->generate($template_id, array());
     }
     
     /**
@@ -70,11 +70,6 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase {
         );
         
         //Id which not exist
-        $document = $generator->generate(null, null, null);
-    }
-    
-    public function testRender()
-    {
-        //TO_DO
+        $generator->generate(null, null, null);
     }
 }
