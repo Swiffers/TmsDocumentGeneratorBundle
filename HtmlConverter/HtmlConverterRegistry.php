@@ -15,6 +15,9 @@ class HtmlConverterRegistry implements HtmlConverterRegistryInterface
      */
     private $converters;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->converters = array();

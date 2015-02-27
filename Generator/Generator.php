@@ -47,8 +47,8 @@ class Generator implements GeneratorInterface
     /**
      * Returns the rendered Html
      *
-     * @param Template $template   The template.
-     * @param array    $fechedData The fetched data.
+     * @param Template $template    The template.
+     * @param array    $fetchedData The fetched data.
      *
      * @return string
      */

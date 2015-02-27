@@ -1,0 +1,32 @@
+parameters:
+#    tms.bundle.documentgenerator.example.class: Tms\Bundle\DocumentGeneratorBundle\Example
+
+services:
+#    tms.bundle.documentgenerator.example:
+#        class: %tms.bundle.documentgenerator.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+#        calls:
+#            - [setService, [@service_id]]
+#        tags:
+#            - { name: twig.extension }
+#            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+# Da Api Client
+da_api_client:
+    api:
+        participation:
+            endpoint_root: %api.participation.endpoint_root%
+            security_token: %api.security_token%
+#            cache_enabled: true
+#        operation:
+#                endpoint_root:  %api.operation.endpoint_root%
+#                security_token: %api.security_token%
+#                cache_enabled:  true
+#        pot:
+#                endpoint_root:  %api.pot.endpoint_root%
+#                security_token: %api.security_token%
+#                cache_enabled:  true
+#        code:
+#                endpoint_root:  %api.code.endpoint_root%
+#                security_token: %api.security_token%
+#                cache_enabled:  true
