@@ -11,22 +11,47 @@ use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DefaultDataFetcher;
  */
 class DefaultDataFetcherTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @dataProvider doFetchProvider
-     */
-    public function testDoFetch(array $data){
-        $dataFetcher = new DefaultDataFetcher();
+    public function getData()
+    {
+        $providedData = array();
         
-        $fetchedDate = $dataFetcher->doFetch($data);
-        $this->assertEquals($fetchedDate, $data);
+        #0
+        $data = array(
+            "name" => "Ribola",
+            "firstname" => "Antoine",
+            "participation_id" => "00000"
+        );
+        $expectedFetchedData = $data;
+        
+        $providedData[] = array(
+            $data,
+            $expectedFetchedData
+        );
+        
+        #1
+        $data = array(
+            "name" => "Shang",
+            "firstname" => "Guokan"
+        );
+        $expectedFetchedData = $data;
+            
+        $providedData[] = array(
+            $data,
+            $expectedFetchedData
+        );
+        
+        return $providedData;
     }
     
     /**
-     * data provider for testDoFetch method
+     * @covers DefaultDataFetcher::doFetch
+     * @dataProvider getData
      */
-    public function doFetchProvider(){
-        return array(
-            array("name" => "RIBOLA", "firstname" => "Antoine")
-        );
+    public function testDoFetch(array $data, array $expectedFetchedData)
+    {
+        $dataFetcher = new DefaultDataFetcher();
+        
+        $fetchedDate = $dataFetcher->doFetch($data);
+        $this->assertEquals($expectedFetchedData, $fetchedDate);
     }
 }

@@ -11,31 +11,73 @@ use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistry;
  */
 class DataFetcherRegistryTest extends \PHPUnit_Framework_TestCase
 {
-    public function testGetDataFetcher(){
+    public function getData()
+    {
+        $data = array();
+        
+        #0
+        $alias = ["default"];
+        $service = ["tms_document_generator.fetcher.default"];
+        
+        $data[] = array(
+            $alias,
+            $service
+        );
+        
+        #1
+        $alias = ["participation"];
+        $service = ["tms_document_generator.fetcher.participation"];
+        
+        $data[] = array(
+            $alias,
+            $service
+        );
+        
+        #2
+        $alias = ["user"];
+        $service = ["tms_document_generator.fetcher.user"];
+        
+        $data[] = array(
+            $alias,
+            $service
+        );
+        
+        return $data;
+    }
+
+    /**
+     * @covers DataFetcherRegistry::getDataFetcher
+     * @dataProvider getData
+     */
+    public function testGetDataFetcher($alias, $service)
+    {
         $dataFetcherRegistry = new DataFetcherRegistry();
         
-        //valid alias test
-        $dataFetcher = $dataFetcherRegistry->getDataFetcher(null);
-        $this->assertEquals(null,$dataFetcher);
+        $dataFetcher = $dataFetcherRegistry->getDataFetcher($alias);
+        $this->assertEquals($service,$dataFetcher);
     }
     
     /**
+     * @covers DataFetcherRegistry::getDataFetcher
      * @expectedException UnexpectedTypeException
      */
-    public function testUnexpectedTypeException(){
+    public function testUnexpectedTypeException()
+    {
         $dataFetcherRegistry = new DataFetcherRegistry();
         
         //parameter with another type than string
-        $dataFetcher = $dataFetcherRegistry->getDataFetcher(0);
+        $dataFetcher = $dataFetcherRegistry->getDataFetcher(00000);
     }
     
     /**
+     * @covers DataFetcherRegistry::getDataFetcher
      * @expectedException InvalidArgumentException
      */
-    public function testInvalidArgumentException(){
+    public function testInvalidArgumentException()
+    {
         $dataFetcherRegistry = new DataFetcherRegistry();
         
         //parameter with alias which not exist
-        $dataFetcher = $dataFetcherRegistry->getDataFetcher(null);
+        $dataFetcher = $dataFetcherRegistry->getDataFetcher("NotExistFetcher");
     }
 }

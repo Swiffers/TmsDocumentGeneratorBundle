@@ -12,30 +12,60 @@ use Tms\Bundle\RestClientBundle\Hypermedia\Crawling\Crawler;
  */
 class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
 {
+    public function getData()
+    {
+        $providedData = array();
+        
+        #0
+        $data = array(
+            "participation_id" => 00000,
+            "user_id" => 00000
+        );
+        $expectedFetchedData = array(
+            //Need to complete
+        );
+        
+        $providedData[] = array(
+            $data,
+            $expectedFetchedData
+        );
+        
+        #1
+        $data = array(
+            "participation_id" => 00000,
+            "firstname" => "Antoine",
+            "name" => "Ribola"
+        );
+        $expectedFetchedData = array(
+            //Need to complete
+        );
+        
+        $providedData[] = array(
+            $data,
+            $expectedFetchedData
+        );
+            
+        return $providedData;
+    }
+    
     /**
-     * @dataProvider doFetchProvider
+     * @covers ParticipationDataFetcher::doFetch
+     * @dataProvider getData
      */
-    public function testDoFetch(array $data){
+    public function testDoFetch(array $data, array $expectedFetchedData)
+    {
         $dataFetcher = new ParticipationDataFetcher(new Crawler());
         
         $fetchedDate = $dataFetcher->doFetch($data);
-        $this->assertEquals($fetchedDate, null);
+        $this->assertEquals($expectedFetchedData, $fetchedDate);
     }
     
     /**
-     * data provider for testDoFetch method
-     */
-    public function doFetchProvider()
-    {
-        return array(
-            array("participation_id" => null, "firstname" => "Antoine")
-        );
-    }
-    
-    /**
+     * @covers ParticipationDataFetcher::doFetch
      * @expectedException NotFoundHttpException
      */
-    public function testNotFoundHttpException(){
+    public function testNotFoundHttpException()
+    {
         $dataFetcher = new ParticipationDataFetcher(new Crawler());
         
         $fetchedDate = $dataFetcher->doFetch(null);
