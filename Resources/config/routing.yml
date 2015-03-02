@@ -1,3 +1,11 @@
-tms_document_generator_test:
-    path:     test
-    defaults: { _controller: TmsDocumentGeneratorBundle:Api/Generator:test }
+tms_document_generator_generate:
+    path:     generate
+    defaults: { _controller: TmsDocumentGeneratorBundle:Api/Generator:generate }
+
+tms_document_generator_download:
+    path:     download
+    defaults: { _controller: TmsDocumentGeneratorBundle:Api/Generator:download }
+
+tms_document_generator_preview:
+    path:     preview
+    defaults: { _controller: TmsDocumentGeneratorBundle:Api/Generator:preview }
