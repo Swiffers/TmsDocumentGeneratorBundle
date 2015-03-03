@@ -6,8 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use IDCI\Bundle\SimpleMetadataBundle\Metadata\MetadatableInterface;
 use Tms\Bundle\LoggerBundle\Logger\LoggableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata;
-use Tms\Bundle\MediaClientBundle\Entity\Media;
 
 /**
  * Template
@@ -74,8 +72,8 @@ class Template implements MetadatableInterface, LoggableInterface
      *
      * @ORM\ManyToMany(targetEntity="IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata", cascade={"all"})
      * @ORM\JoinTable(name="template_tag",
-     *      joinColumns={@ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="cascade")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id", unique=true, onDelete="cascade")}
+     *     joinColumns={@ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="cascade")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id", unique=true, onDelete="cascade")}
      * )
      */
     private $tags;
@@ -143,9 +141,9 @@ class Template implements MetadatableInterface, LoggableInterface
      */
     public function __construct()
     {
-        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->mergeTags = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags         = new ArrayCollection();
+        $this->mergeTags    = new ArrayCollection();
+        $this->images       = new ArrayCollection();
     }
     
     /**
@@ -390,7 +388,7 @@ class Template implements MetadatableInterface, LoggableInterface
      */
     public function getMetadatas()
     {
-        $this->getTags();
+        return $this->getTags();
     }
 
 }

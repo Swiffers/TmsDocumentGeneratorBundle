@@ -11,39 +11,82 @@ use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistry;
  *
  * @author Antoine Ribola <antoine.ribola@gmail.com>
  */
-class GeneratorTest extends \PHPUnit_Framework_TestCase {
-    /*
-     * Need to define all test values !
-     */
+class GeneratorTest extends \PHPUnit_Framework_TestCase
+{
+    public function getData()
+    {
+        $providedData = array();
+        
+        #0
+        $template_id = [00000];
+        $data = array(
+            "name" => "Ribola",
+            "firstname" => "Antoine"
+        );
+        $options = array();
+        $expectedDoc = []; //Need to complete
+        
+        $providedData[] = array(
+            $template_id,
+            $data,
+            $options,
+            $expectedDoc
+        );
+        
+        #1
+        $template_id = [00000];
+        $data = array(
+            "participation_id" => 00000,
+            "user_id" => 00000
+        );
+        $options = array("_format" => "application/pdf");
+        $expectedDoc = []; //Need to complete
+        
+        $providedData[] = array(
+            $template_id,
+            $data,
+            $options,
+            $expectedDoc
+        );
+        
+        #2
+        $template_id = [00000];
+        $data = array(
+            "participation_id" => 00000,
+            "firstname" => "Antoine",
+            "name" => "Ribola"
+        );
+        $options = array("_format" => "text/html");
+        $expectedDoc = []; //Need to complete
+        
+        $providedData[] = array(
+            $template_id,
+            $data,
+            $options,
+            $expectedDoc
+        );
+        
+        return $providedData;
+    }
+    
     
     /**
-     * @dataProvider generateProvider
+     * @covers Generator::generate
+     * @dataProvider getData
      */
-    public function testGenerate($template_id, array $data, array $options)
+    public function testGenerate($template_id, array $data, array $options, $expectedDoc)
     {
         $generator = new Generator(
             new HtmlConverterRegistry(),
             new DataFetcherRegistry()
         );
         
-        $document = $generator->generate($template_id, $data);
-        $this->assertEquals($expectedDocument, $document);
+        $document = $generator->generate($template_id, $data, $options);
+        $this->assertEquals($expectedDoc, $document);
     }
     
     /**
-     * testGenerate params provider
-     */
-    public function generateProvider()
-    {
-        return array(
-            array(null,null,null), //test : id + all data + no option
-            array(null,null,null), //test : id + fetcher needed + no option
-            array(null,null,array("_format"=>"application/pdf")), //test : pdf format
-            array(null,null,array("_format"=>"text/html")) //test : html format
-        );
-    }
-    
-    /**
+     * @covers Generator::generate
      * @expectedException MissingDataException
      */
     public function testMissingDataException(){
@@ -60,6 +103,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase {
     }
     
     /**
+     * @covers Generator::generate
      * @expectedException TemplateNotFound
      */
     public function testTemplateNotFound()

@@ -57,7 +57,7 @@ class MergeTag
      * @ORM\ManyToOne(targetEntity="Template", inversedBy="mergeTags", cascade={"persist"})
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", nullable=false, onDelete="Cascade")
      */
-    private $templateId;
+    private $template_id;
 
     /**
      * toString
@@ -179,7 +179,7 @@ class MergeTag
      */
     public function setTemplateId(\Tms\Bundle\DocumentGeneratorBundle\Entity\Template $templateId)
     {
-        $this->templateId = $templateId;
+        $this->template_id = $templateId;
     
         return $this;
     }
@@ -191,6 +191,6 @@ class MergeTag
      */
     public function getTemplateId()
     {
-        return $this->templateId;
+        return $this->template_id;
     }
 }
