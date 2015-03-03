@@ -11,21 +11,44 @@ use Tms\Bundle\DocumentGeneratorBundle\HtmlConverter\PdfHtmlConverter;
  */
 class PdfHtmlConverterTest extends \PHPUnit_Framework_TestCase
 {
-    public function testConvert(){
+    public function getData()
+    {
+        $data = array();
+        
+        #0
+        $html = null;
+        $expectedPdf = null;
+        
+        $data[] = array(
+            $html,
+            $expectedPdf
+        );
+        
+        return $data;
+    }
+
+    /**
+     * @dataProvider getData
+     * @covers PdfHtmlConverter::convert
+     */
+    public function testConvert($html,$expectedPdf)
+    {
         $pdfHtmlConverter = new PdfHtmlConverter();
         
         //Correct html string
         $pdf = $pdfHtmlConverter->convert($html);
-        $this->assertEquals(null, $pdf);
+        $this->assertEquals($expectedPdf, $pdf);
     }
     
     /**
+     * @covers PdfHtmlConverter::convert
      * @expectedException UnexpectedTypeException
      */
-    public function testUnexpectedTypeException(){
+    public function testUnexpectedTypeException()
+    {
         $pdfHtmlConverter = new PdfHtmlConverter();
         
         //no string param
-        $pdf = $pdfHtmlConverter->convert(0);
+        $pdf = $pdfHtmlConverter->convert(00000);
     }
 }
