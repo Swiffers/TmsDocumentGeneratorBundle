@@ -3,8 +3,6 @@
 namespace Tms\Bundle\DocumentGeneratorBundle\Tests\Generator;
 
 use Tms\Bundle\DocumentGeneratorBundle\Generator\Generator;
-use Tms\Bundle\DocumentGeneratorBundle\HtmlConverter\HtmlConverterRegistry;
-use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistry;
 
 /**
  * Description of GeneratorTest
@@ -69,6 +67,73 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
         return $providedData;
     }
     
+    private function getHtmlConverterRegistry()
+    {
+        $htmlConverterRegistry = $this
+            ->getMockBuilder("Tms\Bundle\DocumentGeneratorBundle\HtmlConverter\HtmlConverterRegistry")
+            ->setMethods(array('getHtmlConverter'))    
+            ->getMock()
+        ;
+ 
+        $htmlConverterRegistry
+            ->expects($this->any())
+            ->method('getHtmlConverter')
+            ->with(
+                $this->callback(
+                    function ($alias)
+                    {
+                        $service = null;
+                    
+                        switch ($alias) {
+                            case "html" :
+                                $service = null; //Wait service done
+                                break;
+                            case "pdf" :
+                                $service = "tms_document_generator.converter.pdf";
+                                break;
+                        }
+                        return $service;
+                    }
+                )
+            );
+        
+        return $htmlConverterRegistry;
+    }
+    
+    private function getDataFetcherRegistry()
+    {
+        $dataFetcherRegistry = $this
+            ->getMockBuilder("Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistry")
+            ->setMethods(array('getDataFetcher'))    
+            ->getMock()
+        ;
+ 
+        $dataFetcherRegistry
+            ->expects($this->any())
+            ->method('getHtmlConverter')
+            ->with(
+                $this->callback(
+                    function ($alias)
+                    {
+                        $service = null;
+                    
+                        switch ($alias) {
+                            case "participation" :
+                                $service = "tms_document_generator.fetcher.participation";
+                                break;
+                            case "user" :
+                                $service = "tms_document_generator.fetcher.user";
+                                break;
+                            default :
+                                $service = "tms_document_generator.fetcher.default";
+                        }
+                        return $service;
+                    }
+                )
+            );
+        
+        return $dataFetcherRegistry;
+    }
     
     /**
      * @covers Generator::generate
@@ -77,8 +142,8 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     public function testGenerate($template_id, array $data, array $options, $expectedDoc)
     {
         $generator = new Generator(
-            new HtmlConverterRegistry(),
-            new DataFetcherRegistry()
+            $this->getHtmlConverterRegistry(),
+            $this->getDataFetcherRegistry()
         );
         
         $document = $generator->generate($template_id, $data, $options);
@@ -89,11 +154,13 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
      * @covers Generator::generate
      * @expectedException MissingDataException
      */
-    public function testMissingDataException(){
+    public function testMissingDataException()
+    {
         $generator = new Generator(
-            new HtmlConverterRegistry(),
-            new DataFetcherRegistry()
+            $this->getHtmlConverterRegistry(),
+            $this->getDataFetcherRegistry()
         );
+        $template_id = 00000;
         
         //Constructor without data, useful ?
         $generator->generate($template_id);
@@ -109,8 +176,8 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     public function testTemplateNotFound()
     {
         $generator = new Generator(
-            new HtmlConverterRegistry(),
-            new DataFetcherRegistry()
+            $this->getHtmlConverterRegistry(),
+            $this->getDataFetcherRegistry()
         );
         
         //Id which not exist
