@@ -3,7 +3,7 @@
 namespace Tms\Bundle\DocumentGeneratorBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
+use Tms\Bundle\MediaClientBundle\Entity\Media;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -11,7 +11,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadTemplateData extends AbstractFixture implements OrderedFixtureInterface, FixtureInterface, ContainerAwareInterface
+class LoadMediaData extends AbstractFixture implements OrderedFixtureInterface, FixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -31,17 +31,14 @@ class LoadTemplateData extends AbstractFixture implements OrderedFixtureInterfac
      */
     public function load(ObjectManager $em)
     {
+        /*
+        $media = new Media();
         for ($i = 1; $i <= 100; $i++) {
-            $template = new Template();
-            $template->setName('template'.$i)
-                ->setDescription('template description'.$i)
-                ->setHtml('html'.$i)
-                ->setCss('css'.$i)
-            ;
-
-            $this->container->get('tms_document_generator.manager.template')->add($template);
-            $this->addReference("template".$i, $template);
+            $template = $this->getReference("template".$i);
+            $template->addImage($media);
+            $this->container->get('tms_document_generator.manager.template')->update($template);
         }
+        */
     }
 
     /**
@@ -49,7 +46,7 @@ class LoadTemplateData extends AbstractFixture implements OrderedFixtureInterfac
      */
     public function getOrder()
     {
-        return 1;
+        return 3;
     }
 }
 
