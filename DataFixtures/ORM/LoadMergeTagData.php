@@ -41,7 +41,7 @@ class LoadMergeTagData extends AbstractFixture implements OrderedFixtureInterfac
      */
     public function load(ObjectManager $em)
     {
-        for ($j = 0; $j < 3; $j++) {
+        for ($j = 0; $j < 10; $j++) {
             for ($i = 1; $i <= 100; $i++) {
                 $mergeTag = new MergeTag();
                 $mergeTag
