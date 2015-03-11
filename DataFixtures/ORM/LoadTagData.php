@@ -47,10 +47,12 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface, Fi
                 ->addTag((new Metadata())
                     ->setKey('customer')
                     ->setValue(self::$customerEnum[array_rand(self::$customerEnum)])
+                    ->setNamespace('tags')
                 )
                 ->addTag((new Metadata())
                     ->setKey('type')
                     ->setValue(self::$typeEnum[array_rand(self::$typeEnum)])
+                    ->setNamespace('tags')
                 )
             ;
 

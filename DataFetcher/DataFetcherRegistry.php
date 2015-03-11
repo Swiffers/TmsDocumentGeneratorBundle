@@ -60,4 +60,11 @@ class DataFetcherRegistry implements DataFetcherRegistryInterface
 
         return true;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDataFetchersAlias(){
+        return array_keys($this->fetchers);
+    }
 }

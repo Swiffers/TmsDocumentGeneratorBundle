@@ -42,28 +42,28 @@ class Template implements MetadatableInterface, LoggableInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="html", type="text")
+     * @ORM\Column(name="html", type="text", nullable=true)
      */
     private $html;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="css", type="text")
+     * @ORM\Column(name="css", type="text", nullable=true)
      */
     private $css;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime")
+     * @ORM\Column(name="createdAt", type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updatedAt", type="datetime")
+     * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
      */
     private $updatedAt;
 
