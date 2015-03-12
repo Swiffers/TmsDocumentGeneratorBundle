@@ -34,7 +34,8 @@
         "tms/media-client-bundle": "1.1.*",
         "tms/modelio-bundle": "1.1.*",
         "tms/logger-bundle": "1.0.*",
-        "tms/rest-client-bundle": "1.0.*"
+        "tms/rest-client-bundle": "1.0.*",
+        "knplabs/knp-snappy-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": {
