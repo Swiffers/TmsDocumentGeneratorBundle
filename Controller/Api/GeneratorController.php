@@ -71,11 +71,25 @@ class GeneratorController extends Controller
      */
     public function previewAction(Request $request, $id)
     {
-        $data = array();
-        $options = json_decode($request->request->get('options'), true);
-        $options['mode'] = 'preview';
-        $content = $this->get('tms_document_generator')->generate($id, $data, $options);
+        $response = new Response();
+        try {
+            $content = $this->get('tms_document_generator')->generate(
+                $id,
+                array(),
+                array('format' => 'pdf'),
+                true
+            );
 
+            $response->headers->set('Content-Type', 'application/pdf');
+            $response->setStatusCode(200);
+            $response->setContent($content);
+        } catch (\Exception $e) {
+            $response->setStatusCode(500);
+            $response->setContent($e->getMessage());
+        }
+
+        return $response;
+/*
         return new Response(
             $content,
             200,
@@ -83,6 +97,6 @@ class GeneratorController extends Controller
                 'Content-Type'          => 'application/pdf',
                 'Content-Disposition'   => 'attachment; filename="file.pdf"'
             )
-        );
+        );*/
     }
 }

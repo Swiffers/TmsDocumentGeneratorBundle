@@ -11,11 +11,12 @@ interface GeneratorInterface
     /**
      * Generate a document from a request
      *
-     * @param string  $template_id The template document id.
+     * @param string  $templateId  The template document id.
      * @param array   $data        The bases data to merge.
      * @param array   $options     The generation options.
+     * @param boolean $isPreview   If the generation must not fetch the given data.
      *
      * @return string
      */
-    public function generate($template_id, array $data = array(), array $options = array());
+    public function generate($templateId, array $data = array(), array $options = array(), $isPreview = false);
 }

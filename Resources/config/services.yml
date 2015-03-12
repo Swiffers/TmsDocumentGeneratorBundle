@@ -1,6 +1,6 @@
 services:
 
-    #Generator
+    # Generator
     tms_document_generator:
         class: Tms\Bundle\DocumentGeneratorBundle\Generator\Generator
         arguments:
@@ -8,14 +8,14 @@ services:
             - @tms_document_generator.fetcher.registry
             - @tms_document_generator.converter.registry
 
-    #Registry
+    # Registry
     tms_document_generator.fetcher.registry:
         class: Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistry
 
     tms_document_generator.converter.registry:
         class: Tms\Bundle\DocumentGeneratorBundle\HtmlConverter\HtmlConverterRegistry
 
-    #Fetcher
+    # Fetcher
     tms_document_generator.fetcher.default:
         class: Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DefaultDataFetcher
         arguments: [@tms_rest_client.hypermedia.crawler]
@@ -34,7 +34,12 @@ services:
         tags:
             - { name: tms_document_generator.fetcher, alias: participation }
 
-    #Converter
+    # Converter
+    tms_document_generator.converter.html:
+        class: Tms\Bundle\DocumentGeneratorBundle\HtmlConverter\NullHtmlConverter
+        tags:
+            - { name: tms_document_generator.converter, alias: html }
+
     tms_document_generator.converter.pdf:
         class: Tms\Bundle\DocumentGeneratorBundle\HtmlConverter\PdfHtmlConverter
         arguments: [@knp_snappy.pdf]

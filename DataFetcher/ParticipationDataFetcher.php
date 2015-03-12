@@ -48,6 +48,7 @@ class ParticipationDataFetcher extends AbstractDataFetcher
                     throw new NotFoundHttpException();
             }
         }
+
         return $raw;
     }
 

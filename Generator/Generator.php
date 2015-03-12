@@ -49,7 +49,7 @@ class Generator implements GeneratorInterface
     /**
      * {@inheritDoc}
      */
-    public function generate($template_id, array $data = array(), array $options = array())
+    public function generate($template_id, array $data = array(), array $options = array(), $isPreview = false)
     {
         $template = $this->templateManager->find($template_id);
         if (!$template) {
@@ -57,48 +57,45 @@ class Generator implements GeneratorInterface
         }
 
         $fetchedData = array();
-        if ($options['mode'] != 'preview') {
-            $rawData = array();
-            foreach ($template->getMergeTags() as $mergeTag) {
-                $identifier = $mergeTag->getIdentifier();
-                $fetcherAlias = $mergeTag->getFetcherAlias();
-
-                if (!array_key_exists($fetcherAlias, $rawData)) {
-                    if (!$this->dataFetcherRegistry->hasDataFetcher($fetcherAlias)) {
-                        throw new \UnexpectedValueException("Fetcher alias: ".$fetcherAlias." doesn't exist");
-                    }
-                    $rawData[$fetcherAlias] = $this->dataFetcherRegistry
-                        ->getDataFetcher($fetcherAlias)
-                        ->fetch($data);
-                }
-
-                if (!array_key_exists($identifier, $rawData[$fetcherAlias])) {
-                    if ($mergeTag->getRequired()) {
-                        throw new \UnexpectedValueException(
-                            "Can not find ".$identifier." on the fetcher ".$fetcherAlias
-                        );
-                    }
-                    continue;
-                }
-
-                $fetchedData[$identifier] = $rawData[$fetcherAlias][$identifier];
-            }
+        if (!$isPreview) {
+            $fetchedData = $this->fetchData($template);
         }
 
-        var_dump($fetchedData);
-        $html = $this->render($template, $fetchedData);
-
-        if (!isset($options['format']) || $options['format'] == 'html') {
-            return $html;
-        }
+        $html = $this->render($template, $fetchedData, $isPreview);
 
         $format = $options['format'];
         if (!$this->htmlConverterRegistry->hasHtmlConverter($format)) {
             throw new \UnexpectedValueException("Format: ".$format." doesn't exist");
         }
 
-        return $this->htmlConverterRegistry->getHtmlConverter($format)
-            ->convert($html);
+        return $this->htmlConverterRegistry->getHtmlConverter($format)->convert($html);
+    }
+
+    /**
+     * Returns the fetch data
+     *
+     * @param Template $template The document template.
+     *
+     * @return mixed
+     */
+    protected function fetchData(Template $template)
+    {
+        $fetchedData = array();
+        foreach ($template->getMergeTags() as $mergeTag) {
+            $identifier = $mergeTag->getIdentifier();
+            $fetcherAlias = $mergeTag->getFetcherAlias();
+
+            if (!$this->dataFetcherRegistry->hasDataFetcher($fetcherAlias)) {
+                throw new \UnexpectedValueException("Fetcher alias: ".$fetcherAlias." doesn't exist");
+            }
+
+            $fetchedData[$identifier] = $this->dataFetcherRegistry
+                ->getDataFetcher($fetcherAlias)
+                ->fetch($data, $mergeTag->getRequired(), $mergeTag->getDefaultValue())
+            ;
+        }
+
+        return $fetchedData;
     }
 
     /**
@@ -106,18 +103,21 @@ class Generator implements GeneratorInterface
      *
      * @param Template $template    The template.
      * @param array    $fetchedData The fetched data.
+     * @param boolean  $isPreview   If the generation must not fetch the given data.
      *
      * @return string
      */
-    private function render(Template $template, array $fetchedData)
+    private function render(Template $template, array $fetchedData, $isPreview = false)
     {
-        // TODO: Use twig engine to merge the template with fetched data.
-        $initHtml = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><style type=\"text/css\">%s</style></head><body>%s</body></html>";
+        if ($isPreview) {
+            return sprintf(
+                "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><style type=\"text/css\">%s</style></head><body>%s</body></html>",
+                $template->getCss(),
+                $template->getHtml()
+            );
+        }
 
-        return sprintf(
-            $initHtml,
-            $template->getCss(),
-            $template->getHtml()
-        );
+        die('TODO');
+        // TODO: Use twig engine to merge the template with fetched data.
     }
 }
