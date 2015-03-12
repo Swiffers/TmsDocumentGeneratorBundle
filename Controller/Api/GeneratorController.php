@@ -76,11 +76,13 @@ class GeneratorController extends Controller
         $options['mode'] = 'preview';
         $content = $this->get('tms_document_generator')->generate($id, $data, $options);
 
-        $response = new Response();
-        //$response->headers->set('Content-Type', MimeType);
-        $response->setStatusCode(200);
-        $response->setContent($content);
-
-        return $response;
+        return new Response(
+            $content,
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="file.pdf"'
+            )
+        );
     }
 }

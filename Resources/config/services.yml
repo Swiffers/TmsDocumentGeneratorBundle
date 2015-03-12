@@ -37,6 +37,6 @@ services:
     #Converter
     tms_document_generator.converter.pdf:
         class: Tms\Bundle\DocumentGeneratorBundle\HtmlConverter\PdfHtmlConverter
-        arguments: [@tms_rest_client.hypermedia.crawler]
+        arguments: [@knp_snappy.pdf]
         tags:
             - { name: tms_document_generator.converter, alias: pdf }
