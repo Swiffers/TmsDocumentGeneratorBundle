@@ -1,11 +1,19 @@
 services:
 
+    #Generator
+    tms_document_generator:
+        class: Tms\Bundle\DocumentGeneratorBundle\Generator\Generator
+        arguments:
+            - @tms_document_generator.manager.template
+            - @tms_document_generator.fetcher.registry
+            - @tms_document_generator.converter.registry
+
     #Registry
     tms_document_generator.fetcher.registry:
-            class: Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistry
+        class: Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistry
 
     tms_document_generator.converter.registry:
-                class: Tms\Bundle\DocumentGeneratorBundle\HtmlConverter\HtmlConverterRegistry
+        class: Tms\Bundle\DocumentGeneratorBundle\HtmlConverter\HtmlConverterRegistry
 
     #Fetcher
     tms_document_generator.fetcher.default:

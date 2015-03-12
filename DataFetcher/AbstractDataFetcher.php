@@ -16,7 +16,8 @@ abstract class AbstractDataFetcher implements DataFetcherInterface
         foreach ($this->getSearchedDataKeys() as $key){
             if (!array_key_exists($key, $data)) {
                 throw new \UnexpectedValueException(sprintf(
-                    'The searched data key "%s" was not found'
+                    'The searched data key "%s" was not found',
+                    $key
                 ));
             }
         }

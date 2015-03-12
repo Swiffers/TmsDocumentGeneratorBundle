@@ -11,9 +11,9 @@ interface HtmlConverterInterface
     /**
      * Convert html page to document.
      *
-     * @param  string $html
+     * @param $html
      *
      * @return string
      */
-    public function convert(string $html);
+    public function convert($html);
 }
