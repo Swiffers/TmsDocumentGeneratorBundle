@@ -6,7 +6,8 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Handler;
 
-class JsonHandler {
+class JsonHandler
+{
 
     /**
      * Json error codes may be returned by json_last_error() and messages corresponding
@@ -33,7 +34,8 @@ class JsonHandler {
      *
      * @throws \Exception
      */
-    public static function encode($value, $options = 0) {
+    public static function encode($value, $options = 0)
+    {
         $result = json_encode($value, $options);
 
         if($result) {
@@ -56,7 +58,8 @@ class JsonHandler {
      *
      * @throws \Exception
      */
-    public static function decode($json, $assoc = false) {
+    public static function decode($json, $assoc = false)
+    {
         $result = json_decode($json, $assoc);
 
         if($result) {

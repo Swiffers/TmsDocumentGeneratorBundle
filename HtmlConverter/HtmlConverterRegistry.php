@@ -36,6 +36,7 @@ class HtmlConverterRegistry implements HtmlConverterRegistryInterface
     {
         $this->converters[$alias] = $htmlconverter;
         $this->mimeTypes[$alias] = $htmlconverter->getMimeType();
+
         return $this;
     }
 

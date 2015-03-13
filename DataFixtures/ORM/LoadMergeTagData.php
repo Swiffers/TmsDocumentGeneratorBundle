@@ -49,7 +49,7 @@ class LoadMergeTagData extends AbstractFixture implements OrderedFixtureInterfac
     /**
      * @var array list of default Value
      */
-    private static $defaultValue=[null, 'defaultValue1', 'defaultValue2'];
+    private static $defaultValueEnum=[null, 'defaultValue1', 'defaultValue2', 'defaultValue3', 'defaultValue4', 'defaultValue5'];
 
     /**
      * @param $fetchAlias
@@ -63,6 +63,22 @@ class LoadMergeTagData extends AbstractFixture implements OrderedFixtureInterfac
                 return self::$UserIdentifierEnum[array_rand(self::$UserIdentifierEnum)];
             case 'participation':
                 return self::$ParticipationIdentifierEnum[array_rand(self::$ParticipationIdentifierEnum)];
+        }
+    }
+
+    /**
+     * @param $fetchAlias
+     *
+     * @return string|null
+     */
+    private function getdefaultValue($fetchAlias)
+    {
+        switch ($fetchAlias) {
+            case 'default':
+                return self::$defaultValueEnum[array_rand(self::$defaultValueEnum)];
+            case 'user':
+            case 'participation':
+                return null;
         }
     }
 
@@ -82,12 +98,12 @@ class LoadMergeTagData extends AbstractFixture implements OrderedFixtureInterfac
                         $this ->getIdentifier($mergeTag->getFetcherAlias())
                         )
                     ->setDescription('merge tag description'.$i)
-                    ->setRequired($i%2)
+                    ->setRequired(($j+1)%2)
                     ->setTemplateId(
                         $this->getReference("template".$i)
                         )
                     ->setDefaultValue(
-                        self::$defaultValue[array_rand(self::$defaultValue)]
+                        $this->getdefaultValue($mergeTag->getFetcherAlias())
                     )
                 ;
 

@@ -58,7 +58,7 @@ class Generator implements GeneratorInterface
 
         $fetchedData = array();
         if (!$isPreview) {
-            $fetchedData = $this->fetchData($template);
+            $fetchedData = $this->fetchData($template, $data);
         }
 
         $html = $this->render($template, $fetchedData, $isPreview);
@@ -75,10 +75,11 @@ class Generator implements GeneratorInterface
      * Returns the fetch data
      *
      * @param Template $template The document template.
+     * @param array    $data     The bases data to merge.
      *
      * @return mixed
      */
-    protected function fetchData(Template $template)
+    protected function fetchData(Template $template, $data)
     {
         $fetchedData = array();
         foreach ($template->getMergeTags() as $mergeTag) {
@@ -91,7 +92,7 @@ class Generator implements GeneratorInterface
 
             $fetchedData[$identifier] = $this->dataFetcherRegistry
                 ->getDataFetcher($fetcherAlias)
-                ->fetch($data, $mergeTag->getRequired(), $mergeTag->getDefaultValue())
+                ->fetch($data, $mergeTag)
             ;
         }
 
@@ -117,7 +118,8 @@ class Generator implements GeneratorInterface
             );
         }
 
-        die('TODO');
+        var_dump($fetchedData);
+        die('TODO: Use twig engine to merge the template with fetched data.');
         // TODO: Use twig engine to merge the template with fetched data.
     }
 }

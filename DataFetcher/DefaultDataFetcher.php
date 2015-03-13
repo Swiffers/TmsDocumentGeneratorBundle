@@ -11,8 +11,8 @@ class DefaultDataFetcher extends AbstractDataFetcher
     /**
      * {@inheritDoc}
      */
-    public function doFetch(array $data)
+    public function doFetch(array $data, $identifier)
     {
-        return $data;
+        return $data[$identifier];
     }
 }

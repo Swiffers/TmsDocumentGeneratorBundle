@@ -7,7 +7,10 @@
 namespace Tms\Bundle\DocumentGeneratorBundle\DataFetcher;
 
 use Tms\Bundle\RestClientBundle\Hypermedia\Crawling\CrawlerInterface;
+
 use Da\ApiClientBundle\Exception\ApiHttpResponseException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ParticipationDataFetcher extends AbstractDataFetcher
 {
@@ -29,34 +32,30 @@ class ParticipationDataFetcher extends AbstractDataFetcher
     /**
      * {@inheritDoc}
      */
-    public function doFetch(array $data)
+    public function doFetch(array $data, $identifier)
     {
+        $raw = array();
         try {
             $raw = $this->crawler
                 ->go('participation')
                 ->execute(
-                    sprintf('/participations/%s', $data['participation_id']),
+                    sprintf('/participations/%s', $data[$identifier]),
                     'GET'
                 )
             ;
             //var_dump($raw); die;
         } catch (ApiHttpResponseException $e) {
+
             switch ($e->getHttpCode()) {
                 case 403:
-                    throw new AccessDeniedHttpException();
+                    throw new AccessDeniedHttpException("Fetch: AccessDeniedHttpException");
                 case 404:
-                    throw new NotFoundHttpException();
+                    throw new NotFoundHttpException("Fetch: NotFoundHttpException");
             }
+
+            throw $e;
         }
 
         return $raw;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getSearchedDataKeys()
-    {
-        return array('participation_id');
     }
 }

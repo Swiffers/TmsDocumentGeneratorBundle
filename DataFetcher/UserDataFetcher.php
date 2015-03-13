@@ -28,16 +28,8 @@ class UserDataFetcher extends AbstractDataFetcher
     /**
      * {@inheritDoc}
      */
-    public function doFetch(array $data)
+    public function doFetch(array $data, $identifier)
     {
 
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getSearchedDataKeys()
-    {
-        return array('user_id');
     }
 }

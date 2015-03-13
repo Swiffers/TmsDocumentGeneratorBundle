@@ -84,7 +84,8 @@ class GeneratorController extends Controller
 
             $response->headers->set(
                 'Content-Type',
-                $this->get('tms_document_generator.converter.registry')
+                $this
+                    ->get('tms_document_generator.converter.registry')
                     ->getMimeType($parameters['options']['format'])
             );
             $response->setStatusCode(200);

@@ -40,7 +40,7 @@ interface DataFetcherRegistryInterface
     public function hasDataFetcher($alias);
 
     /**
-     * Checks the alias list of DataFetchers registered.
+     * Get the alias list of DataFetchers registered.
      *
      * @return array
      */
