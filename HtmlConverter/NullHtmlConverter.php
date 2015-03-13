@@ -16,4 +16,12 @@ class NullHtmlConverter implements HtmlConverterInterface
     {
         return $html;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getMimeType()
+    {
+        return 'text/html';
+    }
 }

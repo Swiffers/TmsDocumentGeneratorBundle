@@ -47,6 +47,13 @@ class MergeTag
     /**
      * @var string
      *
+     * @ORM\Column(name="default_value", type="string", length=255, nullable=true)
+     */
+    private $defaultValue;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="fetcher_alias", type="string", length=255)
      */
     private $fetcherAlias;
@@ -146,6 +153,29 @@ class MergeTag
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set defaultValue
+     *
+     * @param string $defaultValue
+     * @return MergeTag
+     */
+    public function setDefaultValue($defaultValue)
+    {
+        $this->defaultValue = $defaultValue;
+
+        return $this;
+    }
+
+    /**
+     * Get defaultValue
+     *
+     * @return string
+     */
+    public function getDefaultValue()
+    {
+        return $this->defaultValue;
     }
 
     /**

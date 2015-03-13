@@ -38,4 +38,13 @@ interface HtmlConverterRegistryInterface
      * @return bool
      */
     public function hasHtmlConverter($alias);
+
+    /**
+     * Returns the Mime type relevant to the alias.
+     *
+     * @param  string $alias
+     *
+     * @return string
+     */
+    public function getMimeType($alias);
 }

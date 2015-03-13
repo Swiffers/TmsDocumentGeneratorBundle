@@ -32,4 +32,12 @@ class PdfHtmlConverter implements HtmlConverterInterface
     {
         return $this->wkhtmltopdf->getOutputFromHtml($html);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getMimeType()
+    {
+        return 'application/pdf';
+    }
 }

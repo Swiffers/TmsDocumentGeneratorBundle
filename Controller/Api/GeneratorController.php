@@ -9,50 +9,51 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
+use Tms\Bundle\DocumentGeneratorBundle\Handler\JsonHandler;
 
 class GeneratorController extends Controller
 {
-    /**
-     * @Route("/test", name="tms_document_generator_test")
-     * @Method({"GET"})
-     */
-    public function testAction()
-    {
-        return new Response(
-            json_encode(
-                $this
-                    ->get('tms_document_generator.fetcher.registry')
-                    ->getDataFetcher('participation')
-                    ->fetch(
-                        array("participation_id"=>"52976d6fe63ea02c768b4567")
-                    )
-            )
-        );
-    }
-
     /**
      * @Route("/generate/{id}", name="tms_document_generator_generate")
      * @Method({"POST"})
      *
      * @param Request $request Data and options
      * @param string  $id      The template document id.
+     *
+     * @return Response
      */
     public function generateAction(Request $request, $id)
     {
-        $data = json_decode($request->request->get('data'), true);
-        $options = json_decode($request->request->get('options'), true);
-        $options['mode'] = 'generate';
-        $result = $this->get('tms_document_generator')->generate($id, $data, $options);
+        $response = new Response();
+        try {
+            $parameters = $this->handleRequest($request, $id, false);
+            $content = $this->get('tms_document_generator')->generate(
+                $parameters['templateId'],
+                $parameters['data'],
+                $parameters['options'],
+                $parameters['isPreview']
+            );
 
-        var_dump($result);die;
+            $response->headers->set(
+                'Content-Type',
+                $this->get('tms_document_generator.converter.registry')
+                    ->getMimeType($parameters['options']['format'])
+            );
+            $response->setStatusCode(200);
+            $response->setContent($content);
+        } catch (\Exception $e) {
+            $response->setStatusCode(500);
+            $response->setContent($e->getMessage());
+        }
+
+        return $response;
     }
 
     /**
      * @Route("/download/{id}", name="tms_document_generator_download")
      * @Method({"POST"})
      *
-     * @param Request $request Data and options
+     * @param Request $request Data and options.
      * @param string  $id      The template document id.
      */
     public function downloadAction(Request $request, $id)
@@ -64,7 +65,7 @@ class GeneratorController extends Controller
      * @Route("/preview/{id}", name="tms_document_generator_preview")
      * @Method({"POST"})
      *
-     * @param Request $request Data and options
+     * @param Request $request Data and options.
      * @param string  $id      The template document id.
      *
      * @return Response
@@ -73,14 +74,19 @@ class GeneratorController extends Controller
     {
         $response = new Response();
         try {
+            $parameters = $this->handleRequest($request, $id, true);
             $content = $this->get('tms_document_generator')->generate(
-                $id,
-                array(),
-                array('format' => 'pdf'),
-                true
+                $parameters['templateId'],
+                $parameters['data'],
+                $parameters['options'],
+                $parameters['isPreview']
             );
 
-            $response->headers->set('Content-Type', 'application/pdf');
+            $response->headers->set(
+                'Content-Type',
+                $this->get('tms_document_generator.converter.registry')
+                    ->getMimeType($parameters['options']['format'])
+            );
             $response->setStatusCode(200);
             $response->setContent($content);
         } catch (\Exception $e) {
@@ -89,14 +95,30 @@ class GeneratorController extends Controller
         }
 
         return $response;
-/*
-        return new Response(
-            $content,
-            200,
-            array(
-                'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'attachment; filename="file.pdf"'
-            )
-        );*/
+    }
+
+    /**
+     * Check and handle the request
+     *
+     * @param Request $request   Data and options.
+     * @param string  $id        The template document id.
+     * @param bool    $isPreview If in the preview mode.
+     *
+     * @return array
+     */
+    private function handleRequest(Request $request, $id , $isPreview = false)
+    {
+        $parameters['templateId'] = $id;
+        $parameters['data'] = $request->request->has('data')
+            ? JsonHandler::decode($request->request->get('data'), true)
+            : array()
+        ;
+        $parameters['options'] = $request->request->has('options')
+            ? JsonHandler::decode($request->request->get('options'), true)
+            : array('format' => 'html')
+        ;
+        $parameters['isPreview'] = $isPreview;
+
+        return $parameters;
     }
 }

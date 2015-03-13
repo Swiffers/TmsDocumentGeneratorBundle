@@ -17,7 +17,7 @@ interface DataFetcherInterface
      *
      * @return mixed
      *
-     * @throws UnexpectedValueException If the data was not found but is required.
+     * @throws \UnexpectedValueException If the data was not found but is required.
      */
     public function fetch(array $data, $isRequired = false, $defaultValue = null);
 

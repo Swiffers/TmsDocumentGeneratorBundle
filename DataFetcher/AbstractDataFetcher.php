@@ -6,6 +6,8 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\DataFetcher;
 
+use Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag;
+
 abstract class AbstractDataFetcher implements DataFetcherInterface
 {
     /**
@@ -43,9 +45,33 @@ abstract class AbstractDataFetcher implements DataFetcherInterface
     }
 
     /**
+     * {@inheritDoc}
+     */
+    /*public function fetch(array $data, MergeTag $mergeTag)
+    {
+        $identifier = $mergeTag->getIdentifier();
+        $isRequired = $mergeTag->getRequired();
+        $defaultValue = $mergeTag->getDefaultValue();
+
+        if (!array_key_exists($identifier, $data)) {
+            if ($isRequired && is_null($defaultValue)) {
+                throw new \UnexpectedValueException(sprintf(
+                    'The identifier: %s of merge tag were not found, witch is requires but doesn\'t have a default value',
+                    $identifier
+                ));
+            }
+            else {
+                return $defaultValue;
+            }
+        }
+
+        return $this->doFetch($data);
+    }*/
+
+    /**
      * Do fetch.
      *
-     * @param  array data The data used as the fetcher source to look at.
+     * @param  array $data The data used as the fetcher source to look at.
      *
      * @return array
      */

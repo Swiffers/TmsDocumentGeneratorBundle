@@ -16,4 +16,11 @@ interface HtmlConverterInterface
      * @return string
      */
     public function convert($html);
+
+    /**
+     * Get the MimeType of document converted by html converter
+     *
+     * @return string
+     */
+    public function getMimeType();
 }

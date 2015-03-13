@@ -16,11 +16,17 @@ class HtmlConverterRegistry implements HtmlConverterRegistryInterface
     private $converters;
 
     /**
+     * @var array
+     */
+    private $mimeTypes;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->converters = array();
+        $this->mimeTypes  = array();
     }
 
     /**
@@ -29,7 +35,7 @@ class HtmlConverterRegistry implements HtmlConverterRegistryInterface
     public function setHtmlConverter($alias, HtmlConverterInterface $htmlconverter)
     {
         $this->converters[$alias] = $htmlconverter;
-
+        $this->mimeTypes[$alias] = $htmlconverter->getMimeType();
         return $this;
     }
 
@@ -59,5 +65,23 @@ class HtmlConverterRegistry implements HtmlConverterRegistryInterface
         }
 
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getMimeType($alias)
+    {
+        /*
+        if (!is_string($alias)) {
+            throw new UnexpectedTypeException($alias, 'string');
+        }
+
+        if (!$this->hasHtmlConverter($alias)) {
+            throw new \InvalidArgumentException(sprintf('Could not load html converter "%s"', $alias));
+        }
+        */
+
+        return $this->mimeTypes[$alias];
     }
 }

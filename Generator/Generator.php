@@ -49,11 +49,11 @@ class Generator implements GeneratorInterface
     /**
      * {@inheritDoc}
      */
-    public function generate($template_id, array $data = array(), array $options = array(), $isPreview = false)
+    public function generate($templateId, array $data = array(), array $options = array(), $isPreview = false)
     {
-        $template = $this->templateManager->find($template_id);
+        $template = $this->templateManager->find($templateId);
         if (!$template) {
-            throw new \UnexpectedValueException("Template id: ".$template_id." doesn't exist");
+            throw new \UnexpectedValueException("Template id: ".$templateId." doesn't exist");
         }
 
         $fetchedData = array();
