@@ -31,12 +31,12 @@ da_api_client:
 #                security_token: %api.security_token%
 #                cache_enabled:  true
 
-knp_snappy:
-    pdf:
-        enabled:    true
-        binary:     %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64
-        options:
-            margin_bottom: 0
-            margin_left: 0
-            margin_right: 0
-            margin_top: 0
+#knp_snappy:
+#    pdf:
+#        enabled:    true
+#        binary:     %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64
+#        options:
+#            margin_bottom: 0
+#            margin_left: 0
+#            margin_right: 0
+#            margin_top: 0
