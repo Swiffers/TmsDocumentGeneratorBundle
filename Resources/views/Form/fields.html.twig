@@ -1,0 +1,46 @@
+{% block fetch_data_keys_type_widget %}
+    <div id="fetch_data_keys_list" data-prototype='{{ form_row(form.vars.prototype) }}'>
+        {% for f in form %}
+        <div class="fetch_data_key">
+            <div class="input-group-addon">identifier.</div>
+            {{ form_widget(f) }}
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        var $collectionHolder = $('#fetch_data_keys_list');
+        var $addLink = $('<a href="#" class="btn btn-default btn-sm add_fetch_data_key">Add</a>');
+        $collectionHolder.append($addLink);
+        jQuery(document).ready(function() {
+            $collectionHolder.append($addLink);
+
+            $addLink.on('click', function(e) {
+                e.preventDefault();
+                addDiv($collectionHolder, $addLink);
+            });
+
+            $collectionHolder.find('.fetch_data_key').each(function() {
+                addRemoveLink($(this));
+            });
+        });
+
+        function addDiv($collectionHolder, $addLink) {
+            var $prototype = $.parseHTML($collectionHolder.attr('data-prototype').replace(/__name__/g, $collectionHolder.children().length));
+            var $newInput = $($prototype).find('input');
+            var $newLabel = '<div class="input-group-addon">identifier.</div>';
+            var $newDiv = $('<div class="fetch_data_key"></div>').append($newLabel).append($newInput);
+            $addLink.before($newDiv);
+            addRemoveLink($newDiv);
+        }
+
+        function addRemoveLink($div) {
+            var $removeLink = $('<a href="#" class="btn btn-default btn-xs remove_fetch_data_key">Delete</a>');
+            $div.append($removeLink);
+
+            $removeLink.on('click', function(e) {
+                e.preventDefault();
+                $div.remove();
+            });
+        }
+    </script>
+{% endblock %}

@@ -61,7 +61,7 @@ class MergeTag
     /**
      * @var array
      *
-     * @ORM\Column(name="fetch_data_keys", type="simple_array")
+     * @ORM\Column(name="fetch_data_keys", type="simple_array", nullable=false)
      */
     private $fetchDataKeys;
 
