@@ -32,30 +32,37 @@ class ParticipationDataFetcher extends AbstractDataFetcher
     /**
      * {@inheritDoc}
      */
-    public function doFetch(array $data, $identifier)
+    public function doFetch(array $params)
     {
-        $raw = array();
         try {
             $raw = $this->crawler
                 ->go('participation')
                 ->execute(
-                    sprintf('/participations/%s', $data[$identifier]),
-                    'GET'
+                    sprintf('/participations'),
+                    'GET',
+                    $params
                 )
             ;
-            //var_dump($raw); die;
-        } catch (ApiHttpResponseException $e) {
 
+        } catch (ApiHttpResponseException $e) {
             switch ($e->getHttpCode()) {
                 case 403:
                     throw new AccessDeniedHttpException("Fetch: AccessDeniedHttpException");
                 case 404:
                     throw new NotFoundHttpException("Fetch: NotFoundHttpException");
             }
-
             throw $e;
         }
 
-        return $raw;
+        //crawler may be return not only one item
+        if (count($raw) > 1){
+            throw new \InvalidArgumentException(sprintf("Fetcher: %s return %s results with search query: %s, which should only return one item.",
+                'participation',
+                count($raw),
+                http_build_query($params)
+            ));
+        }
+
+        return current($raw);
     }
 }

@@ -57,7 +57,14 @@ class MergeTag
      * @ORM\Column(name="fetcher_alias", type="string", length=255)
      */
     private $fetcherAlias;
-    
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="fetch_data_keys", type="simple_array")
+     */
+    private $fetchDataKeys;
+
     /**
      * @var integer
      * 
@@ -199,6 +206,29 @@ class MergeTag
     public function getFetcherAlias()
     {
         return $this->fetcherAlias;
+    }
+
+    /**
+     * Set fetchDataKeys
+     *
+     * @param array $fetchDataKeys
+     * @return MergeTag
+     */
+    public function setFetchDataKeys($fetchDataKeys)
+    {
+        $this->fetchDataKeys = $fetchDataKeys;
+
+        return $this;
+    }
+
+    /**
+     * Get fetchDataKeys
+     *
+     * @return array
+     */
+    public function getFetchDataKeys()
+    {
+        return $this->fetchDataKeys;
     }
 
     /**

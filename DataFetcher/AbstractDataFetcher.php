@@ -15,16 +15,25 @@ abstract class AbstractDataFetcher implements DataFetcherInterface
      */
     public function fetch(array $data, MergeTag $mergeTag)
     {
-        $identifier = $mergeTag->getIdentifier();
-        $isRequired = $mergeTag->getRequired();
-        $defaultValue = $mergeTag->getDefaultValue();
+        $identifier    = $mergeTag->getIdentifier();
+        $fetchDataKeys = $mergeTag->getFetchDataKeys();
+        $isRequired    = $mergeTag->getRequired();
+        $defaultValue  = $mergeTag->getDefaultValue();
 
-        if (!array_key_exists($identifier, $data)) {
+        $missingDataKeys = array();
+        foreach ($fetchDataKeys as $fetchDataKey) {
+            if (!array_key_exists($identifier.'.'.$fetchDataKey, $data)) {
+                $missingDataKeys[] = $identifier.'.'.$fetchDataKey;
+            }
+        }
+
+        if (isset($missingDataKeys[0])) {
             //If merge tag identifier is required, it has to be submitted in the data,
             //A default value for a merge tag who is required make no sense
             if ($isRequired) {
                 throw new \UnexpectedValueException(sprintf(
-                    'The identifier: %s of merge tag were not found, witch is required.',
+                    'The following fetch Data Keys: %s were not found for merge tag: %s witch is required.',
+                    join($missingDataKeys, ','),
                     $identifier
                 ));
             } else {
@@ -32,16 +41,32 @@ abstract class AbstractDataFetcher implements DataFetcherInterface
             }
         }
 
-        return $this->doFetch($data, $identifier);
+        $params = $this->getFetchParams($data, $identifier, $fetchDataKeys);
+        return $this->doFetch($params);
+    }
+
+    /**
+     * @param  array  $data
+     * @param  string $identifier
+     * @param  array  $fetchDataKeys
+     * @return array
+     */
+    protected function getFetchParams(array $data, $identifier, $fetchDataKeys)
+    {
+        $params = array();
+        foreach($fetchDataKeys as $fetchDataKey){
+            $params[$fetchDataKey] = $data[$identifier.'.'.$fetchDataKey];
+        }
+
+        return $params;
     }
 
     /**
      * Do fetch.
      *
-     * @param  array  $data       The data used as the fetcher source to look at.
-     * @param  string $identifier The Id or a set of data for fetching
+     * @param  array  $params
      *
      * @return array
      */
-    public abstract function doFetch(array $data, $identifier);
+    public abstract function doFetch(array $params);
 }

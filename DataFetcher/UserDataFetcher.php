@@ -28,7 +28,7 @@ class UserDataFetcher extends AbstractDataFetcher
     /**
      * {@inheritDoc}
      */
-    public function doFetch(array $data, $identifier)
+    public function doFetch(array $params)
     {
 
     }

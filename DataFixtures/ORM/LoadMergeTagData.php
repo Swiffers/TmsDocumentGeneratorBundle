@@ -83,6 +83,22 @@ class LoadMergeTagData extends AbstractFixture implements OrderedFixtureInterfac
     }
 
     /**
+     * @param $fetchAlias
+     *
+     * @return string|null
+     */
+    private function getFetchDataKey($fetchAlias, $identifier)
+    {
+        switch ($fetchAlias) {
+            case 'default':
+                return array($identifier);
+            case 'user':
+            case 'participation':
+                return array('id', 'status');
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function load(ObjectManager $em)
@@ -104,6 +120,9 @@ class LoadMergeTagData extends AbstractFixture implements OrderedFixtureInterfac
                         )
                     ->setDefaultValue(
                         $this->getdefaultValue($mergeTag->getFetcherAlias())
+                    )
+                    ->setFetchDataKeys(
+                        $this->getFetchDataKey($mergeTag->getFetcherAlias(), $mergeTag->getIdentifier())
                     )
                 ;
 
