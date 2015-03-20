@@ -38,7 +38,7 @@ class JsonHandler
     {
         $result = json_encode($value, $options);
 
-        if($result) {
+        if(json_last_error() == JSON_ERROR_NONE) {
             return $result;
         }
 
@@ -62,7 +62,7 @@ class JsonHandler
     {
         $result = json_decode($json, $assoc);
 
-        if($result) {
+        if(json_last_error() == JSON_ERROR_NONE) {
             return $result;
         }
 
@@ -72,5 +72,47 @@ class JsonHandler
         ;
 
         throw new \Exception("Json decode: ".$errorMessage);
+    }
+
+    /**
+     * Is json
+     *
+     * @param string $json
+     * @return bool
+     */
+    public static function is_json ($json)
+    {
+        json_decode($json);
+        return (json_last_error() == JSON_ERROR_NONE);
+    }
+
+    /**
+     * Recursion do json_decode on a N-dimensional array
+     *
+     * @param  array $current
+     * @return array
+     * @throws \Exception
+     */
+    public static function decodeRecursion (array $current){
+        foreach ($current as $key => $value) {
+            switch (true) {
+                case is_bool($value):
+                    $current[$key] = null;
+                    break;
+                case is_array($value):
+                    $current[$key] = self::decodeRecursion($value);
+                    break;
+                case JsonHandler::is_json($value):
+                    $current[$key] = JsonHandler::decode($value, true);
+                    break;
+                case is_string($value):
+                    $current[$key] = $value;
+                    break;
+                default:
+                    throw new \UnexpectedValueException('UnexpectedValueException: '.$value);
+                    break;
+            }
+        }
+        return $current;
     }
 }

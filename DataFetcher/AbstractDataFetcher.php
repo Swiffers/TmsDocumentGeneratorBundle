@@ -8,6 +8,8 @@ namespace Tms\Bundle\DocumentGeneratorBundle\DataFetcher;
 
 use Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag;
 
+use Tms\Bundle\DocumentGeneratorBundle\Handler\JsonHandler;
+
 abstract class AbstractDataFetcher implements DataFetcherInterface
 {
     /**
@@ -19,7 +21,6 @@ abstract class AbstractDataFetcher implements DataFetcherInterface
         $fetchDataKeys = $mergeTag->getFetchDataKeys();
         $isRequired    = $mergeTag->getRequired();
         $defaultValue  = $mergeTag->getDefaultValue();
-        $fetchAlias    = $mergeTag->getFetcherAlias();
 
         $missingDataKeys = array();
         foreach ($fetchDataKeys as $fetchDataKey) {
@@ -48,6 +49,8 @@ abstract class AbstractDataFetcher implements DataFetcherInterface
     }
 
     /**
+     * Get fetch params
+     *
      * @param  array  $data
      * @param  string $identifier
      * @param  array  $fetchDataKeys
@@ -64,13 +67,19 @@ abstract class AbstractDataFetcher implements DataFetcherInterface
     }
 
     /**
-     * @param $rawFetchedData
+     * Handle RawFetchedData
+     *
+     * @param  $rawFetchedData
      * @return array
      */
     protected function handleRawFetchedData ($rawFetchedData)
     {
-        //TODO json to array
-        $fetchedData = $rawFetchedData;
+        $fetchedData = JsonHandler::decodeRecursion($rawFetchedData);
+
+        print "<pre>";
+        print_r($fetchedData);
+        print "</pre>";
+
         return $fetchedData;
     }
 

@@ -115,7 +115,7 @@ class Generator implements GeneratorInterface
      * @param array    $fetchedData The fetched data.
      * @param boolean  $isPreview   If the generation must not fetch the given data.
      *
-     * @throws \Exception
+     * @throws \Exception twig render error
      *
      * @return string
      */

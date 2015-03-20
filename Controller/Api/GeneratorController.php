@@ -55,10 +55,35 @@ class GeneratorController extends Controller
      *
      * @param Request $request Data and options.
      * @param string  $id      The template document id.
+     *
+     * @return Response
      */
     public function downloadAction(Request $request, $id)
     {
+        $response = new Response();
+        try {
+            $parameters = $this->handleRequest($request, $id, false);
+            $content = $this->get('tms_document_generator')->generate(
+                $parameters['templateId'],
+                $parameters['data'],
+                $parameters['options'],
+                $parameters['isPreview']
+            );
 
+            $response->headers->set(
+                'Content-Type',
+                $this->get('tms_document_generator.converter.registry')
+                    ->getMimeType($parameters['options']['format'])
+            );
+            $response->headers->set('Content-Disposition', 'attachment; filename="'.$id.'.'.$parameters['options']['format'].'"');
+            $response->setStatusCode(200);
+            $response->setContent($content);
+        } catch (\Exception $e) {
+            $response->setStatusCode(500);
+            $response->setContent($e->getMessage());
+        }
+
+        return $response;
     }
 
     /**
