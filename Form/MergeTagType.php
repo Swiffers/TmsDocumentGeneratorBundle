@@ -25,7 +25,7 @@ class MergeTagType extends AbstractType
     {
         $builder
             ->add('identifier', 'text', array('label' => 'identifier *'))
-            ->add('required', 'checkbox', array('required' => false, 'label' => 'required *'))
+            ->add('required', 'checkbox', array('required' => false, 'label' => 'required *', 'data' => true))
             ->add('description', 'text', array('required' => false))
             ->add('defaultValue', 'text', array('required' => false))
             ->add('fetcherAlias', 'choice', array(

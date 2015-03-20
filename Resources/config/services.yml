@@ -7,6 +7,7 @@ services:
             - @tms_document_generator.manager.template
             - @tms_document_generator.fetcher.registry
             - @tms_document_generator.converter.registry
+            - @twig
 
     # Registry
     tms_document_generator.fetcher.registry:
@@ -45,3 +46,9 @@ services:
         arguments: [@knp_snappy.pdf]
         tags:
             - { name: tms_document_generator.converter, alias: pdf }
+
+    # Twig string loader
+    twig.loader.string:
+        class: Twig_Loader_String
+        tags:
+            - { name: twig.loader }

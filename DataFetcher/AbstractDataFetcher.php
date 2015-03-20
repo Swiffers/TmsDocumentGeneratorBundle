@@ -19,6 +19,7 @@ abstract class AbstractDataFetcher implements DataFetcherInterface
         $fetchDataKeys = $mergeTag->getFetchDataKeys();
         $isRequired    = $mergeTag->getRequired();
         $defaultValue  = $mergeTag->getDefaultValue();
+        $fetchAlias    = $mergeTag->getFetcherAlias();
 
         $missingDataKeys = array();
         foreach ($fetchDataKeys as $fetchDataKey) {
@@ -42,7 +43,8 @@ abstract class AbstractDataFetcher implements DataFetcherInterface
         }
 
         $params = $this->getFetchParams($data, $identifier, $fetchDataKeys);
-        return $this->doFetch($params);
+        $rawFetchedData = $this->doFetch($params);
+        return $this->handleRawFetchedData($rawFetchedData);
     }
 
     /**
@@ -59,6 +61,17 @@ abstract class AbstractDataFetcher implements DataFetcherInterface
         }
 
         return $params;
+    }
+
+    /**
+     * @param $rawFetchedData
+     * @return array
+     */
+    protected function handleRawFetchedData ($rawFetchedData)
+    {
+        //TODO json to array
+        $fetchedData = $rawFetchedData;
+        return $fetchedData;
     }
 
     /**

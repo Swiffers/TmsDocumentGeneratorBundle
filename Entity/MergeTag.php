@@ -40,7 +40,7 @@ class MergeTag
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=128)
+     * @ORM\Column(name="description", type="string", length=128, nullable=true)
      */
     private $description;
 

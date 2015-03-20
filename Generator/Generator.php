@@ -10,6 +10,7 @@ use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
 use Tms\Bundle\DocumentGeneratorBundle\Manager\TemplateManager;
 use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistryInterface;
 use Tms\Bundle\DocumentGeneratorBundle\HtmlConverter\HtmlConverterRegistryInterface;
+use \Twig_Environment;
 
 class Generator implements GeneratorInterface
 {
@@ -29,21 +30,29 @@ class Generator implements GeneratorInterface
     private $htmlConverterRegistry;
 
     /**
+     * @var $twig
+     */
+    private $twig;
+
+    /**
      * Constructor
      *
      * @param TemplateManager                $templateManager
      * @param HtmlConverterRegistryInterface $htmlConverterRegistry
      * @param DataFetcherRegistryInterface   $dataFetcherRegistry
+     * @param Twig_Environment               $twig
      */
     public function __construct(
         TemplateManager                $templateManager,
         DataFetcherRegistryInterface   $dataFetcherRegistry,
-        HtmlConverterRegistryInterface $htmlConverterRegistry
+        HtmlConverterRegistryInterface $htmlConverterRegistry,
+        Twig_Environment               $twig
     )
     {
         $this->templateManager       = $templateManager;
         $this->dataFetcherRegistry   = $dataFetcherRegistry;
         $this->htmlConverterRegistry = $htmlConverterRegistry;
+        $this->twig                  = $twig;
     }
 
     /**
@@ -106,20 +115,43 @@ class Generator implements GeneratorInterface
      * @param array    $fetchedData The fetched data.
      * @param boolean  $isPreview   If the generation must not fetch the given data.
      *
+     * @throws \Exception
+     *
      * @return string
      */
     private function render(Template $template, array $fetchedData, $isPreview = false)
     {
+        $html = sprintf(
+            "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><style type=\"text/css\">%s</style></head><body>%s</body></html>",
+            $template->getCss(),
+            $template->getHtml()
+        );
+
         if ($isPreview) {
-            return sprintf(
-                "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><style type=\"text/css\">%s</style></head><body>%s</body></html>",
-                $template->getCss(),
-                $template->getHtml()
-            );
+            return $html;
         }
 
-        var_dump($fetchedData);
-        die('TODO: Use twig engine to merge the template with fetched data.');
-        // TODO: Use twig engine to merge the template with fetched data.
+        try {
+            $html = $this->twig->render($html, $fetchedData);
+        } catch (\Twig_Error_Runtime $e) {
+            throw new \Exception(get_class($e).': '.$e->getMessage().
+                ', this exception was raised may be you use a merge tag not defined in the template: '.$template->getId()
+            );
+        } catch (\Twig_Error $e) {
+            throw new \Exception(get_class($e).': '.$e->getMessage().', template id: '.$template->getId());
+        }
+
+        /**
+         * Clear twig cache files
+         *
+         *    * Twig_Loader_String
+         *    * When using this loader with a cache mechanism, you should know that a new cache
+         *    * key is generated each time a template content "changes" (the cache key being the
+         *    * source code of the template). If you don't want to see your cache grows out of
+         *    * control, you need to take care of clearing the old cache file by yourself.
+         */
+        $this->twig->clearCacheFiles();
+
+        return $html;
     }
 }
