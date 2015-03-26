@@ -37,8 +37,8 @@ class ParticipationDataFetcher extends AbstractDataFetcher
      */
     protected function configureParameters(OptionsResolverInterface $resolver)
     {
-        parent::configureParameters($resolver);
         $resolver
+            ->setOptional(array('_'))
             ->setDefaults(array(
                 'id' => function (Options $options) {
                     return $options['_'];

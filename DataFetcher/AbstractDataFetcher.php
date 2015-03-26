@@ -19,12 +19,7 @@ abstract class AbstractDataFetcher implements DataFetcherInterface
      *
      * @param OptionsResolverInterface $resolver
      */
-    protected function configureParameters(OptionsResolverInterface $resolver)
-    {
-        $resolver
-            ->setOptional(array('_'))
-        ;
-    }
+    protected abstract function configureParameters(OptionsResolverInterface $resolver);
 
     /**
      * {@inheritDoc}

@@ -17,8 +17,8 @@ class DefaultDataFetcher extends AbstractDataFetcher
      */
     protected function configureParameters(OptionsResolverInterface $resolver)
     {
-        parent::configureParameters($resolver);
         $resolver
+            ->setOptional(array('_'))
             ->setDefaults(array(
                 '_identifier_' => function (Options $options) {
                     return $options['_'];

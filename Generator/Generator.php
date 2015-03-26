@@ -103,7 +103,7 @@ class Generator implements GeneratorInterface
      *                                   For a merge tag required,
      *                                   When his parameters witch is used by fetcher cannot be found in the data.
      */
-    protected function fetchData(Template $template, $data)
+    private function fetchData(Template $template, $data)
     {
         $fetchedData = array();
 

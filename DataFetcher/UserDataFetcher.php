@@ -6,6 +6,9 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\DataFetcher;
 
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
+
 use Tms\Bundle\RestClientBundle\Hypermedia\Crawling\CrawlerInterface;
 
 class UserDataFetcher extends AbstractDataFetcher
@@ -23,6 +26,17 @@ class UserDataFetcher extends AbstractDataFetcher
     public function __construct(CrawlerInterface $crawler)
     {
         $this->crawler = $crawler;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function configureParameters(OptionsResolverInterface $resolver)
+    {
+        parent::configureParameters($resolver);
+        $resolver
+            ->setOptional(array('_'))
+        ;
     }
 
     /**
