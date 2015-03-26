@@ -6,39 +6,24 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-use Tms\Bundle\DocumentGeneratorBundle\Form\Type\FetchDataKeysType;
-
 class MergeTagType extends AbstractType
 {
-    private $fetcherAlias;
-
-    public function __construct(array $fetcherAlias = null)
-    {
-        $this->fetcherAlias = $fetcherAlias;
-    }
-
     /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('identifier', 'text', array('label' => 'identifier *'))
-            ->add('required', 'checkbox', array('required' => false, 'label' => 'required *', 'data' => true))
-            ->add('description', 'text', array('required' => false))
-            ->add('defaultValue', 'text', array('required' => false))
-            ->add('fetcherAlias', 'choice', array(
-                'choices' => array_combine($this->fetcherAlias, $this->fetcherAlias),
-                'label' => 'fetcherAlias *'
-            ))
-            ->add('fetchDataKeys', new FetchDataKeysType())
-            //->add('template_id')
+            ->add('identifier')
+            ->add('required', 'checkbox', array('required' => false))
+            ->add('description')
+            ->add('defaultValue')
+            ->add('fetcherAlias', 'fetcher_alias')
         ;
     }
-    
+
     /**
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -48,7 +33,7 @@ class MergeTagType extends AbstractType
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {

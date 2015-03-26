@@ -5,6 +5,7 @@
  */
 
 namespace Tms\Bundle\DocumentGeneratorBundle\DataFetcher;
+use Tms\Bundle\DocumentGeneratorBundle\Exception\UnexpectedTypeException;
 
 interface DataFetcherRegistryInterface
 {
@@ -25,8 +26,8 @@ interface DataFetcherRegistryInterface
      *
      * @return DataFetcherInterface
      *
-     * @throws Exception\UnexpectedTypeException if the passed alias is not a string.
-     * @throws \InvalidArgumentException         if the data fetcher can not be retrieved.
+     * @throws UnexpectedTypeException   when the passed alias is not a string.
+     * @throws \InvalidArgumentException when the data fetcher can not be retrieved.
      */
     public function getDataFetcher($alias);
 

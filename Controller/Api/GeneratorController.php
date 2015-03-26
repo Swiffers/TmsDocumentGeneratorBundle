@@ -8,16 +8,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 use Tms\Bundle\DocumentGeneratorBundle\Handler\JsonHandler;
 
 class GeneratorController extends Controller
 {
     /**
+     * HTTP Response with header filed Content-Type as The MIME type of the document generated.
+     * Allow to show the document generated direct in the browser.
+     *
      * @Route("/generate/{id}", name="tms_document_generator_generate")
      * @Method({"POST"})
      *
-     * @param Request $request Data and options
+     * @param Request $request Data and options.
      * @param string  $id      The template document id.
      *
      * @return Response
@@ -50,6 +52,10 @@ class GeneratorController extends Controller
     }
 
     /**
+     * HTTP Response with header filed: Content-Type as The MIME type of the document generated,
+     * HTTP Response with header filed: Content-Disposition as Filename: template document id, Extension: corresponding to the MIME type.
+     * Allow to raise a "File Download" dialogue box for the MIME type of the document generated in the browser.
+     *
      * @Route("/download/{id}", name="tms_document_generator_download")
      * @Method({"POST"})
      *
@@ -87,6 +93,9 @@ class GeneratorController extends Controller
     }
 
     /**
+     * HTTP Response with header filed: Content-Type as The MIME type of the document generated.
+     * Allow to preview(without data) the document generated direct in the browser.
+     *
      * @Route("/preview/{id}", name="tms_document_generator_preview")
      * @Method({"POST"})
      *
@@ -124,7 +133,10 @@ class GeneratorController extends Controller
     }
 
     /**
-     * Check and handle the request
+     * Check and handle the request,
+     * convert fields json: data and options to array of HTTP request.
+     * Default data: array()
+     * Default options: array('format' => 'html')
      *
      * @param Request $request   Data and options.
      * @param string  $id        The template document id.

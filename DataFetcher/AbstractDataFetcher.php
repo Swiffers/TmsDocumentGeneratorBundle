@@ -6,89 +6,74 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\DataFetcher;
 
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag;
 
-use Tms\Bundle\DocumentGeneratorBundle\Handler\JsonHandler;
+use Tms\Bundle\DocumentGeneratorBundle\Exception\MissingGenerationParametersException;
 
 abstract class AbstractDataFetcher implements DataFetcherInterface
 {
+    /**
+     * Configure parameters
+     *
+     * @param OptionsResolverInterface $resolver
+     */
+    protected function configureParameters(OptionsResolverInterface $resolver)
+    {
+        $resolver
+            ->setOptional(array('_'))
+        ;
+    }
+
     /**
      * {@inheritDoc}
      */
     public function fetch(array $data, MergeTag $mergeTag)
     {
-        $identifier    = $mergeTag->getIdentifier();
-        $fetchDataKeys = $mergeTag->getFetchDataKeys();
-        $isRequired    = $mergeTag->getRequired();
-        $defaultValue  = $mergeTag->getDefaultValue();
+        //identifier.postfix
+        $pattern = sprintf(
+            "/^(%s)(\.(?<postfix>(.+)))?/",
+            $mergeTag->getIdentifier()
+        );
 
-        $missingDataKeys = array();
-        foreach ($fetchDataKeys as $fetchDataKey) {
-            if (!array_key_exists($identifier.'.'.$fetchDataKey, $data)) {
-                $missingDataKeys[] = $identifier.'.'.$fetchDataKey;
+        /**
+         * loop on data to search parameters(postfix).
+         * if postfix is null, use placeholder '_' as parameter,
+         * it will be immediately replaced by the default parameter of every fetcher.
+         */
+        $parameters = array();
+        foreach ($data as $key => $value) {
+            if (empty($key) || empty($value)) {
+                continue;
+            }
+            if (preg_match($pattern, $key, $matches)) {
+                if (isset($matches['postfix'])) {
+                    $parameters[$matches['postfix']] = $value;
+                } else {
+                    $parameters['_'] = $value;
+                }
             }
         }
 
-        if (isset($missingDataKeys[0])) {
-            //If merge tag identifier is required, it has to be submitted in the data,
-            //A default value for a merge tag who is required make no sense
-            if ($isRequired) {
-                throw new \UnexpectedValueException(sprintf(
-                    'The following fetch Data Keys: %s were not found for merge tag: %s witch is required.',
-                    join($missingDataKeys, ','),
-                    $identifier
-                ));
-            } else {
-                return $defaultValue;
-            }
+        if (empty($parameters)) {
+            throw new MissingGenerationParametersException();
         }
 
-        $params = $this->getFetchParams($data, $identifier, $fetchDataKeys);
-        $rawFetchedData = $this->doFetch($params);
-        return $this->handleRawFetchedData($rawFetchedData);
-    }
+        $resolver = new OptionsResolver();
+        $this->configureParameters($resolver);
+        $resolvedParameters = $resolver->resolve($parameters);
+        unset($resolvedParameters['_']);
 
-    /**
-     * Get fetch params
-     *
-     * @param  array  $data
-     * @param  string $identifier
-     * @param  array  $fetchDataKeys
-     * @return array
-     */
-    protected function getFetchParams(array $data, $identifier, $fetchDataKeys)
-    {
-        $params = array();
-        foreach($fetchDataKeys as $fetchDataKey){
-            $params[$fetchDataKey] = $data[$identifier.'.'.$fetchDataKey];
-        }
-
-        return $params;
-    }
-
-    /**
-     * Handle RawFetchedData
-     *
-     * @param  $rawFetchedData
-     * @return array
-     */
-    protected function handleRawFetchedData ($rawFetchedData)
-    {
-        $fetchedData = JsonHandler::decodeRecursion($rawFetchedData);
-
-        print "<pre>";
-        print_r($fetchedData);
-        print "</pre>";
-
-        return $fetchedData;
+        return $this->doFetch($resolvedParameters);
     }
 
     /**
      * Do fetch.
      *
-     * @param  array  $params
+     * @param  array $parameters
      *
      * @return array
      */
-    public abstract function doFetch(array $params);
+    public abstract function doFetch(array $parameters);
 }

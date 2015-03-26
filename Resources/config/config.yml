@@ -40,8 +40,3 @@ knp_snappy:
             margin_left: 0
             margin_right: 0
             margin_top: 0
-
-twig:
-    form:
-        resources:
-            - 'TmsDocumentGeneratorBundle:Form:fields.html.twig'

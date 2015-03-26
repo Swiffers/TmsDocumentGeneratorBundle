@@ -59,19 +59,12 @@ class MergeTag
     private $fetcherAlias;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(name="fetch_data_keys", type="simple_array", nullable=false)
-     */
-    private $fetchDataKeys;
-
-    /**
-     * @var integer
+     * @var Template
      * 
      * @ORM\ManyToOne(targetEntity="Template", inversedBy="mergeTags", cascade={"persist"})
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", nullable=false, onDelete="Cascade")
      */
-    private $template_id;
+    private $template;
 
     /**
      * toString
@@ -130,11 +123,11 @@ class MergeTag
     }
 
     /**
-     * Get required
+     * Is required
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getRequired()
+    public function isRequired()
     {
         return $this->required;
     }
@@ -209,48 +202,25 @@ class MergeTag
     }
 
     /**
-     * Set fetchDataKeys
+     * Set template
      *
-     * @param array $fetchDataKeys
+     * @param \Tms\Bundle\DocumentGeneratorBundle\Entity\Template $template
      * @return MergeTag
      */
-    public function setFetchDataKeys($fetchDataKeys)
+    public function setTemplate(\Tms\Bundle\DocumentGeneratorBundle\Entity\Template $template)
     {
-        $this->fetchDataKeys = $fetchDataKeys;
-
-        return $this;
-    }
-
-    /**
-     * Get fetchDataKeys
-     *
-     * @return array
-     */
-    public function getFetchDataKeys()
-    {
-        return $this->fetchDataKeys;
-    }
-
-    /**
-     * Set templateId
-     *
-     * @param \Tms\Bundle\DocumentGeneratorBundle\Entity\Template $templateId
-     * @return MergeTag
-     */
-    public function setTemplateId(\Tms\Bundle\DocumentGeneratorBundle\Entity\Template $templateId)
-    {
-        $this->template_id = $templateId;
+        $this->template = $template;
     
         return $this;
     }
 
     /**
-     * Get templateId
+     * Get template
      *
      * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template 
      */
-    public function getTemplateId()
+    public function getTemplate()
     {
-        return $this->template_id;
+        return $this->template;
     }
 }

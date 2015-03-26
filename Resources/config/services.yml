@@ -1,5 +1,4 @@
 services:
-
     # Generator
     tms_document_generator:
         class: Tms\Bundle\DocumentGeneratorBundle\Generator\Generator
@@ -46,6 +45,13 @@ services:
         arguments: [@knp_snappy.pdf]
         tags:
             - { name: tms_document_generator.converter, alias: pdf }
+
+    # Form Type
+    form.type.tms_document_generator.fetcher_alias:
+        class: Tms\Bundle\DocumentGeneratorBundle\Form\Type\FetcherAliasType
+        arguments: [@tms_document_generator.fetcher.registry]
+        tags:
+            - { name: form.type, alias: fetcher_alias }
 
     # Twig string loader
     twig.loader.string:

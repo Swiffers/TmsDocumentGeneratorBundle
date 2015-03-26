@@ -43,7 +43,10 @@ class DataFetcherRegistry implements DataFetcherRegistryInterface
         }
 
         if (!$this->hasDataFetcher($alias)) {
-            throw new \InvalidArgumentException(sprintf('Could not load data fetcher "%s"', $alias));
+            throw new \InvalidArgumentException(sprintf(
+                'InvalidArgumentException - Could not load data fetcher "%s"',
+                $alias
+            ));
         }
 
         return $this->fetchers[$alias];
@@ -64,7 +67,8 @@ class DataFetcherRegistry implements DataFetcherRegistryInterface
     /**
      * {@inheritDoc}
      */
-    public function getDataFetchersAlias(){
+    public function getDataFetchersAlias()
+    {
         return array_keys($this->fetchers);
     }
 }

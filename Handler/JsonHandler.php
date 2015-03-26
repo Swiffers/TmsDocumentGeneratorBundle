@@ -6,11 +6,14 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Handler;
 
+use Tms\Bundle\DocumentGeneratorBundle\Exception\JsonConversionException;
+
 class JsonHandler
 {
 
     /**
-     * Json error codes may be returned by json_last_error() and messages corresponding
+     * The error codes and error messages of the last json_encode() or json_decode() call
+     * which may be returned by json_last_error()
      *
      * @var array
      */
@@ -27,16 +30,19 @@ class JsonHandler
     );
 
     /**
-     * @param mixed $value
-     * @param int   $options
+     * Returns the JSON representation of a value
+     *
+     * @param mixed $value   The value being encoded.
+     * @param int   $options Bitmask of JSON encode options.
+     * @param int   $depth   Set the maximum depth. Must be greater than zero.
      *
      * @return string
      *
      * @throws \Exception
      */
-    public static function encode($value, $options = 0)
+    public static function encode($value, $options = 0, $depth = 512)
     {
-        $result = json_encode($value, $options);
+        $result = json_encode($value, $options, $depth);
 
         if(json_last_error() == JSON_ERROR_NONE) {
             return $result;
@@ -47,20 +53,24 @@ class JsonHandler
             : 'Unknown error'
         ;
 
-        throw new \Exception("Json encode: ".$errorMessage);
+        throw new JsonConversionException('encode', $errorMessage);
     }
 
     /**
-     * @param string $json
-     * @param bool   $assoc
+     * Decodes a JSON string
+     *
+     * @param string $json    The json string being decoded.
+     * @param bool   $assoc   When TRUE, returned objects will be converted into associative arrays.
+     * @param int    $depth   User specified recursion depth.
+     * @param int    $options Bitmask of JSON decode options.
      *
      * @return mixed
      *
      * @throws \Exception
      */
-    public static function decode($json, $assoc = false)
+    public static function decode($json, $assoc = false, $depth = 512, $options = 0)
     {
-        $result = json_decode($json, $assoc);
+        $result = json_decode($json, $assoc, $depth, $options);
 
         if(json_last_error() == JSON_ERROR_NONE) {
             return $result;
@@ -71,45 +81,57 @@ class JsonHandler
             : 'Unknown error'
         ;
 
-        throw new \Exception("Json decode: ".$errorMessage);
+        throw new JsonConversionException('decode', $errorMessage);
     }
 
     /**
      * Is json
      *
-     * @param string $json
-     * @return bool
+     * @param mixed $var         The variable being evaluated.
+     * @param bool  $return_data When TRUE, returned result of json_decode
+     * @param bool  $assoc       json_decode Parameter
+     * @param int   $depth       json_decode Parameter
+     * @param int   $options     json_decode Parameter
+     *
+     * @return mixed return array, when $var is json and $return_data is true,
+     *                      bool, otherwise.
      */
-    public static function is_json ($json)
+    public static function is_json ($var, $return_data = false, $assoc = false, $depth = 512, $options = 0)
     {
-        json_decode($json);
-        return (json_last_error() == JSON_ERROR_NONE);
+        if (is_string($var)) {
+            $data = json_decode($var, $assoc, $depth, $options);
+
+            return (json_last_error() == JSON_ERROR_NONE)
+                ? ($return_data ? $data : true)
+                : false
+            ;
+        }
+
+        return false;
     }
 
     /**
      * Recursion do json_decode on a N-dimensional array
      *
-     * @param  array $current
+     * @param array $current     N-dimensional array who contain json string as value
+     * @param bool  $assoc       json_decode Parameter
+     * @param int   $depth       json_decode Parameter
+     * @param int   $options     json_decode Parameter
+     *
      * @return array
-     * @throws \Exception
      */
-    public static function decodeRecursion (array $current){
+    public static function array_decode_json_recursive (array $current, $assoc = false, $depth = 512, $options = 0)
+    {
         foreach ($current as $key => $value) {
             switch (true) {
-                case is_bool($value):
-                    $current[$key] = null;
-                    break;
                 case is_array($value):
-                    $current[$key] = self::decodeRecursion($value);
+                    $current[$key] = self::array_decode_json_recursive($value, $assoc, $depth, $options);
                     break;
-                case JsonHandler::is_json($value):
-                    $current[$key] = JsonHandler::decode($value, true);
-                    break;
-                case is_string($value):
-                    $current[$key] = $value;
+                case self::is_json($value, false, $assoc, $depth, $options):
+                    $current[$key] = self::decode($value, $assoc, $depth, $options);
                     break;
                 default:
-                    throw new \UnexpectedValueException('UnexpectedValueException: '.$value);
+                    $current[$key] = $value;
                     break;
             }
         }

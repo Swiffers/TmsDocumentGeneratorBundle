@@ -50,7 +50,10 @@ class HtmlConverterRegistry implements HtmlConverterRegistryInterface
         }
 
         if (!$this->hasHtmlConverter($alias)) {
-            throw new \InvalidArgumentException(sprintf('Could not load html converter "%s"', $alias));
+            throw new \InvalidArgumentException(sprintf(
+                'InvalidArgumentException - Could not load html converter "%s"',
+                $alias
+            ));
         }
 
         return $this->converters[$alias];
@@ -73,16 +76,6 @@ class HtmlConverterRegistry implements HtmlConverterRegistryInterface
      */
     public function getMimeType($alias)
     {
-        /*
-        if (!is_string($alias)) {
-            throw new UnexpectedTypeException($alias, 'string');
-        }
-
-        if (!$this->hasHtmlConverter($alias)) {
-            throw new \InvalidArgumentException(sprintf('Could not load html converter "%s"', $alias));
-        }
-        */
-
         return $this->mimeTypes[$alias];
     }
 }

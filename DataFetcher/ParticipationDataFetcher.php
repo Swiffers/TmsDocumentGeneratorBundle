@@ -6,7 +6,10 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\DataFetcher;
 
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
 use Tms\Bundle\RestClientBundle\Hypermedia\Crawling\CrawlerInterface;
+use Tms\Bundle\DocumentGeneratorBundle\Handler\JsonHandler;
 
 use Da\ApiClientBundle\Exception\ApiHttpResponseException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -32,37 +35,64 @@ class ParticipationDataFetcher extends AbstractDataFetcher
     /**
      * {@inheritDoc}
      */
-    public function doFetch(array $params)
+    protected function configureParameters(OptionsResolverInterface $resolver)
+    {
+        parent::configureParameters($resolver);
+        $resolver
+            ->setDefaults(array(
+                'id' => function (Options $options) {
+                    return $options['_'];
+                }
+            ))
+            ->setRequired(array('id'))
+        ;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throw AccessDeniedHttpException previous: ApiHttpResponseException
+     *                                  Exception of TmsRestClientBundle
+     * @throw NotFoundHttpException     previous: ApiHttpResponseException
+     *                                  Exception of TmsRestClientBundle
+     * @throw \InvalidArgumentException when crawler didn't return one item
+     */
+    public function doFetch(array $parameters)
     {
         try {
-            $raw = $this->crawler
+            $rawfetchedData = $this->crawler
                 ->go('participation')
                 ->execute(
                     sprintf('/participations'),
                     'GET',
-                    $params
+                    $parameters
                 )
             ;
-
         } catch (ApiHttpResponseException $e) {
             switch ($e->getHttpCode()) {
                 case 403:
-                    throw new AccessDeniedHttpException("Fetch: AccessDeniedHttpException");
+                    throw new AccessDeniedHttpException(sprintf(
+                        "AccessDeniedHttpException - Fetcher: %s",
+                        'participation'
+                    ));
                 case 404:
-                    throw new NotFoundHttpException("Fetch: NotFoundHttpException");
+                    throw new NotFoundHttpException(sprintf(
+                        "NotFoundHttpException - Fetcher: %s",
+                        'participation'
+                    ));
             }
             throw $e;
         }
 
-        //crawler may be return not only one item
-        if (count($raw) > 1){
-            throw new \InvalidArgumentException(sprintf("Fetcher: %s return %s results with search query: %s, which should only return one item.",
+        if (count($rawfetchedData) != 1){
+            throw new \InvalidArgumentException(sprintf(
+                "InvalidArgumentException - Fetcher: %s return %s results with search query: %s, which should return only one item",
                 'participation',
-                count($raw),
-                http_build_query($params)
+                count($rawfetchedData),
+                http_build_query($parameters)
             ));
         }
 
-        return current($raw);
+        return JsonHandler::array_decode_json_recursive(current($rawfetchedData), true);
     }
 }

@@ -35,7 +35,7 @@ class Template implements MetadatableInterface, LoggableInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=128)
+     * @ORM\Column(name="description", type="string", length=128, nullable=true)
      */
     private $description;
 
@@ -81,7 +81,7 @@ class Template implements MetadatableInterface, LoggableInterface
     /**
      * @var array<MergeTag>
      * 
-     * @ORM\OneToMany(targetEntity="MergeTag", mappedBy="template_id", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="MergeTag", mappedBy="template", cascade={"all"})
      */
     private $mergeTags;
 

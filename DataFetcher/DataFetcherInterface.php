@@ -8,17 +8,20 @@ namespace Tms\Bundle\DocumentGeneratorBundle\DataFetcher;
 
 use Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag;
 
+use Tms\Bundle\DocumentGeneratorBundle\Exception\MissingGenerationParametersException;
+
 interface DataFetcherInterface
 {
     /**
      * Fetch.
      *
-     * @param  array    $data     The data used as the fetcher source to look at.
-     * @param  MergeTag $mergeTag Use information(identifier, required, defaultValue) of mergeTag to fetch data
+     * @param  array    $data     The data(with parameters used by fetcher to fetch data for each merge tag of the template).
+     * @param  MergeTag $mergeTag Use information(identifier, required, defaultValue, etc) of mergeTag to fetch data
      *
-     * @return mixed
+     * @return array
      *
-     * @throws \UnexpectedValueException The identifier of merge tag were not found but is required
+     * @throws MissingGenerationParametersException For a merge tag,
+     *                                              When his parameters witch is used by fetcher cannot be found in the data.
      */
     public function fetch(array $data, MergeTag $mergeTag);
 }
