@@ -6,6 +6,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistry;
 
+/**
+ * Class FetcherAliasType
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\Form\Type
+ */
 class FetcherAliasType extends AbstractType
 {
     /**
@@ -28,12 +33,14 @@ class FetcherAliasType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'choices' => array_combine(
-                $this->fetcherRegistry->getDataFetchersAlias(),
-                $this->fetcherRegistry->getDataFetchersAlias()
+        $resolver->setDefaults(
+            array(
+                'choices' => array_combine(
+                    $this->fetcherRegistry->getDataFetchersAlias(),
+                    $this->fetcherRegistry->getDataFetchersAlias()
+                ),
             )
-        ));
+        );
     }
 
     /**

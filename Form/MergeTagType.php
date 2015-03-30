@@ -6,6 +6,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class MergeTagType
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\Form
+ */
 class MergeTagType extends AbstractType
 {
     /**
@@ -18,8 +23,7 @@ class MergeTagType extends AbstractType
             ->add('required', 'checkbox', array('required' => false))
             ->add('description')
             ->add('defaultValue')
-            ->add('fetcherAlias', 'fetcher_alias')
-        ;
+            ->add('fetcherAlias', 'fetcher_alias');
     }
 
     /**
@@ -27,9 +31,11 @@ class MergeTagType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag'
-        ));
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag',
+            )
+        );
     }
 
     /**

@@ -6,12 +6,17 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\HtmlConverter;
 
+/**
+ * Interface HtmlConverterInterface
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\HtmlConverter
+ */
 interface HtmlConverterInterface
 {
     /**
      * Convert html page to document.
      *
-     * @param $html
+     * @param string $html
      *
      * @return string
      */

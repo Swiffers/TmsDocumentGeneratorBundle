@@ -13,7 +13,7 @@ use Symfony\Component\EventDispatcher\Event;
 class MergeTagEvent extends Event
 {
     protected $mergeTag;
-    
+
     /**
      * Constructor
      *
@@ -23,7 +23,7 @@ class MergeTagEvent extends Event
     {
         $this->mergeTag = $mergeTag;
     }
-    
+
     /**
      * Get Object
      *

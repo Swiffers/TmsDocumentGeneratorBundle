@@ -12,7 +12,7 @@ use Tms\Bundle\DocumentGeneratorBundle\Event\MergeTagEvent;
  */
 class MergeTagManager extends AbstractManager
 {
-    
+
     /**
      * {@inheritdoc}
      */
@@ -20,7 +20,7 @@ class MergeTagManager extends AbstractManager
     {
         return "TmsDocumentGeneratorBundle:MergeTag";
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -36,7 +36,7 @@ class MergeTagManager extends AbstractManager
             new MergeTagEvent($entity)
         );
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -52,7 +52,7 @@ class MergeTagManager extends AbstractManager
             new MergeTagEvent($entity)
         );
     }
-    
+
     /**
      * {@inheritdoc}
      */

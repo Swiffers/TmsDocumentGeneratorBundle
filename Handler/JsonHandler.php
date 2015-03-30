@@ -8,6 +8,11 @@ namespace Tms\Bundle\DocumentGeneratorBundle\Handler;
 
 use Tms\Bundle\DocumentGeneratorBundle\Exception\JsonConversionException;
 
+/**
+ * Class JsonHandler
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\Handler
+ */
 class JsonHandler
 {
 
@@ -17,7 +22,7 @@ class JsonHandler
      *
      * @var array
      */
-    protected static $_messages = array(
+    protected static $messages = array(
         JSON_ERROR_NONE => 'No error has occurred',
         JSON_ERROR_DEPTH => 'The maximum stack depth has been exceeded',
         JSON_ERROR_STATE_MISMATCH => 'Invalid or malformed JSON',
@@ -26,7 +31,7 @@ class JsonHandler
         JSON_ERROR_UTF8 => 'Malformed UTF-8 characters, possibly incorrectly encoded',
         JSON_ERROR_RECURSION => 'One or more recursive references in the value to be encoded',
         JSON_ERROR_INF_OR_NAN => 'One or more NAN or INF values in the value to be encoded',
-        JSON_ERROR_UNSUPPORTED_TYPE => 'A value of a type that cannot be encoded was given'
+        JSON_ERROR_UNSUPPORTED_TYPE => 'A value of a type that cannot be encoded was given',
     );
 
     /**
@@ -44,12 +49,12 @@ class JsonHandler
     {
         $result = json_encode($value, $options, $depth);
 
-        if(json_last_error() == JSON_ERROR_NONE) {
+        if (json_last_error() == JSON_ERROR_NONE) {
             return $result;
         }
 
-        $errorMessage = isset(static::$_messages[json_last_error()])
-            ? static::$_messages[json_last_error()]
+        $errorMessage = isset(static::$messages[json_last_error()])
+            ? static::$messages[json_last_error()]
             : 'Unknown error'
         ;
 
@@ -72,12 +77,12 @@ class JsonHandler
     {
         $result = json_decode($json, $assoc, $depth, $options);
 
-        if(json_last_error() == JSON_ERROR_NONE) {
+        if (json_last_error() == JSON_ERROR_NONE) {
             return $result;
         }
 
-        $errorMessage = isset(static::$_messages[json_last_error()])
-            ? static::$_messages[json_last_error()]
+        $errorMessage = isset(static::$messages[json_last_error()])
+            ? static::$messages[json_last_error()]
             : 'Unknown error'
         ;
 
@@ -96,7 +101,7 @@ class JsonHandler
      * @return mixed return array, when $var is json and $return_data is true,
      *                      bool, otherwise.
      */
-    public static function is_json ($var, $return_data = false, $assoc = false, $depth = 512, $options = 0)
+    public static function is_json($var, $return_data = false, $assoc = false, $depth = 512, $options = 0)
     {
         if (is_string($var)) {
             $data = json_decode($var, $assoc, $depth, $options);
@@ -113,14 +118,14 @@ class JsonHandler
     /**
      * Recursion do json_decode on a N-dimensional array
      *
-     * @param array $current     N-dimensional array who contain json string as value
-     * @param bool  $assoc       json_decode Parameter
-     * @param int   $depth       json_decode Parameter
-     * @param int   $options     json_decode Parameter
+     * @param array $current N-dimensional array who contain json string as value
+     * @param bool  $assoc   json_decode Parameter
+     * @param int   $depth   json_decode Parameter
+     * @param int   $options json_decode Parameter
      *
      * @return array
      */
-    public static function array_decode_json_recursive (array $current, $assoc = false, $depth = 512, $options = 0)
+    public static function array_decode_json_recursive(array $current, $assoc = false, $depth = 512, $options = 0)
     {
         foreach ($current as $key => $value) {
             switch (true) {
@@ -135,6 +140,7 @@ class JsonHandler
                     break;
             }
         }
+
         return $current;
     }
 }

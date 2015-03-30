@@ -10,6 +10,11 @@ use Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag;
 
 use Tms\Bundle\DocumentGeneratorBundle\Exception\MissingGenerationParametersException;
 
+/**
+ * Interface DataFetcherInterface
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\DataFetcher
+ */
 interface DataFetcherInterface
 {
     /**

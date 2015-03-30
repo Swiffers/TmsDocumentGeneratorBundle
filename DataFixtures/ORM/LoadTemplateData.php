@@ -11,6 +11,11 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class LoadTemplateData
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\DataFixtures\ORM
+ */
 class LoadTemplateData extends AbstractFixture implements OrderedFixtureInterface, FixtureInterface, ContainerAwareInterface
 {
     /**
@@ -36,8 +41,7 @@ class LoadTemplateData extends AbstractFixture implements OrderedFixtureInterfac
             $template->setName('template'.$i)
                 ->setDescription('template description'.$i)
                 ->setHtml('html'.$i)
-                ->setCss('css'.$i)
-            ;
+                ->setCss('css'.$i);
 
             $this->container->get('tms_document_generator.manager.template')->add($template);
             $this->addReference("template".$i, $template);

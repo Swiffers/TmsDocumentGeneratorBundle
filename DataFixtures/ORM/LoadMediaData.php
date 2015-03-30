@@ -11,6 +11,11 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class LoadMediaData
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\DataFixtures\ORM
+ */
 class LoadMediaData extends AbstractFixture implements OrderedFixtureInterface, FixtureInterface, ContainerAwareInterface
 {
     /**

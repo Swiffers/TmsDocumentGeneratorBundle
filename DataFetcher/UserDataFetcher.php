@@ -11,6 +11,11 @@ use Symfony\Component\OptionsResolver\Options;
 
 use Tms\Bundle\RestClientBundle\Hypermedia\Crawling\CrawlerInterface;
 
+/**
+ * Class UserDataFetcher
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\DataFetcher
+ */
 class UserDataFetcher extends AbstractDataFetcher
 {
     /**
@@ -31,19 +36,18 @@ class UserDataFetcher extends AbstractDataFetcher
     /**
      * {@inheritDoc}
      */
-    protected function configureParameters(OptionsResolverInterface $resolver)
+    public function doFetch(array $params)
     {
-        parent::configureParameters($resolver);
-        $resolver
-            ->setOptional(array('_'))
-        ;
+
     }
 
     /**
      * {@inheritDoc}
      */
-    public function doFetch(array $params)
+    protected function configureParameters(OptionsResolverInterface $resolver)
     {
-
+        parent::configureParameters($resolver);
+        $resolver
+            ->setOptional(array('_'));
     }
 }

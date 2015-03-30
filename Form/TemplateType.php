@@ -6,6 +6,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class TemplateType
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\Form
+ */
 class TemplateType extends AbstractType
 {
     /**
@@ -16,8 +21,7 @@ class TemplateType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('tags', 'related_to_many_metadata_tags')
-        ;
+            ->add('tags', 'related_to_many_metadata_tags');
     }
 
     /**
@@ -25,9 +29,11 @@ class TemplateType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Tms\Bundle\DocumentGeneratorBundle\Entity\Template'
-        ));
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Tms\Bundle\DocumentGeneratorBundle\Entity\Template',
+            )
+        );
     }
 
     /**

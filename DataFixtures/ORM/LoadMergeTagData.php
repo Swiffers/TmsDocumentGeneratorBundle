@@ -11,6 +11,11 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class LoadMergeTagData
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\DataFixtures\ORM
+ */
 class LoadMergeTagData extends AbstractFixture implements OrderedFixtureInterface, FixtureInterface, ContainerAwareInterface
 {
     /**
@@ -112,19 +117,18 @@ class LoadMergeTagData extends AbstractFixture implements OrderedFixtureInterfac
                     )
                     ->setIdentifier(
                         $this ->getIdentifier($mergeTag->getFetcherAlias())
-                        )
+                    )
                     ->setDescription('merge tag description'.$i)
                     ->setRequired(($j+1)%2)
                     ->setTemplateId(
                         $this->getReference("template".$i)
-                        )
+                    )
                     ->setDefaultValue(
                         $this->getdefaultValue($mergeTag->getFetcherAlias())
                     )
                     ->setFetchDataKeys(
                         $this->getFetchDataKey($mergeTag->getFetcherAlias(), $mergeTag->getIdentifier())
-                    )
-                ;
+                    );
 
                 $this->container->get('tms_document_generator.manager.merge_tag')->add($mergeTag);
             }

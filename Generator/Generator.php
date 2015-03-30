@@ -15,6 +15,11 @@ use Tms\Bundle\DocumentGeneratorBundle\HtmlConverter\HtmlConverterRegistryInterf
 
 use Tms\Bundle\DocumentGeneratorBundle\Exception\MissingGenerationParametersException;
 
+/**
+ * Class Generator
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\Generator
+ */
 class Generator implements GeneratorInterface
 {
     /**
@@ -121,8 +126,7 @@ class Generator implements GeneratorInterface
             try {
                 $fetchedData[$identifier] = $this->dataFetcherRegistry
                     ->getDataFetcher($fetcherAlias)
-                    ->fetch($data, $mergeTag)
-                ;
+                    ->fetch($data, $mergeTag);
             } catch (MissingGenerationParametersException $e) {
                 if ($mergeTag->isRequired()) {
                     throw new \RuntimeException(sprintf(
@@ -134,8 +138,7 @@ class Generator implements GeneratorInterface
                 //DefaultValue could be a string of json
                 $fetchedData[$identifier] = JsonHandler::is_json($mergeTag->getDefaultValue(), true, true)
                     ?
-                    : $mergeTag->getDefaultValue()
-                ;
+                    : $mergeTag->getDefaultValue();
             }
         }
 

@@ -5,8 +5,14 @@
  */
 
 namespace Tms\Bundle\DocumentGeneratorBundle\DataFetcher;
+
 use Tms\Bundle\DocumentGeneratorBundle\Exception\UnexpectedTypeException;
 
+/**
+ * Interface DataFetcherRegistryInterface
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\DataFetcher
+ */
 interface DataFetcherRegistryInterface
 {
     /**

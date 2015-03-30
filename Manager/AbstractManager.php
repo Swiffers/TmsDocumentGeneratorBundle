@@ -17,11 +17,11 @@ abstract class AbstractManager
 {
     protected $entityManager;
     protected $eventDispatcher;
-    
+
     /**
      * Constructor
      *
-     * @param EntityManager $entityManager
+     * @param EntityManager                 $entityManager
      * @param ContainerAwareEventDispatcher $eventDispatcher
      */
     public function __construct(EntityManager $entityManager, EventDispatcherInterface $eventDispatcher)
@@ -29,7 +29,7 @@ abstract class AbstractManager
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
     }
-    
+
     /**
      * Get EntityManager
      *
@@ -39,7 +39,7 @@ abstract class AbstractManager
     {
         return $this->entityManager;
     }
-    
+
     /**
      * Get EventDispatcher
      *
@@ -49,7 +49,7 @@ abstract class AbstractManager
     {
         return $this->eventDispatcher;
     }
-    
+
     /**
      * Get Repository
      *
@@ -59,10 +59,14 @@ abstract class AbstractManager
     {
         return $this->getEntityManager()->getRepository($this->getEntityClass());
     }
-    
+
     /**
      * Magic call
      * Triger to repository methods call
+     * @param $method
+     * @param $args
+     *
+     * @return mixed
      */
     public function __call($method, $args)
     {
@@ -77,7 +81,7 @@ abstract class AbstractManager
      */
     public function add($entity)
     {
-        if($entity instanceof LoggableInterface) {
+        if ($entity instanceof LoggableInterface) {
             $this->getEventDispatcher()->dispatch(
                 LogEvents::PRE_CREATE,
                 new LogEvent($entity)
@@ -85,7 +89,7 @@ abstract class AbstractManager
         }
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
-        if($entity instanceof LoggableInterface) {
+        if ($entity instanceof LoggableInterface) {
             $this->getEventDispatcher()->dispatch(
                 LogEvents::POST_CREATE,
                 new LogEvent($entity)
@@ -140,7 +144,7 @@ abstract class AbstractManager
             );
         }
     }
-    
+
     /**
      * Get Entity class name
      *

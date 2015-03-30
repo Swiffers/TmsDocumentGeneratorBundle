@@ -8,6 +8,11 @@ namespace Tms\Bundle\DocumentGeneratorBundle\DataFetcher;
 
 use Tms\Bundle\DocumentGeneratorBundle\Exception\UnexpectedTypeException;
 
+/**
+ * Class DataFetcherRegistry
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\DataFetcher
+ */
 class DataFetcherRegistry implements DataFetcherRegistryInterface
 {
     /**
@@ -57,7 +62,7 @@ class DataFetcherRegistry implements DataFetcherRegistryInterface
      */
     public function hasDataFetcher($alias)
     {
-        if (!isset($this->fetchers[$alias])){
+        if (!isset($this->fetchers[$alias])) {
             return false;
         }
 

@@ -6,6 +6,11 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Generator;
 
+/**
+ * Interface GeneratorInterface
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\Generator
+ */
 interface GeneratorInterface
 {
     /**

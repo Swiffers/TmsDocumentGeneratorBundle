@@ -3,6 +3,7 @@
 namespace Tms\Bundle\DocumentGeneratorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Tms\Bundle\LoggerBundle\Logger\LoggableInterface;
 
 /**
  * MergeTag
@@ -60,7 +61,7 @@ class MergeTag
 
     /**
      * @var Template
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="Template", inversedBy="mergeTags", cascade={"persist"})
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", nullable=false, onDelete="Cascade")
      */
@@ -68,7 +69,7 @@ class MergeTag
 
     /**
      * toString
-     * 
+     *
      * @return string
      */
     public function __toString()
@@ -79,7 +80,7 @@ class MergeTag
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -95,14 +96,14 @@ class MergeTag
     public function setIdentifier($identifier)
     {
         $this->identifier = $identifier;
-    
+
         return $this;
     }
 
     /**
      * Get identifier
      *
-     * @return string 
+     * @return string
      */
     public function getIdentifier()
     {
@@ -118,7 +119,7 @@ class MergeTag
     public function setRequired($required)
     {
         $this->required = $required;
-    
+
         return $this;
     }
 
@@ -141,14 +142,14 @@ class MergeTag
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -187,14 +188,14 @@ class MergeTag
     public function setFetcherAlias($fetcherAlias)
     {
         $this->fetcherAlias = $fetcherAlias;
-    
+
         return $this;
     }
 
     /**
      * Get fetcherAlias
      *
-     * @return string 
+     * @return string
      */
     public function getFetcherAlias()
     {
@@ -210,17 +211,25 @@ class MergeTag
     public function setTemplate(\Tms\Bundle\DocumentGeneratorBundle\Entity\Template $template)
     {
         $this->template = $template;
-    
+
         return $this;
     }
 
     /**
      * Get template
      *
-     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template 
+     * @return \Tms\Bundle\DocumentGeneratorBundle\Entity\Template
      */
     public function getTemplate()
     {
         return $this->template;
+    }
+
+    /**
+     * magic clone
+     */
+    public function __clone()
+    {
+        $this->id = null;
     }
 }

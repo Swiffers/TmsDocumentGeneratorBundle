@@ -19,18 +19,18 @@ abstract class AbstractEntityRepository extends EntityRepository
 {
     /**
      * Find by query builder
-     * 
-     * @param array $criteria
+     *
+     * @param array      $criteria
      * @param array|null $orderBy
-     * 
+     *
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function findByQueryBuilder(array $criteria, array $orderBy = null)
     {
         $qb = $this->createQueryBuilder('entity');
 
-        if(!is_null($orderBy)) {
-            foreach($orderBy as $field => $order) {
+        if (!is_null($orderBy)) {
+            foreach ($orderBy as $field => $order) {
                 $qb->addOrderBy(sprintf("entity.%s", $field), $order);
             }
         }
@@ -43,9 +43,9 @@ abstract class AbstractEntityRepository extends EntityRepository
     /**
      * Find by query
      *
-     * @param array $criteria
+     * @param array      $criteria
      * @param array|null $orderBy
-     * 
+     *
      * @return \Doctrine\ORM\Query
      */
     public function findByQuery(array $criteria = null, array $orderBy = null)
@@ -55,9 +55,9 @@ abstract class AbstractEntityRepository extends EntityRepository
 
     /**
      * Find all query builder
-     * 
+     *
      * @param array|null $orderBy
-     * 
+     *
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function findAllQueryBuilder(array $orderBy = null)
@@ -67,9 +67,9 @@ abstract class AbstractEntityRepository extends EntityRepository
 
     /**
      * Find all query
-     * 
+     *
      * @param array|null $orderBy
-     * 
+     *
      * @return \Doctrine\ORM\Query
      */
     public function findAllQuery(array $orderBy = null)
@@ -114,8 +114,8 @@ abstract class AbstractEntityRepository extends EntityRepository
      * addCriteria
      *
      * @param QueryBuilder $qb
-     * @param string $sourceEntity
-     * @param array $criteria
+     * @param string       $sourceEntity
+     * @param array        $criteria
      */
     public static function addCriteria(QueryBuilder & $qb, $sourceEntity, array $criteria)
     {

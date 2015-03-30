@@ -8,6 +8,11 @@ namespace Tms\Bundle\DocumentGeneratorBundle\HtmlConverter;
 
 use Knp\Bundle\SnappyBundle\Snappy\LoggableGenerator;
 
+/**
+ * Class PdfHtmlConverter
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\HtmlConverter
+ */
 class PdfHtmlConverter implements HtmlConverterInterface
 {
     /**

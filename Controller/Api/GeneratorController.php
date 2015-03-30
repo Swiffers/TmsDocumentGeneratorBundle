@@ -10,6 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Tms\Bundle\DocumentGeneratorBundle\Handler\JsonHandler;
 
+/**
+ * Class GeneratorController
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\Controller\Api
+ */
 class GeneratorController extends Controller
 {
     /**
@@ -144,7 +149,7 @@ class GeneratorController extends Controller
      *
      * @return array
      */
-    private function handleRequest(Request $request, $id , $isPreview = false)
+    private function handleRequest(Request $request, $id, $isPreview = false)
     {
         $parameters['templateId'] = $id;
         $parameters['data'] = $request->request->has('data')

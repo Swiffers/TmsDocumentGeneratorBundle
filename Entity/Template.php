@@ -3,6 +3,7 @@
 namespace Tms\Bundle\DocumentGeneratorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata;
 use IDCI\Bundle\SimpleMetadataBundle\Metadata\MetadatableInterface;
 use Tms\Bundle\LoggerBundle\Logger\LoggableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -80,14 +81,14 @@ class Template implements MetadatableInterface, LoggableInterface
 
     /**
      * @var array<MergeTag>
-     * 
+     *
      * @ORM\OneToMany(targetEntity="MergeTag", mappedBy="template", cascade={"all"})
      */
     private $mergeTags;
 
     /**
      * @var array<Media>
-     * 
+     *
      * @ORM\ManyToMany(targetEntity="Tms\Bundle\MediaClientBundle\Entity\Media", cascade={"all"})
      * @ORM\JoinTable(name="template_media",
      *      joinColumns={@ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="cascade")},
@@ -104,8 +105,7 @@ class Template implements MetadatableInterface, LoggableInterface
         $now = new \DateTime("now");
         $this
             ->setCreatedAt($now)
-            ->setUpdatedAt($now)
-        ;
+            ->setUpdatedAt($now);
     }
 
     /**
@@ -118,18 +118,18 @@ class Template implements MetadatableInterface, LoggableInterface
 
     /**
      * toString
-     * 
+     *
      * @return string
      */
     public function __toString()
     {
         return $this->getName();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -145,7 +145,7 @@ class Template implements MetadatableInterface, LoggableInterface
         $this->mergeTags    = new ArrayCollection();
         $this->images       = new ArrayCollection();
     }
-    
+
     /**
      * Set name
      *
@@ -155,14 +155,14 @@ class Template implements MetadatableInterface, LoggableInterface
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -178,14 +178,14 @@ class Template implements MetadatableInterface, LoggableInterface
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -201,14 +201,14 @@ class Template implements MetadatableInterface, LoggableInterface
     public function setHtml($html)
     {
         $this->html = $html;
-    
+
         return $this;
     }
 
     /**
      * Get html
      *
-     * @return string 
+     * @return string
      */
     public function getHtml()
     {
@@ -224,14 +224,14 @@ class Template implements MetadatableInterface, LoggableInterface
     public function setCss($css)
     {
         $this->css = $css;
-    
+
         return $this;
     }
 
     /**
      * Get css
      *
-     * @return string 
+     * @return string
      */
     public function getCss()
     {
@@ -247,14 +247,14 @@ class Template implements MetadatableInterface, LoggableInterface
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -270,14 +270,14 @@ class Template implements MetadatableInterface, LoggableInterface
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -293,7 +293,7 @@ class Template implements MetadatableInterface, LoggableInterface
     public function addTag(\IDCI\Bundle\SimpleMetadataBundle\Entity\Metadata $tag)
     {
         $this->tags[] = $tag;
-    
+
         return $this;
     }
 
@@ -310,7 +310,7 @@ class Template implements MetadatableInterface, LoggableInterface
     /**
      * Get tags
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTags()
     {
@@ -326,7 +326,7 @@ class Template implements MetadatableInterface, LoggableInterface
     public function addMergeTag(\Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag $mergeTag)
     {
         $this->mergeTags[] = $mergeTag;
-    
+
         return $this;
     }
 
@@ -343,7 +343,7 @@ class Template implements MetadatableInterface, LoggableInterface
     /**
      * Get mergeTags
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMergeTags()
     {
@@ -359,7 +359,7 @@ class Template implements MetadatableInterface, LoggableInterface
     public function addImage(\Tms\Bundle\MediaClientBundle\Entity\Media $image)
     {
         $this->images[] = $image;
-    
+
         return $this;
     }
 
@@ -376,7 +376,7 @@ class Template implements MetadatableInterface, LoggableInterface
     /**
      * Get images
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getImages()
     {
@@ -391,4 +391,23 @@ class Template implements MetadatableInterface, LoggableInterface
         return $this->getTags();
     }
 
+    /**
+     * magic clone
+     */
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id          = null;
+            $this->name       .= " copy";
+            //$this->description = $this->description;
+            //$this->html        = $this->html;
+            //$this->css         = $this->css;
+            $this->createdAt   = null;
+            $this->updatedAt   = null;
+
+            $this->tags        = array();
+            $this->mergeTags   = array();
+            $this->images      = array();
+        }
+    }
 }

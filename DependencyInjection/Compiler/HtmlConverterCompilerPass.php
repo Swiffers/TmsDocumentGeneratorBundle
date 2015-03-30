@@ -10,6 +10,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * Class HtmlConverterCompilerPass
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\DependencyInjection\Compiler
+ */
 class HtmlConverterCompilerPass implements CompilerPassInterface
 {
     /**

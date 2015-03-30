@@ -8,6 +8,11 @@ namespace Tms\Bundle\DocumentGeneratorBundle\HtmlConverter;
 
 use Tms\Bundle\DocumentGeneratorBundle\Exception\UnexpectedTypeException;
 
+/**
+ * Class HtmlConverterRegistry
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\HtmlConverter
+ */
 class HtmlConverterRegistry implements HtmlConverterRegistryInterface
 {
     /**

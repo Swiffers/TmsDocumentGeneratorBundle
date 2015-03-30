@@ -13,7 +13,7 @@ use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
 class TemplateEvent extends Event
 {
     protected $template;
-    
+
     /**
      * Constructor
      *
@@ -23,7 +23,7 @@ class TemplateEvent extends Event
     {
         $this->template = $template;
     }
-    
+
     /**
      * Get Object
      *

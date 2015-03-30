@@ -15,6 +15,11 @@ use Da\ApiClientBundle\Exception\ApiHttpResponseException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * Class ParticipationDataFetcher
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\DataFetcher
+ */
 class ParticipationDataFetcher extends AbstractDataFetcher
 {
     /**
@@ -30,22 +35,6 @@ class ParticipationDataFetcher extends AbstractDataFetcher
     public function __construct(CrawlerInterface $crawler)
     {
         $this->crawler = $crawler;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function configureParameters(OptionsResolverInterface $resolver)
-    {
-        $resolver
-            ->setOptional(array('_'))
-            ->setDefaults(array(
-                'id' => function (Options $options) {
-                    return $options['_'];
-                }
-            ))
-            ->setRequired(array('id'))
-        ;
     }
 
     /**
@@ -66,8 +55,7 @@ class ParticipationDataFetcher extends AbstractDataFetcher
                     sprintf('/participations'),
                     'GET',
                     $parameters
-                )
-            ;
+                );
         } catch (ApiHttpResponseException $e) {
             switch ($e->getHttpCode()) {
                 case 403:
@@ -84,7 +72,7 @@ class ParticipationDataFetcher extends AbstractDataFetcher
             throw $e;
         }
 
-        if (count($rawfetchedData) != 1){
+        if (count($rawfetchedData) != 1) {
             throw new \InvalidArgumentException(sprintf(
                 "InvalidArgumentException - Fetcher: %s return %s results with search query: %s, which should return only one item",
                 'participation',
@@ -94,5 +82,20 @@ class ParticipationDataFetcher extends AbstractDataFetcher
         }
 
         return JsonHandler::array_decode_json_recursive(current($rawfetchedData), true);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function configureParameters(OptionsResolverInterface $resolver)
+    {
+        $resolver
+            ->setOptional(array('_'))
+            ->setDefaults(array(
+                'id' => function (Options $options) {
+                    return $options['_'];
+                },
+            ))
+            ->setRequired(array('id'));
     }
 }

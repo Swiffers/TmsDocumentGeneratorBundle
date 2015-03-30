@@ -6,7 +6,11 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\HtmlConverter;
 
-
+/**
+ * Class NullHtmlConverter
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\HtmlConverter
+ */
 class NullHtmlConverter implements HtmlConverterInterface
 {
     /**

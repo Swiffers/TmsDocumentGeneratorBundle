@@ -12,15 +12,13 @@ use Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag;
 
 use Tms\Bundle\DocumentGeneratorBundle\Exception\MissingGenerationParametersException;
 
+/**
+ * Class AbstractDataFetcher
+ *
+ * @package Tms\Bundle\DocumentGeneratorBundle\DataFetcher
+ */
 abstract class AbstractDataFetcher implements DataFetcherInterface
 {
-    /**
-     * Configure parameters
-     *
-     * @param OptionsResolverInterface $resolver
-     */
-    protected abstract function configureParameters(OptionsResolverInterface $resolver);
-
     /**
      * {@inheritDoc}
      */
@@ -70,5 +68,12 @@ abstract class AbstractDataFetcher implements DataFetcherInterface
      *
      * @return array
      */
-    public abstract function doFetch(array $parameters);
+     abstract public function doFetch(array $parameters);
+
+    /**
+     * Configure parameters
+     *
+     * @param OptionsResolverInterface $resolver
+     */
+     abstract protected function configureParameters(OptionsResolverInterface $resolver);
 }
