@@ -15,46 +15,5 @@ use Tms\Bundle\MediaClientBundle\Entity\Media;
  */
 class TemplateRepository extends AbstractEntityRepository
 {
-    /**
-     * Duplicate the template
-     *
-     * @param Template $template
-     * @return Template
-     */
-    public function duplicate(Template $template)
-    {
-        $templateDuplicated = clone $template;
 
-        $this->getEntityManager()->persist($templateDuplicated);
-        $this->getEntityManager()->flush();
-
-        //Tags
-        foreach ($template->getTags() as $tag) {
-            $newTag = new Metadata();
-            $newTag->setNamespace($tag->getNamespace());
-            $newTag->setKey($tag->getKey());
-            $newTag->setValue($tag->getValue());
-            $newTag->setObject($templateDuplicated);
-            $newTag->setObjectClassName(get_class($templateDuplicated));
-            $newTag->setObjectId($templateDuplicated->getId());
-
-            $templateDuplicated->addTag($newTag);
-        }
-
-        $this->getEntityManager()->persist($templateDuplicated);
-        $this->getEntityManager()->flush();
-
-        //MergeTags
-        $this->getEntityManager()
-            ->getRepository('TmsDocumentGeneratorBundle:MergeTag')
-            ->duplicate($template, $templateDuplicated);
-        //Medias
-        foreach ($template->getImages() as $image) {
-            //$templateDuplicated->addImage($image);
-            //$this->getEntityManager()->persist($templateDuplicated);
-            //$this->getEntityManager()->flush();
-        }
-
-        return $templateDuplicated;
-    }
 }

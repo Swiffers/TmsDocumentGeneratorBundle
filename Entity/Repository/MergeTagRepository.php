@@ -13,19 +13,5 @@ use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
  */
 class MergeTagRepository extends AbstractEntityRepository
 {
-    /**
-     * Duplicate merge tags of template
-     *
-     * @param Template $template
-     * @param Template $templateDuplicated
-     */
-    public function duplicate(Template $template, Template $templateDuplicated)
-    {
-        foreach ($template->getMergeTags() as $mergeTag) {
-            $newMergeTag = clone $mergeTag;
-            $newMergeTag->setTemplate($templateDuplicated);
-            $this->getEntityManager()->persist($newMergeTag);
-            $this->getEntityManager()->flush();
-        }
-    }
+
 }

@@ -4,6 +4,7 @@ namespace Tms\Bundle\DocumentGeneratorBundle\Manager;
 
 use Tms\Bundle\DocumentGeneratorBundle\Event\MergeTagEvents;
 use Tms\Bundle\DocumentGeneratorBundle\Event\MergeTagEvent;
+use Tms\Bundle\DocumentGeneratorBundle\Entity\Template;
 
 /**
  * Description of MergeTagManager
@@ -67,5 +68,20 @@ class MergeTagManager extends AbstractManager
             MergeTagEvents::POST_DELETE,
             new MergeTagEvent($entity)
         );
+    }
+
+    /**
+     * Duplicate merge tags of template
+     *
+     * @param Template $template
+     * @param Template $templateDuplicated
+     */
+    public function duplicate(Template $template, Template $templateDuplicated)
+    {
+        foreach ($template->getMergeTags() as $mergeTag) {
+            $newMergeTag = clone $mergeTag;
+            $newMergeTag->setTemplate($templateDuplicated);
+            $this->add($newMergeTag);
+        }
     }
 }
