@@ -34,6 +34,12 @@ services:
         tags:
             - { name: tms_document_generator.fetcher, alias: participation }
 
+    tms_document_generator.fetcher.offer:
+            class: Tms\Bundle\DocumentGeneratorBundle\DataFetcher\OfferDataFetcher
+            arguments: [@tms_rest_client.hypermedia.crawler]
+            tags:
+                - { name: tms_document_generator.fetcher, alias: offer }
+
     # Converter
     tms_document_generator.converter.html:
         class: Tms\Bundle\DocumentGeneratorBundle\HtmlConverter\NullHtmlConverter

@@ -18,10 +18,10 @@ da_api_client:
             endpoint_root: %api.participation.endpoint_root%
             security_token: %api.security_token%
 #            cache_enabled: true
-#        operation:
-#                endpoint_root:  %api.operation.endpoint_root%
-#                security_token: %api.security_token%
-#                cache_enabled:  true
+        operation:
+            endpoint_root:  %api.operation.endpoint_root%
+            security_token: %api.security_token%
+#           cache_enabled:  true
 #        pot:
 #                endpoint_root:  %api.pot.endpoint_root%
 #                security_token: %api.security_token%
