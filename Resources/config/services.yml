@@ -22,12 +22,6 @@ services:
         tags:
             - { name: tms_document_generator.fetcher, alias: default }
 
-    tms_document_generator.fetcher.user:
-        class: Tms\Bundle\DocumentGeneratorBundle\DataFetcher\UserDataFetcher
-        arguments: [@tms_rest_client.hypermedia.crawler]
-        tags:
-            - { name: tms_document_generator.fetcher, alias: user }
-
     tms_document_generator.fetcher.participation:
         class: Tms\Bundle\DocumentGeneratorBundle\DataFetcher\ParticipationDataFetcher
         arguments: [@tms_rest_client.hypermedia.crawler]
