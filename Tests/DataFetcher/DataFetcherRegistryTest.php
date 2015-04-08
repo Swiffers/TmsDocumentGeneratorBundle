@@ -5,79 +5,118 @@ namespace Tms\Bundle\DocumentGeneratorBundle\Tests\DataFetcher;
 use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistry;
 
 /**
- * Description of DataFetcherRegistryTest
- *
- * @author Antoine Ribola <antoine.ribola@gmail.com>
+ * Class DataFetcherRegistryTest
  */
 class DataFetcherRegistryTest extends \PHPUnit_Framework_TestCase
 {
-    public function getData()
+    /**
+     * @return DataFetcherRegistry
+     */
+    public function testSetDataFetcher()
     {
-        $data = array();
-        
-        #0
-        $alias = ["default"];
-        $service = ["tms_document_generator.fetcher.default"];
-        
-        $data[] = array(
-            $alias,
-            $service
+        $default =
+            $this->getMockBuilder('Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DefaultDataFetcher')
+                ->disableOriginalConstructor()
+                ->getMock();
+        $offer =
+            $this->getMockBuilder('Tms\Bundle\DocumentGeneratorBundle\DataFetcher\OfferDataFetcher')
+                ->disableOriginalConstructor()
+                ->getMock();
+        $participation =
+            $this->getMockBuilder('Tms\Bundle\DocumentGeneratorBundle\DataFetcher\ParticipationDataFetcher')
+                ->disableOriginalConstructor()
+                ->getMock();
+
+        $registry = new DataFetcherRegistry();
+
+        $this->assertInstanceOf(
+            'Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistryInterface',
+            $registry->setDataFetcher('default', $default)
         );
-        
-        #1
-        $alias = ["participation"];
-        $service = ["tms_document_generator.fetcher.participation"];
-        
-        $data[] = array(
-            $alias,
-            $service
+
+        $this->assertInstanceOf(
+            'Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistryInterface',
+            $registry->setDataFetcher('offer', $offer)
         );
-        
-        #2
-        $alias = ["user"];
-        $service = ["tms_document_generator.fetcher.user"];
-        
-        $data[] = array(
-            $alias,
-            $service
+
+        $this->assertInstanceOf(
+            'Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistryInterface',
+            $registry->setDataFetcher('participation', $participation)
         );
-        
-        return $data;
+
+        return $registry;
     }
 
     /**
-     * @covers DataFetcherRegistry::getDataFetcher
-     * @dataProvider getData
+     * @param DataFetcherRegistry $registry
+     *
+     * @depends testSetDataFetcher
      */
-    public function testGetDataFetcher($alias, $service)
+    public function testHasDataFetcher(DataFetcherRegistry $registry)
     {
-        $dataFetcherRegistry = new DataFetcherRegistry();
-        
-        $dataFetcher = $dataFetcherRegistry->getDataFetcher($alias);
-        $this->assertEquals($service,$dataFetcher);
+        $this->assertTrue($registry->hasDataFetcher('default'));
+        $this->assertTrue($registry->hasDataFetcher('offer'));
+        $this->assertTrue($registry->hasDataFetcher('participation'));
+        $this->assertFalse($registry->hasDataFetcher('user'));
     }
-    
+
     /**
-     * @covers DataFetcherRegistry::getDataFetcher
-     * @expectedException UnexpectedTypeException
+     * @param DataFetcherRegistry $registry
+     *
+     * @depends testSetDataFetcher
      */
-    public function testUnexpectedTypeException()
+    public function testGetDataFetcher(DataFetcherRegistry $registry)
     {
-        $dataFetcherRegistry = new DataFetcherRegistry();
-        
-        //parameter with another type than string
-        $dataFetcher = $dataFetcherRegistry->getDataFetcher(00000);
+        $this->assertInstanceOf(
+            'Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherInterface',
+            $registry->getDataFetcher('default')
+        );
+
+        $this->assertInstanceOf(
+            'Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherInterface',
+            $registry->getDataFetcher('offer')
+        );
+
+        $this->assertInstanceOf(
+            'Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherInterface',
+            $registry->getDataFetcher('participation')
+        );
     }
-    
+
     /**
-     * @covers DataFetcherRegistry::getDataFetcher
-     * @expectedException InvalidArgumentException
+     * @param DataFetcherRegistry $registry
+     *
+     * @depends testSetDataFetcher
      */
-    public function testInvalidArgumentException()
+    public function testGetDataFetchersAlias(DataFetcherRegistry $registry)
     {
-        $dataFetcherRegistry = new DataFetcherRegistry();
-        
-        //parameter with alias which not exist
-        $dataFetcher = $dataFetcherRegistry->getDataFetcher("NotExistFetcher");
+        $this->assertEquals(
+            array('default', 'offer', 'participation'),
+            $registry->getDataFetchersAlias()
+        );
+    }
+
+    /**
+     * @param DataFetcherRegistry $registry
+     *
+     * @expectedException \Tms\Bundle\DocumentGeneratorBundle\Exception\UnexpectedTypeException
+     *
+     * @depends testSetDataFetcher
+     */
+    public function testUnexpectedTypeException(DataFetcherRegistry $registry)
+    {
+        $registry->getDataFetcher(array());
+    }
+
+    /**
+     * @param DataFetcherRegistry $registry
+     *
+     * @expectedException \InvalidArgumentException
+     *
+     * @depends testSetDataFetcher
+     */
+    public function testInvalidArgumentException(DataFetcherRegistry $registry)
+    {
+        $registry->getDataFetcher('user');
     }
 }
