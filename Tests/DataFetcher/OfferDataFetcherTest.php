@@ -2,7 +2,7 @@
 
 namespace Tms\Bundle\DocumentGeneratorBundle\Tests\DataFetcher;
 
-use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\ParticipationDataFetcher;
+use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\OfferDataFetcher;
 
 use Da\ApiClientBundle\Exception\ApiHttpResponseException;
 
@@ -11,7 +11,7 @@ use Da\ApiClientBundle\Exception\ApiHttpResponseException;
  *
  * @package Tms\Bundle\DocumentGeneratorBundle\Tests\DataFetcher
  */
-class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
+class OfferDataFetcherTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var $crawler
@@ -23,15 +23,20 @@ class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-       $this->crawler =
+        $this->crawler =
             $this->getMockBuilder('Tms\Bundle\RestClientBundle\Hypermedia\Crawling\Crawler')
                 ->disableOriginalConstructor()
-                ->setMethods(array('go', 'execute'))
+                ->setMethods(array('go', 'findOne', 'getData'))
                 ->getMock();
 
-       $this->crawler
+        $this->crawler
             ->expects($this->any())
             ->method('go')
+            ->will($this->returnSelf());
+
+        $this->crawler
+            ->expects($this->any())
+            ->method('findOne')
             ->will($this->returnSelf());
     }
 
@@ -48,10 +53,10 @@ class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
         $mergeTag
             ->expects($this->once())
             ->method('getIdentifier')
-            ->willReturn('participation_1');
+            ->willReturn('offer_1');
 
         $data = array(
-            'participation_1' => '52976d6fe63ea02c768b4567'
+            'offer_1' => 'msdata-123'
         );
 
         $parameters[] = array($data, $mergeTag);
@@ -64,10 +69,10 @@ class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
         $mergeTag
             ->expects($this->once())
             ->method('getIdentifier')
-            ->willReturn('participation_2');
+            ->willReturn('offer_2');
 
         $data = array(
-            'participation_2.id' => '52976d6fe63ea02c768b4567'
+            'offer_2.reference' => 'msdata-456'
         );
 
         $parameters[] = array($data, $mergeTag);
@@ -84,14 +89,14 @@ class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
     {
         $this->crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('getData')
             ->will(
-                $this->returnValue(array(
+                $this->returnValue(
                     array()
-                ))
+                )
             );
 
-        $fetcher = new ParticipationDataFetcher($this->crawler);
+        $fetcher = new OfferDataFetcher($this->crawler);
 
         $this->assertEquals(array(), $fetcher->Fetch($data, $mergeTag));
     }
@@ -109,36 +114,15 @@ class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
         $mergeTag
             ->expects($this->once())
             ->method('getIdentifier')
-            ->willReturn('address');
+            ->willReturn('offer_3');
 
-        $data = array("address"=>"");
+        $data = array("offer_3"=>"");
 
-        $fetcher = new ParticipationDataFetcher($this->crawler);
+        $fetcher = new OfferDataFetcher($this->crawler);
 
         $fetcher->fetch($data, $mergeTag);
     }
 
-    /**
-     * testInvalidArgumentException
-     *
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInvalidArgumentException()
-    {
-        $this->crawler
-            ->expects($this->once())
-            ->method('execute')
-            ->will(
-                $this->returnValue(
-                    array(),
-                    array()
-                )
-            );
-
-        $fetcher = new ParticipationDataFetcher($this->crawler);
-
-        $fetcher->doFetch(array());
-    }
 
     /**
      * testApiHttpResponseException
@@ -149,16 +133,16 @@ class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
     {
         $this->crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('getData')
             ->will(
                 $this->throwException(
                     new ApiHttpResponseException(null, null, null, null)
                 )
             );
 
-        $fetcher = new ParticipationDataFetcher($this->crawler);
+        $fetcher = new OfferDataFetcher($this->crawler);
 
-        $fetcher->doFetch(array());
+        $fetcher->doFetch(array('reference'=>'msdata-789'));
     }
 
     /**
@@ -170,16 +154,16 @@ class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
     {
         $this->crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('getData')
             ->will(
                 $this->throwException(
                     new ApiHttpResponseException(null, 403, null, null)
                 )
             );
 
-        $fetcher = new ParticipationDataFetcher($this->crawler);
+        $fetcher = new OfferDataFetcher($this->crawler);
 
-        $fetcher->doFetch(array());
+        $fetcher->doFetch(array('reference'=>'msdata-789'));
     }
 
     /**
@@ -191,15 +175,15 @@ class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
     {
         $this->crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('getData')
             ->will(
                 $this->throwException(
                     new ApiHttpResponseException(null, 404, null, null)
                 )
             );
 
-        $fetcher = new ParticipationDataFetcher($this->crawler);
+        $fetcher = new OfferDataFetcher($this->crawler);
 
-        $fetcher->doFetch(array());
+        $fetcher->doFetch(array('reference'=>'msdata-789'));
     }
 }

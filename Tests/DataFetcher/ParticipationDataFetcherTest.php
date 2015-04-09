@@ -23,13 +23,13 @@ class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-       $this->crawler =
+        $this->crawler =
             $this->getMockBuilder('Tms\Bundle\RestClientBundle\Hypermedia\Crawling\Crawler')
                 ->disableOriginalConstructor()
                 ->setMethods(array('go', 'execute'))
                 ->getMock();
 
-       $this->crawler
+        $this->crawler
             ->expects($this->any())
             ->method('go')
             ->will($this->returnSelf());
@@ -109,9 +109,9 @@ class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
         $mergeTag
             ->expects($this->once())
             ->method('getIdentifier')
-            ->willReturn('address');
+            ->willReturn('participation_3');
 
-        $data = array("address"=>"");
+        $data = array("participation_3"=>"");
 
         $fetcher = new ParticipationDataFetcher($this->crawler);
 
