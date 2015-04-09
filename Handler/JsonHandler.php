@@ -44,6 +44,8 @@ class JsonHandler
      * @return string
      *
      * @throws \Exception
+     *
+     * @codeCoverageIgnore
      */
     public static function encode($value, $options = 0, $depth = 512)
     {

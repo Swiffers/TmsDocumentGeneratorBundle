@@ -4,6 +4,7 @@ namespace Tms\Bundle\DocumentGeneratorBundle\Tests\DataFetcher;
 
 use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DefaultDataFetcher;
 use Tms\Bundle\DocumentGeneratorBundle\Handler\JsonHandler;
+use Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag;
 
 /**
  * Class DefaultDataFetcher
@@ -14,6 +15,8 @@ class DefaultDataFetcherTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * getParameter
+     *
+     * @return array
      */
     public function getParameter()
     {
@@ -28,7 +31,7 @@ class DefaultDataFetcherTest extends \PHPUnit_Framework_TestCase
             ->willReturn('address');
 
         $data = array(
-            'address' => 'Rue de lac, Paris'
+            'address' => 'Rue de lac, Paris',
         );
 
         $parameters[] = array($data, $mergeTag);
@@ -44,7 +47,7 @@ class DefaultDataFetcherTest extends \PHPUnit_Framework_TestCase
             ->willReturn('address');
 
         $data = array(
-            'address' => '{"street":"Rue de lac","city":"Paris"}'
+            'address' => '{"street":"Rue de lac","city":"Paris"}',
         );
 
         $parameters[] = array($data, $mergeTag);
@@ -55,16 +58,20 @@ class DefaultDataFetcherTest extends \PHPUnit_Framework_TestCase
     /**
      * testDoFetch
      *
+     * @param array    $data
+     * @param MergeTag $mergeTag
+     *
      * @dataProvider getParameter
      */
     public function testFetch($data, $mergeTag)
     {
         $fetcher = new DefaultDataFetcher();
 
-        JsonHandler::is_json($data['address'])
-            ? $this->assertEquals(JsonHandler::decode($data['address'],true), $fetcher->Fetch($data, $mergeTag))
-            : $this->assertEquals($data['address'], $fetcher->Fetch($data, $mergeTag))
-            ;
+        if (JsonHandler::is_json($data['address'])) {
+            $this->assertEquals(JsonHandler::decode($data['address'], true), $fetcher->Fetch($data, $mergeTag));
+        } else {
+            $this->assertEquals($data['address'], $fetcher->Fetch($data, $mergeTag));
+        }
     }
 
     /**
@@ -86,7 +93,7 @@ class DefaultDataFetcherTest extends \PHPUnit_Framework_TestCase
         $data = array("address"=>"");
 
         $fetcher = new DefaultDataFetcher();
-        
+
         $fetcher->fetch($data, $mergeTag);
     }
 }

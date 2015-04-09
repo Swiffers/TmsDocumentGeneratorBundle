@@ -5,6 +5,7 @@ namespace Tms\Bundle\DocumentGeneratorBundle\Tests\DataFetcher;
 use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\OfferDataFetcher;
 
 use Da\ApiClientBundle\Exception\ApiHttpResponseException;
+use Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag;
 
 /**
  * Class OfferDataFetcherTest
@@ -42,6 +43,8 @@ class OfferDataFetcherTest extends \PHPUnit_Framework_TestCase
 
     /**
      * getParameter
+     *
+     * @return array
      */
     public function getParameter()
     {
@@ -56,7 +59,7 @@ class OfferDataFetcherTest extends \PHPUnit_Framework_TestCase
             ->willReturn('offer_1');
 
         $data = array(
-            'offer_1' => 'msdata-123'
+            'offer_1' => 'msdata-123',
         );
 
         $parameters[] = array($data, $mergeTag);
@@ -72,7 +75,7 @@ class OfferDataFetcherTest extends \PHPUnit_Framework_TestCase
             ->willReturn('offer_2');
 
         $data = array(
-            'offer_2.reference' => 'msdata-456'
+            'offer_2.reference' => 'msdata-456',
         );
 
         $parameters[] = array($data, $mergeTag);
@@ -82,6 +85,9 @@ class OfferDataFetcherTest extends \PHPUnit_Framework_TestCase
 
     /**
      * testDoFetch
+     *
+     * @param array    $data
+     * @param MergeTag $mergeTag
      *
      * @dataProvider getParameter
      */

@@ -3,7 +3,7 @@
 namespace Tms\Bundle\DocumentGeneratorBundle\Tests\DataFetcher;
 
 use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\ParticipationDataFetcher;
-
+use Tms\Bundle\DocumentGeneratorBundle\Entity\MergeTag;
 use Da\ApiClientBundle\Exception\ApiHttpResponseException;
 
 /**
@@ -37,6 +37,8 @@ class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
 
     /**
      * getParameter
+     *
+     * @return array
      */
     public function getParameter()
     {
@@ -51,7 +53,7 @@ class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
             ->willReturn('participation_1');
 
         $data = array(
-            'participation_1' => '52976d6fe63ea02c768b4567'
+            'participation_1' => '52976d6fe63ea02c768b4567',
         );
 
         $parameters[] = array($data, $mergeTag);
@@ -67,7 +69,7 @@ class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
             ->willReturn('participation_2');
 
         $data = array(
-            'participation_2.id' => '52976d6fe63ea02c768b4567'
+            'participation_2.id' => '52976d6fe63ea02c768b4567',
         );
 
         $parameters[] = array($data, $mergeTag);
@@ -80,6 +82,14 @@ class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider getParameter
      */
+    /**
+     * testDoFetch
+     *
+     * @param array    $data
+     * @param MergeTag $mergeTag
+     *
+     * @dataProvider getParameter
+     */
     public function testFetch($data, $mergeTag)
     {
         $this->crawler
@@ -87,7 +97,7 @@ class ParticipationDataFetcherTest extends \PHPUnit_Framework_TestCase
             ->method('execute')
             ->will(
                 $this->returnValue(array(
-                    array()
+                    array(),
                 ))
             );
 
