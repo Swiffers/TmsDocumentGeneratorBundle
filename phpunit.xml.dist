@@ -28,6 +28,7 @@
                 <directory>./Resources</directory>
                 <directory>./Tests</directory>
                 <directory>./vendor</directory>
+                <directory>./DataFixtures</directory>
             </exclude>
         </whitelist>
     </filter>

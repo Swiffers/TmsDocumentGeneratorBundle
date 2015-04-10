@@ -46,8 +46,8 @@ class Generator implements GeneratorInterface
      * Constructor
      *
      * @param TemplateManager                $templateManager
-     * @param HtmlConverterRegistryInterface $htmlConverterRegistry
      * @param DataFetcherRegistryInterface   $dataFetcherRegistry
+     * @param HtmlConverterRegistryInterface $htmlConverterRegistry
      * @param Twig_Environment               $twig
      */
     public function __construct(
@@ -69,6 +69,7 @@ class Generator implements GeneratorInterface
     public function generate($templateId, array $data = array(), array $options = array(), $isPreview = false)
     {
         $template = $this->templateManager->find($templateId);
+
         if (!$template) {
             throw new \UnexpectedValueException(sprintf(
                 "UnexpectedValueException - Template id: %s doesn't exist",
