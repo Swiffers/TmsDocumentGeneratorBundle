@@ -1,10 +1,6 @@
-TmsDocumentGeneratorBundle
-============================
+#TmsDocumentGeneratorBundle
 
-
-
-Installation
-------------
+##Installation
 
 ### Step 1: Composer
 
@@ -61,3 +57,16 @@ Documentation
 -------------
 
 Check the [documentation](https://github.com/Tessi-Tms/TmsDocumentGeneratorBundle/blob/fetcher/Resources/doc/index.rst) to learn more about the API provided by this bundle.
+
+Tests
+-----
+
+To execute unit tests:
+```sh
+$ phpunit -c .
+```
+
+To generate a coverage report:
+```sh
+$ phpunit --coverage-html ../Resource/doc/Coverage .
+```

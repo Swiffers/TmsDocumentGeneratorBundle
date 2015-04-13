@@ -29,14 +29,14 @@ class Template implements MetadatableInterface, LoggableInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=64)
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=128, nullable=true)
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
 
@@ -57,14 +57,14 @@ class Template implements MetadatableInterface, LoggableInterface
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime", nullable=true)
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
 

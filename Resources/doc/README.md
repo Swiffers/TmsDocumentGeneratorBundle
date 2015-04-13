@@ -4,13 +4,13 @@
 
 |API                |Method|Address                     |
 |-------------------|------|----------------------------|
-|Generate a document|POST  |/api/generator/{template_id}|
+|Generate a document|POST  |/api/generate/{template_id}|
 |Download a document|POST  |/api/download/{template_id} |
 |Preview a document |POST  |/api/preview/{template_id}  |
 
-#### POST parameters
+#### POST Parameters
 
-|key    |description|value format|
+|Key    |Description|Value Format|
 |-------|-----------|------------|
 |data   |The data (parameters used by fetcher to fetch data for each merge tag of the template)|JSON|
 |options|The generation options (format)|JSON|
@@ -43,9 +43,9 @@ options =
 
 ###Default Fetcher
 
-For one merge tag ``address`` with fetcher alias ``default``
-When you post in the data ``address``
-the default fetcher will just convert it to an array as fetched data 
+For one merge tag ``address`` with fetcher alias ``default``,
+When you post in the data ``address``,
+the default fetcher will just convert it to an array as fetched data,
 which should return the value like: 
 ```php
 
@@ -59,8 +59,8 @@ which should return the value like:
 
 ###Offer Fetcher
 
-For one merge tag ``offer_1`` with fetcher alias ``offer``
-When you post in the data ``offer_1`` or ``offer_1.reference``
+For one merge tag ``offer_1`` with fetcher alias ``offer``,
+When you post in the data ``offer_1`` or ``offer_1.reference``,
 the offer fetcher will use the value of reference to crawl the offer information from  TmsOperationManager.
 which should return the value like:
 ```php
@@ -233,8 +233,8 @@ which should return the value like:
 
 ###Participation Fetcher
 
-For one merge tag ``participation_1`` with fetcher alias ``participation``
-When you post in the data ``participation_1`` or ``participation_1.id``
+For one merge tag ``participation_1`` with fetcher alias ``participation``,
+When you post in the data ``participation_1`` or ``participation_1.id``,
 the participation fetcher will use the value of id to crawl the participation information from  TmsParticipationManager.
 which should return the value like:
 
@@ -364,3 +364,7 @@ or
 {{key}} : {{value}}
 {% endfor %}
 ```
+
+###Default Value
+
+Default Value is only used for a merge tag which is not required and which was not found in the post data.

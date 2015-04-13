@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /var/www/DocumentGeneratorManager/vendor/tms/document-generator-bundle/Tms/Bundle/DocumentGeneratorBundle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/nv.d3.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.min.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+ </head>
+ <body>
+  <header>
+   <div class="container">
+    <div class="row">
+     <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="index.html">/var/www/DocumentGeneratorManager/vendor/tms/document-generator-bundle/Tms/Bundle/DocumentGeneratorBundle</a></li>
+        <li class="active">(Dashboard)</li>
+
+      </ol>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Form/Type/FetcherAliasType.php.html#14">FetcherAliasType</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Form/TemplateType.php.html#14">TemplateType</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Form/MergeTagType.php.html#14">MergeTagType</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/AbstractManager.php.html#16">AbstractManager</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/MergeTagManager.php.html#14">MergeTagManager</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TmsDocumentGeneratorBundle.php.html#10">TmsDocumentGeneratorBundle</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/TemplateManager.php.html#20">TemplateManager</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event/TemplateEvent.php.html#13">TemplateEvent</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event/MergeTagEvent.php.html#13">MergeTagEvent</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DependencyInjection/Configuration.php.html#13">Configuration</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DependencyInjection/Compiler/HtmlConverterCompilerPass.php.html#18">HtmlConverterCompilerPass</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DependencyInjection/TmsDocumentGeneratorExtension.php.html#15">TmsDocumentGeneratorExtension</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/Api/GeneratorController.php.html#18">GeneratorController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DependencyInjection/Compiler/DataFetcherCompilerPass.php.html#18">DataFetcherCompilerPass</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Repository/AbstractEntityRepository.php.html#18">AbstractEntityRepository</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#18">Template</a></td><td class="text-right">14%</td></tr>
+       <tr><td><a href="Entity/MergeTag.php.html#16">MergeTag</a></td><td class="text-right">27%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Entity/Template.php.html#18">Template</a></td><td class="text-right">563</td></tr>
+       <tr><td><a href="Manager/AbstractManager.php.html#16">AbstractManager</a></td><td class="text-right">240</td></tr>
+       <tr><td><a href="Entity/Repository/AbstractEntityRepository.php.html#18">AbstractEntityRepository</a></td><td class="text-right">156</td></tr>
+       <tr><td><a href="Controller/Api/GeneratorController.php.html#18">GeneratorController</a></td><td class="text-right">90</td></tr>
+       <tr><td><a href="Manager/TemplateManager.php.html#20">TemplateManager</a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="Manager/MergeTagManager.php.html#14">MergeTagManager</a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="DependencyInjection/Compiler/DataFetcherCompilerPass.php.html#18">DataFetcherCompilerPass</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="DependencyInjection/Compiler/HtmlConverterCompilerPass.php.html#18">HtmlConverterCompilerPass</a></td><td class="text-right">30</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Form/TemplateType.php.html#19"><abbr title="TemplateType::buildForm">buildForm</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Form/MergeTagType.php.html#44"><abbr title="MergeTagType::getName">getName</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Form/MergeTagType.php.html#32"><abbr title="MergeTagType::setDefaultOptions">setDefaultOptions</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Form/MergeTagType.php.html#19"><abbr title="MergeTagType::buildForm">buildForm</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Form/TemplateType.php.html#30"><abbr title="TemplateType::setDefaultOptions">setDefaultOptions</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Form/TemplateType.php.html#42"><abbr title="TemplateType::getName">getName</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Form/Type/FetcherAliasType.php.html#49"><abbr title="FetcherAliasType::getParent">getParent</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Form/Type/FetcherAliasType.php.html#34"><abbr title="FetcherAliasType::setDefaultOptions">setDefaultOptions</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Form/Type/FetcherAliasType.php.html#26"><abbr title="FetcherAliasType::__construct">__construct</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event/TemplateEvent.php.html#32"><abbr title="TemplateEvent::getTemplate">getTemplate</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event/TemplateEvent.php.html#22"><abbr title="TemplateEvent::__construct">__construct</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#371"><abbr title="Template::removeImage">removeImage</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#359"><abbr title="Template::addImage">addImage</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#338"><abbr title="Template::removeMergeTag">removeMergeTag</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#381"><abbr title="Template::getImages">getImages</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#389"><abbr title="Template::getMetadatas">getMetadatas</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event/MergeTagEvent.php.html#32"><abbr title="MergeTagEvent::getMergeTag">getMergeTag</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event/MergeTagEvent.php.html#22"><abbr title="MergeTagEvent::__construct">__construct</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#397"><abbr title="Template::__clone">__clone</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Form/Type/FetcherAliasType.php.html#57"><abbr title="FetcherAliasType::getName">getName</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/AbstractManager.php.html#27"><abbr title="AbstractManager::__construct">__construct</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/TemplateManager.php.html#45"><abbr title="TemplateManager::getEntityClass">getEntityClass</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/TemplateManager.php.html#32"><abbr title="TemplateManager::__construct">__construct</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/MergeTagManager.php.html#79"><abbr title="MergeTagManager::duplicate">duplicate</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/MergeTagManager.php.html#60"><abbr title="MergeTagManager::delete">delete</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/TemplateManager.php.html#53"><abbr title="TemplateManager::add">add</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/TemplateManager.php.html#69"><abbr title="TemplateManager::update">update</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TmsDocumentGeneratorBundle.php.html#12"><abbr title="TmsDocumentGeneratorBundle::build">build</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/TemplateManager.php.html#104"><abbr title="TemplateManager::duplicate">duplicate</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/TemplateManager.php.html#85"><abbr title="TemplateManager::delete">delete</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/MergeTagManager.php.html#44"><abbr title="MergeTagManager::update">update</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/MergeTagManager.php.html#28"><abbr title="MergeTagManager::add">add</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/AbstractManager.php.html#58"><abbr title="AbstractManager::getRepository">getRepository</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/AbstractManager.php.html#48"><abbr title="AbstractManager::getEventDispatcher">getEventDispatcher</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/AbstractManager.php.html#38"><abbr title="AbstractManager::getEntityManager">getEntityManager</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/AbstractManager.php.html#71"><abbr title="AbstractManager::__call">__call</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/AbstractManager.php.html#82"><abbr title="AbstractManager::add">add</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/MergeTagManager.php.html#20"><abbr title="MergeTagManager::getEntityClass">getEntityClass</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/AbstractManager.php.html#130"><abbr title="AbstractManager::delete">delete</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Manager/AbstractManager.php.html#106"><abbr title="AbstractManager::update">update</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#326"><abbr title="Template::addMergeTag">addMergeTag</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#315"><abbr title="Template::getTags">getTags</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/MergeTag.php.html#188"><abbr title="MergeTag::setFetcherAlias">setFetcherAlias</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/MergeTag.php.html#165"><abbr title="MergeTag::setDefaultValue">setDefaultValue</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/MergeTag.php.html#154"><abbr title="MergeTag::getDescription">getDescription</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/MergeTag.php.html#142"><abbr title="MergeTag::setDescription">setDescription</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/MergeTag.php.html#211"><abbr title="MergeTag::setTemplate">setTemplate</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/MergeTag.php.html#223"><abbr title="MergeTag::getTemplate">getTemplate</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Repository/AbstractEntityRepository.php.html#51"><abbr title="AbstractEntityRepository::findByQuery">findByQuery</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Repository/AbstractEntityRepository.php.html#28"><abbr title="AbstractEntityRepository::findByQueryBuilder">findByQueryBuilder</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/MergeTag.php.html#231"><abbr title="MergeTag::__clone">__clone</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/MergeTag.php.html#96"><abbr title="MergeTag::setIdentifier">setIdentifier</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/MergeTag.php.html#85"><abbr title="MergeTag::getId">getId</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/Api/GeneratorController.php.html#152"><abbr title="GeneratorController::handleRequest">handleRequest</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/Api/GeneratorController.php.html#112"><abbr title="GeneratorController::previewAction">previewAction</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/Api/GeneratorController.php.html#72"><abbr title="GeneratorController::downloadAction">downloadAction</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DependencyInjection/Compiler/DataFetcherCompilerPass.php.html#23"><abbr title="DataFetcherCompilerPass::process">process</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DependencyInjection/Compiler/HtmlConverterCompilerPass.php.html#23"><abbr title="HtmlConverterCompilerPass::process">process</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/MergeTag.php.html#75"><abbr title="MergeTag::__toString">__toString</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DependencyInjection/TmsDocumentGeneratorExtension.php.html#20"><abbr title="TmsDocumentGeneratorExtension::load">load</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DependencyInjection/Configuration.php.html#18"><abbr title="Configuration::getConfigTreeBuilder">getConfigTreeBuilder</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Repository/AbstractEntityRepository.php.html#63"><abbr title="AbstractEntityRepository::findAllQueryBuilder">findAllQueryBuilder</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Repository/AbstractEntityRepository.php.html#75"><abbr title="AbstractEntityRepository::findAllQuery">findAllQuery</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#247"><abbr title="Template::setCreatedAt">setCreatedAt</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#224"><abbr title="Template::setCss">setCss</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#201"><abbr title="Template::setHtml">setHtml</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#259"><abbr title="Template::getCreatedAt">getCreatedAt</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#270"><abbr title="Template::setUpdatedAt">setUpdatedAt</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#305"><abbr title="Template::removeTag">removeTag</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#293"><abbr title="Template::addTag">addTag</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#282"><abbr title="Template::getUpdatedAt">getUpdatedAt</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#190"><abbr title="Template::getDescription">getDescription</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#178"><abbr title="Template::setDescription">setDescription</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Repository/AbstractEntityRepository.php.html#120"><abbr title="AbstractEntityRepository::addCriteria">addCriteria</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Repository/AbstractEntityRepository.php.html#105"><abbr title="AbstractEntityRepository::addWhere">addWhere</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Repository/AbstractEntityRepository.php.html#88"><abbr title="AbstractEntityRepository::addJoin">addJoin</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#103"><abbr title="Template::onCreate">onCreate</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#114"><abbr title="Template::onUpdate">onUpdate</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#167"><abbr title="Template::getName">getName</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#155"><abbr title="Template::setName">setName</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/Template.php.html#124"><abbr title="Template::__toString">__toString</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/Api/GeneratorController.php.html#32"><abbr title="GeneratorController::generateAction">generateAction</a></a></td><td class="text-right">0%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="DependencyInjection/Compiler/HtmlConverterCompilerPass.php.html#23"><abbr title="HtmlConverterCompilerPass::process">process</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="DependencyInjection/Compiler/DataFetcherCompilerPass.php.html#23"><abbr title="DataFetcherCompilerPass::process">process</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Manager/AbstractManager.php.html#130"><abbr title="AbstractManager::delete">delete</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Entity/Repository/AbstractEntityRepository.php.html#120"><abbr title="AbstractEntityRepository::addCriteria">addCriteria</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Manager/AbstractManager.php.html#106"><abbr title="AbstractManager::update">update</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Entity/Repository/AbstractEntityRepository.php.html#28"><abbr title="AbstractEntityRepository::findByQueryBuilder">findByQueryBuilder</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Manager/TemplateManager.php.html#104"><abbr title="TemplateManager::duplicate">duplicate</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Controller/Api/GeneratorController.php.html#152"><abbr title="GeneratorController::handleRequest">handleRequest</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Manager/AbstractManager.php.html#82"><abbr title="AbstractManager::add">add</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Manager/MergeTagManager.php.html#79"><abbr title="MergeTagManager::duplicate">duplicate</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Entity/Repository/AbstractEntityRepository.php.html#88"><abbr title="AbstractEntityRepository::addJoin">addJoin</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Controller/Api/GeneratorController.php.html#72"><abbr title="GeneratorController::downloadAction">downloadAction</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Controller/Api/GeneratorController.php.html#112"><abbr title="GeneratorController::previewAction">previewAction</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Controller/Api/GeneratorController.php.html#32"><abbr title="GeneratorController::generateAction">generateAction</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Entity/Template.php.html#397"><abbr title="Template::__clone">__clone</abbr></a></td><td class="text-right">6</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 2.0.15</a> using <a href="http://php.net/" target="_top">PHP 5.5.9-1ubuntu4.7</a> and <a href="http://phpunit.de/">PHPUnit 4.5.0</a> at Mon Apr 13 9:17:34 CEST 2015.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="js/jquery.min.js" type="text/javascript"></script>
+  <script src="js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="js/holder.js" type="text/javascript"></script>
+  <script src="js/d3.min.js" type="text/javascript"></script>
+  <script src="js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([15,0,1,1,0,0,0,0,0,0,0,17], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([82,0,0,0,0,0,0,0,0,0,0,50], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.scatter.onlyCircles(false);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[0,9,"<a href=\"Controller\/Api\/GeneratorController.php.html#18\">GeneratorController<\/a>"],[100,9,"<a href=\"DataFetcher\/AbstractDataFetcher.php.html#20\">AbstractDataFetcher<\/a>"],[100,8,"<a href=\"DataFetcher\/DataFetcherRegistry.php.html#16\">DataFetcherRegistry<\/a>"],[100,4,"<a href=\"DataFetcher\/DefaultDataFetcher.php.html#18\">DefaultDataFetcher<\/a>"],[100,7,"<a href=\"DataFetcher\/OfferDataFetcher.php.html#23\">OfferDataFetcher<\/a>"],[100,8,"<a href=\"DataFetcher\/ParticipationDataFetcher.php.html#23\">ParticipationDataFetcher<\/a>"],[0,5,"<a href=\"DependencyInjection\/Compiler\/DataFetcherCompilerPass.php.html#18\">DataFetcherCompilerPass<\/a>"],[0,5,"<a href=\"DependencyInjection\/Compiler\/HtmlConverterCompilerPass.php.html#18\">HtmlConverterCompilerPass<\/a>"],[0,1,"<a href=\"DependencyInjection\/Configuration.php.html#13\">Configuration<\/a>"],[0,1,"<a href=\"DependencyInjection\/TmsDocumentGeneratorExtension.php.html#15\">TmsDocumentGeneratorExtension<\/a>"],[27.272727272727,15,"<a href=\"Entity\/MergeTag.php.html#16\">MergeTag<\/a>"],[0,12,"<a href=\"Entity\/Repository\/AbstractEntityRepository.php.html#18\">AbstractEntityRepository<\/a>"],[100,0,"<a href=\"Entity\/Repository\/MergeTagRepository.php.html#14\">MergeTagRepository<\/a>"],[100,0,"<a href=\"Entity\/Repository\/TemplateRepository.php.html#16\">TemplateRepository<\/a>"],[14.035087719298,29,"<a href=\"Entity\/Template.php.html#18\">Template<\/a>"],[0,2,"<a href=\"Event\/MergeTagEvent.php.html#13\">MergeTagEvent<\/a>"],[100,0,"<a href=\"Event\/MergeTagEvents.php.html#10\">MergeTagEvents<\/a>"],[0,2,"<a href=\"Event\/TemplateEvent.php.html#13\">TemplateEvent<\/a>"],[100,0,"<a href=\"Event\/TemplateEvents.php.html#10\">TemplateEvents<\/a>"],[100,1,"<a href=\"Exception\/JsonConversionException.php.html#14\">JsonConversionException<\/a>"],[100,0,"<a href=\"Exception\/MissingGenerationParametersException.php.html#14\">MissingGenerationParametersException<\/a>"],[100,2,"<a href=\"Exception\/UnexpectedTypeException.php.html#14\">UnexpectedTypeException<\/a>"],[0,3,"<a href=\"Form\/MergeTagType.php.html#14\">MergeTagType<\/a>"],[0,3,"<a href=\"Form\/TemplateType.php.html#14\">TemplateType<\/a>"],[0,4,"<a href=\"Form\/Type\/FetcherAliasType.php.html#14\">FetcherAliasType<\/a>"],[100,15,"<a href=\"Generator\/Generator.php.html#23\">Generator<\/a>"],[100,14,"<a href=\"Handler\/JsonHandler.php.html#16\">JsonHandler<\/a>"],[100,8,"<a href=\"HtmlConverter\/HtmlConverterRegistry.php.html#16\">HtmlConverterRegistry<\/a>"],[100,2,"<a href=\"HtmlConverter\/NullHtmlConverter.php.html#14\">NullHtmlConverter<\/a>"],[100,3,"<a href=\"HtmlConverter\/PdfHtmlConverter.php.html#16\">PdfHtmlConverter<\/a>"],[0,15,"<a href=\"Manager\/AbstractManager.php.html#16\">AbstractManager<\/a>"],[0,6,"<a href=\"Manager\/MergeTagManager.php.html#14\">MergeTagManager<\/a>"],[0,8,"<a href=\"Manager\/TemplateManager.php.html#20\">TemplateManager<\/a>"],[0,1,"<a href=\"TmsDocumentGeneratorBundle.php.html#10\">TmsDocumentGeneratorBundle<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.scatter.onlyCircles(false);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[0,2,"<a href=\"Controller\/Api\/GeneratorController.php.html#32\">GeneratorController::generateAction<\/a>"],[0,2,"<a href=\"Controller\/Api\/GeneratorController.php.html#72\">GeneratorController::downloadAction<\/a>"],[0,2,"<a href=\"Controller\/Api\/GeneratorController.php.html#112\">GeneratorController::previewAction<\/a>"],[0,3,"<a href=\"Controller\/Api\/GeneratorController.php.html#152\">GeneratorController::handleRequest<\/a>"],[100,7,"<a href=\"DataFetcher\/AbstractDataFetcher.php.html#25\">AbstractDataFetcher::fetch<\/a>"],[100,1,"<a href=\"DataFetcher\/AbstractDataFetcher.php.html#71\">AbstractDataFetcher::doFetch<\/a>"],[100,1,"<a href=\"DataFetcher\/AbstractDataFetcher.php.html#78\">AbstractDataFetcher::configureParameters<\/a>"],[100,1,"<a href=\"DataFetcher\/DataFetcherRegistry.php.html#26\">DataFetcherRegistry::__construct<\/a>"],[100,1,"<a href=\"DataFetcher\/DataFetcherRegistry.php.html#34\">DataFetcherRegistry::setDataFetcher<\/a>"],[100,3,"<a href=\"DataFetcher\/DataFetcherRegistry.php.html#44\">DataFetcherRegistry::getDataFetcher<\/a>"],[100,2,"<a href=\"DataFetcher\/DataFetcherRegistry.php.html#63\">DataFetcherRegistry::hasDataFetcher<\/a>"],[100,1,"<a href=\"DataFetcher\/DataFetcherRegistry.php.html#75\">DataFetcherRegistry::getDataFetchersAlias<\/a>"],[100,2,"<a href=\"DataFetcher\/DefaultDataFetcher.php.html#23\">DefaultDataFetcher::doFetch<\/a>"],[100,1,"<a href=\"DataFetcher\/DefaultDataFetcher.php.html#36\">DefaultDataFetcher::configureParameters<\/a>"],[100,1,"<a href=\"DataFetcher\/DefaultDataFetcher.php.html#41\">DefaultDataFetcher::anonymous function<\/a>"],[100,1,"<a href=\"DataFetcher\/OfferDataFetcher.php.html#35\">OfferDataFetcher::__construct<\/a>"],[100,4,"<a href=\"DataFetcher\/OfferDataFetcher.php.html#49\">OfferDataFetcher::doFetch<\/a>"],[100,1,"<a href=\"DataFetcher\/OfferDataFetcher.php.html#78\">OfferDataFetcher::configureParameters<\/a>"],[100,1,"<a href=\"DataFetcher\/OfferDataFetcher.php.html#83\">OfferDataFetcher::anonymous function<\/a>"],[100,1,"<a href=\"DataFetcher\/ParticipationDataFetcher.php.html#35\">ParticipationDataFetcher::__construct<\/a>"],[100,5,"<a href=\"DataFetcher\/ParticipationDataFetcher.php.html#49\">ParticipationDataFetcher::doFetch<\/a>"],[100,1,"<a href=\"DataFetcher\/ParticipationDataFetcher.php.html#90\">ParticipationDataFetcher::configureParameters<\/a>"],[100,1,"<a href=\"DataFetcher\/ParticipationDataFetcher.php.html#95\">ParticipationDataFetcher::anonymous function<\/a>"],[0,5,"<a href=\"DependencyInjection\/Compiler\/DataFetcherCompilerPass.php.html#23\">DataFetcherCompilerPass::process<\/a>"],[0,5,"<a href=\"DependencyInjection\/Compiler\/HtmlConverterCompilerPass.php.html#23\">HtmlConverterCompilerPass::process<\/a>"],[0,1,"<a href=\"DependencyInjection\/Configuration.php.html#18\">Configuration::getConfigTreeBuilder<\/a>"],[0,1,"<a href=\"DependencyInjection\/TmsDocumentGeneratorExtension.php.html#20\">TmsDocumentGeneratorExtension::load<\/a>"],[0,1,"<a href=\"Entity\/MergeTag.php.html#75\">MergeTag::__toString<\/a>"],[0,1,"<a href=\"Entity\/MergeTag.php.html#85\">MergeTag::getId<\/a>"],[0,1,"<a href=\"Entity\/MergeTag.php.html#96\">MergeTag::setIdentifier<\/a>"],[100,1,"<a href=\"Entity\/MergeTag.php.html#108\">MergeTag::getIdentifier<\/a>"],[100,1,"<a href=\"Entity\/MergeTag.php.html#119\">MergeTag::setRequired<\/a>"],[100,1,"<a href=\"Entity\/MergeTag.php.html#131\">MergeTag::isRequired<\/a>"],[0,1,"<a href=\"Entity\/MergeTag.php.html#142\">MergeTag::setDescription<\/a>"],[0,1,"<a href=\"Entity\/MergeTag.php.html#154\">MergeTag::getDescription<\/a>"],[0,1,"<a href=\"Entity\/MergeTag.php.html#165\">MergeTag::setDefaultValue<\/a>"],[100,1,"<a href=\"Entity\/MergeTag.php.html#177\">MergeTag::getDefaultValue<\/a>"],[0,1,"<a href=\"Entity\/MergeTag.php.html#188\">MergeTag::setFetcherAlias<\/a>"],[100,1,"<a href=\"Entity\/MergeTag.php.html#200\">MergeTag::getFetcherAlias<\/a>"],[0,1,"<a href=\"Entity\/MergeTag.php.html#211\">MergeTag::setTemplate<\/a>"],[0,1,"<a href=\"Entity\/MergeTag.php.html#223\">MergeTag::getTemplate<\/a>"],[0,1,"<a href=\"Entity\/MergeTag.php.html#231\">MergeTag::__clone<\/a>"],[0,3,"<a href=\"Entity\/Repository\/AbstractEntityRepository.php.html#28\">AbstractEntityRepository::findByQueryBuilder<\/a>"],[0,1,"<a href=\"Entity\/Repository\/AbstractEntityRepository.php.html#51\">AbstractEntityRepository::findByQuery<\/a>"],[0,1,"<a href=\"Entity\/Repository\/AbstractEntityRepository.php.html#63\">AbstractEntityRepository::findAllQueryBuilder<\/a>"],[0,1,"<a href=\"Entity\/Repository\/AbstractEntityRepository.php.html#75\">AbstractEntityRepository::findAllQuery<\/a>"],[0,2,"<a href=\"Entity\/Repository\/AbstractEntityRepository.php.html#88\">AbstractEntityRepository::addJoin<\/a>"],[0,1,"<a href=\"Entity\/Repository\/AbstractEntityRepository.php.html#105\">AbstractEntityRepository::addWhere<\/a>"],[0,3,"<a href=\"Entity\/Repository\/AbstractEntityRepository.php.html#120\">AbstractEntityRepository::addCriteria<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#103\">Template::onCreate<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#114\">Template::onUpdate<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#124\">Template::__toString<\/a>"],[100,1,"<a href=\"Entity\/Template.php.html#134\">Template::getId<\/a>"],[100,1,"<a href=\"Entity\/Template.php.html#142\">Template::__construct<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#155\">Template::setName<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#167\">Template::getName<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#178\">Template::setDescription<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#190\">Template::getDescription<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#201\">Template::setHtml<\/a>"],[100,1,"<a href=\"Entity\/Template.php.html#213\">Template::getHtml<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#224\">Template::setCss<\/a>"],[100,1,"<a href=\"Entity\/Template.php.html#236\">Template::getCss<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#247\">Template::setCreatedAt<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#259\">Template::getCreatedAt<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#270\">Template::setUpdatedAt<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#282\">Template::getUpdatedAt<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#293\">Template::addTag<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#305\">Template::removeTag<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#315\">Template::getTags<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#326\">Template::addMergeTag<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#338\">Template::removeMergeTag<\/a>"],[100,1,"<a href=\"Entity\/Template.php.html#348\">Template::getMergeTags<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#359\">Template::addImage<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#371\">Template::removeImage<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#381\">Template::getImages<\/a>"],[0,1,"<a href=\"Entity\/Template.php.html#389\">Template::getMetadatas<\/a>"],[0,2,"<a href=\"Entity\/Template.php.html#397\">Template::__clone<\/a>"],[0,1,"<a href=\"Event\/MergeTagEvent.php.html#22\">MergeTagEvent::__construct<\/a>"],[0,1,"<a href=\"Event\/MergeTagEvent.php.html#32\">MergeTagEvent::getMergeTag<\/a>"],[0,1,"<a href=\"Event\/TemplateEvent.php.html#22\">TemplateEvent::__construct<\/a>"],[0,1,"<a href=\"Event\/TemplateEvent.php.html#32\">TemplateEvent::getTemplate<\/a>"],[100,1,"<a href=\"Exception\/JsonConversionException.php.html#22\">JsonConversionException::__construct<\/a>"],[100,2,"<a href=\"Exception\/UnexpectedTypeException.php.html#20\">UnexpectedTypeException::__construct<\/a>"],[0,1,"<a href=\"Form\/MergeTagType.php.html#19\">MergeTagType::buildForm<\/a>"],[0,1,"<a href=\"Form\/MergeTagType.php.html#32\">MergeTagType::setDefaultOptions<\/a>"],[0,1,"<a href=\"Form\/MergeTagType.php.html#44\">MergeTagType::getName<\/a>"],[0,1,"<a href=\"Form\/TemplateType.php.html#19\">TemplateType::buildForm<\/a>"],[0,1,"<a href=\"Form\/TemplateType.php.html#30\">TemplateType::setDefaultOptions<\/a>"],[0,1,"<a href=\"Form\/TemplateType.php.html#42\">TemplateType::getName<\/a>"],[0,1,"<a href=\"Form\/Type\/FetcherAliasType.php.html#26\">FetcherAliasType::__construct<\/a>"],[0,1,"<a href=\"Form\/Type\/FetcherAliasType.php.html#34\">FetcherAliasType::setDefaultOptions<\/a>"],[0,1,"<a href=\"Form\/Type\/FetcherAliasType.php.html#49\">FetcherAliasType::getParent<\/a>"],[0,1,"<a href=\"Form\/Type\/FetcherAliasType.php.html#57\">FetcherAliasType::getName<\/a>"],[100,1,"<a href=\"Generator\/Generator.php.html#53\">Generator::__construct<\/a>"],[100,4,"<a href=\"Generator\/Generator.php.html#69\">Generator::generate<\/a>"],[100,6,"<a href=\"Generator\/Generator.php.html#112\">Generator::fetchData<\/a>"],[100,4,"<a href=\"Generator\/Generator.php.html#162\">Generator::render<\/a>"],[100,3,"<a href=\"Handler\/JsonHandler.php.html#50\">JsonHandler::encode<\/a>"],[100,3,"<a href=\"Handler\/JsonHandler.php.html#78\">JsonHandler::decode<\/a>"],[100,4,"<a href=\"Handler\/JsonHandler.php.html#106\">JsonHandler::is_json<\/a>"],[100,4,"<a href=\"Handler\/JsonHandler.php.html#130\">JsonHandler::array_decode_json_recursive<\/a>"],[100,1,"<a href=\"HtmlConverter\/HtmlConverterRegistry.php.html#31\">HtmlConverterRegistry::__construct<\/a>"],[100,1,"<a href=\"HtmlConverter\/HtmlConverterRegistry.php.html#40\">HtmlConverterRegistry::setHtmlConverter<\/a>"],[100,3,"<a href=\"HtmlConverter\/HtmlConverterRegistry.php.html#51\">HtmlConverterRegistry::getHtmlConverter<\/a>"],[100,2,"<a href=\"HtmlConverter\/HtmlConverterRegistry.php.html#70\">HtmlConverterRegistry::hasHtmlConverter<\/a>"],[100,1,"<a href=\"HtmlConverter\/HtmlConverterRegistry.php.html#82\">HtmlConverterRegistry::getMimeType<\/a>"],[100,1,"<a href=\"HtmlConverter\/NullHtmlConverter.php.html#19\">NullHtmlConverter::convert<\/a>"],[100,1,"<a href=\"HtmlConverter\/NullHtmlConverter.php.html#27\">NullHtmlConverter::getMimeType<\/a>"],[100,1,"<a href=\"HtmlConverter\/PdfHtmlConverter.php.html#28\">PdfHtmlConverter::__construct<\/a>"],[100,1,"<a href=\"HtmlConverter\/PdfHtmlConverter.php.html#36\">PdfHtmlConverter::convert<\/a>"],[100,1,"<a href=\"HtmlConverter\/PdfHtmlConverter.php.html#44\">PdfHtmlConverter::getMimeType<\/a>"],[0,1,"<a href=\"Manager\/AbstractManager.php.html#27\">AbstractManager::__construct<\/a>"],[0,1,"<a href=\"Manager\/AbstractManager.php.html#38\">AbstractManager::getEntityManager<\/a>"],[0,1,"<a href=\"Manager\/AbstractManager.php.html#48\">AbstractManager::getEventDispatcher<\/a>"],[0,1,"<a href=\"Manager\/AbstractManager.php.html#58\">AbstractManager::getRepository<\/a>"],[0,1,"<a href=\"Manager\/AbstractManager.php.html#71\">AbstractManager::__call<\/a>"],[0,3,"<a href=\"Manager\/AbstractManager.php.html#82\">AbstractManager::add<\/a>"],[0,3,"<a href=\"Manager\/AbstractManager.php.html#106\">AbstractManager::update<\/a>"],[0,3,"<a href=\"Manager\/AbstractManager.php.html#130\">AbstractManager::delete<\/a>"],[100,1,"<a href=\"Manager\/AbstractManager.php.html#153\">AbstractManager::getEntityClass<\/a>"],[0,1,"<a href=\"Manager\/MergeTagManager.php.html#20\">MergeTagManager::getEntityClass<\/a>"],[0,1,"<a href=\"Manager\/MergeTagManager.php.html#28\">MergeTagManager::add<\/a>"],[0,1,"<a href=\"Manager\/MergeTagManager.php.html#44\">MergeTagManager::update<\/a>"],[0,1,"<a href=\"Manager\/MergeTagManager.php.html#60\">MergeTagManager::delete<\/a>"],[0,2,"<a href=\"Manager\/MergeTagManager.php.html#79\">MergeTagManager::duplicate<\/a>"],[0,1,"<a href=\"Manager\/TemplateManager.php.html#32\">TemplateManager::__construct<\/a>"],[0,1,"<a href=\"Manager\/TemplateManager.php.html#45\">TemplateManager::getEntityClass<\/a>"],[0,1,"<a href=\"Manager\/TemplateManager.php.html#53\">TemplateManager::add<\/a>"],[0,1,"<a href=\"Manager\/TemplateManager.php.html#69\">TemplateManager::update<\/a>"],[0,1,"<a href=\"Manager\/TemplateManager.php.html#85\">TemplateManager::delete<\/a>"],[0,3,"<a href=\"Manager\/TemplateManager.php.html#104\">TemplateManager::duplicate<\/a>"],[0,1,"<a href=\"TmsDocumentGeneratorBundle.php.html#12\">TmsDocumentGeneratorBundle::build<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

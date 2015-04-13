@@ -25,13 +25,6 @@ class MergeTag
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="identifier", type="string", length=64)
-     */
-    private $identifier;
-
-    /**
      * @var boolean
      *
      * @ORM\Column(name="required", type="boolean")
@@ -41,7 +34,14 @@ class MergeTag
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=128, nullable=true)
+     * @ORM\Column(name="identifier", type="string", length=255)
+     */
+    private $identifier;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
 
