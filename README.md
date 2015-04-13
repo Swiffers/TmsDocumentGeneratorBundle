@@ -56,7 +56,7 @@ You can simply add the default participation configuration. For this import the 
 Documentation
 -------------
 
-Check the [documentation](https://github.com/Tessi-Tms/TmsDocumentGeneratorBundle/blob/fetcher/Resources/doc/index.rst) to learn more about the API provided by this bundle.
+Check the [documentation](https://github.com/Tessi-Tms/TmsDocumentGeneratorBundle/blob/fetcher/Resources/doc) to learn more about the API provided by this bundle.
 
 Tests
 -----
