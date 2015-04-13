@@ -12,6 +12,7 @@ use Tms\Bundle\DocumentGeneratorBundle\Handler\JsonHandler;
 use Tms\Bundle\DocumentGeneratorBundle\Manager\TemplateManager;
 use Tms\Bundle\DocumentGeneratorBundle\DataFetcher\DataFetcherRegistryInterface;
 use Tms\Bundle\DocumentGeneratorBundle\HtmlConverter\HtmlConverterRegistryInterface;
+use Hackzilla\BarcodeBundle\Utility\Barcode;
 
 use Tms\Bundle\DocumentGeneratorBundle\Exception\MissingGenerationParametersException;
 
