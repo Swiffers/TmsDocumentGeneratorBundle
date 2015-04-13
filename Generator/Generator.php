@@ -161,9 +161,9 @@ class Generator implements GeneratorInterface
      */
     private function render(Template $template, array $fetchedData, $isPreview = false)
     {
-        echo '<pre>';
-        print_r($fetchedData);
-        echo '</pre>';
+        //echo '<pre>';
+        //print_r($fetchedData);
+        //echo '</pre>';
 
         $html = sprintf(
             "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><style type=\"text/css\">%s</style></head><body>%s</body></html>",
