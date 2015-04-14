@@ -390,4 +390,6 @@ Data Matrix
 
 {{ barcode2d('Data Matrix', participation_1.id) }}
 
+![barcode](https://github.com/Tessi-Tms/TmsDocumentGeneratorBundle/blob/fetcher/Resources/doc/barcode.png)
+
 more information of barcode, please visit: https://github.com/Tessi-Tms/TmsBarcodeBundle
