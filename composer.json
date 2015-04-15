@@ -37,7 +37,7 @@
         "tms/modelio-bundle":                  "1.1.*",
         "knplabs/knp-snappy-bundle":           "dev-master",
         "h4cc/wkhtmltopdf-amd64":              "0.12.x",
-        "dompdf/dompdf":                       "dev-master"
+        "dompdf/dompdf":                       "0.6.*"
     },
     "autoload": {
         "psr-0": { "Tms\\Bundle\\DocumentGeneratorBundle": "" }
