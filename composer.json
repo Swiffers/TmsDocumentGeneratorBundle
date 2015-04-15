@@ -35,7 +35,6 @@
         "h4cc/wkhtmltopdf-i386": "0.12.0",
         "idci/simple-metadata-bundle": "1.0.*",
         "tms/media-client-bundle": "1.1.*",
-        "tms/modelio-bundle": "1.1.*",
         "tms/logger-bundle": "1.0.*",
         "tms/rest-client-bundle": "1.0.*"
     },
