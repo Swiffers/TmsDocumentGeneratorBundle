@@ -35,7 +35,7 @@
         "tms/rest-bundle":                     "1.2.*",
         "tms/media-client-bundle":             "1.1.*",
         "tms/modelio-bundle":                  "1.1.*",
-        "knplabs/knp-snappy-bundle":           "dev-master",
+        "knplabs/knp-snappy-bundle":           "1.2.*",
         "h4cc/wkhtmltopdf-amd64":              "0.12.x",
         "dompdf/dompdf":                       "0.6.*"
     },
