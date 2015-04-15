@@ -4,7 +4,7 @@ Configuration Reference
 Configuration
 -------------
 
-Add the default participation configuration. For this import the config.yml file
+Add the default configuration. For this import the config.yml file
 ```yaml
 # app/config/config.yml
 imports:
@@ -14,7 +14,7 @@ imports:
 Routing
 -------
 
-Add the default participation routing. For this import the routing.yml file
+Add the default routing. For this import the routing.yml file
 ```yaml
 # app/config/routing.yml
 tms_document_generator_bundle_api:
