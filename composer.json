@@ -31,7 +31,7 @@
         "doctrine/orm":                        ">=2.2.3,<2.4-dev",
         "doctrine/doctrine-bundle":            "1.2.*",
         "twig/twig":                           "1.*",
-        "idci/simple-metadata-bundle":         "dev-master",
+        "idci/simple-metadata-bundle":         "1.0.*",
         "tms/rest-bundle":                     "1.2.*",
         "tms/media-client-bundle":             "1.1.*",
         "tms/modelio-bundle":                  "1.1.*",
