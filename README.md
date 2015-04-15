@@ -77,7 +77,7 @@ Documentation
 -------------
 
 * [Introduction](Resources/doc/introduction.md)
-* [Architecture](Resources/doc/class_diagram.png)
+* [Architecture](Resources/doc/architecture.md)
 * [API Reference](Resources/doc/api_reference.md)
 * [Data Fetcher](Resources/doc/data_fetcher.md)
 * [Configuration Reference](Resources/doc/configuration_reference.md)

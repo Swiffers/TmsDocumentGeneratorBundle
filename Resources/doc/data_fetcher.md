@@ -5,7 +5,7 @@ Data Fetcher
 * [Offer Fetcher](#offer-fetcher)
 * [Participation Fetcher](#offer-fetcher)
 * [Achieve fetched data in template](#achieve-fetched-data-in-template)
-* [Default Value](#default_value)
+* [Default Value](#default-value)
 
 Default Fetcher
 ---------------
