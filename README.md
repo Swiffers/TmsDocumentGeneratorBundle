@@ -6,34 +6,34 @@ Installation
 
 Add dependencies in your `composer.json` file:
 ```json
-    "repositories": [
-        ...,
-        {
-            "type": "vcs",
-            "url": "https://github.com/Tessi-Tms/TmsMediaClientBundle.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/Tessi-Tms/TmsLoggerBundle.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/Tessi-Tms/TmsRestClientBundle.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/Tessi-Tms/TmsDocumentGeneratorBundle.git"
-        }
-    ],
-    "require": {
-        ...,
-        "knplabs/knp-snappy-bundle": "1.2.*",
-        "idci/simple-metadata-bundle": "1.0.*",
-        "tms/media-client-bundle": "1.1.*",
-        "tms/logger-bundle": "1.0.*",
-        "tms/rest-client-bundle": "1.0.*",
-        "tms/document-generator-bundle": "dev-master"
-    },    
+"repositories": [
+    ...,
+    {
+        "type": "vcs",
+        "url": "https://github.com/Tessi-Tms/TmsMediaClientBundle.git"
+    },
+    {
+        "type": "vcs",
+        "url": "https://github.com/Tessi-Tms/TmsLoggerBundle.git"
+    },
+    {
+        "type": "vcs",
+        "url": "https://github.com/Tessi-Tms/TmsRestClientBundle.git"
+    },
+    {
+        "type": "vcs",
+        "url": "https://github.com/Tessi-Tms/TmsDocumentGeneratorBundle.git"
+    }
+],
+"require": {
+    ...,
+    "knplabs/knp-snappy-bundle": "1.2.*",
+    "idci/simple-metadata-bundle": "1.0.*",
+    "tms/media-client-bundle": "1.1.*",
+    "tms/logger-bundle": "1.0.*",
+    "tms/rest-client-bundle": "1.0.*",
+    "tms/document-generator-bundle": "dev-master"
+},    
 ```
 
 Install these new dependencies in your application using composer:
