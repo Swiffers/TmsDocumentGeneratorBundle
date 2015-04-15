@@ -1,11 +1,10 @@
-#TmsDocumentGeneratorBundle
+TmsDocumentGeneratorBundle
+==========================
 
-##Installation
+Installation
+------------
 
-### Step 1: Composer
-
-First, add these dependencies in your `composer.json` file:
-
+Add dependencies in your `composer.json` file:
 ```json
 "repositories": [
     ...,
@@ -20,17 +19,12 @@ First, add these dependencies in your `composer.json` file:
     },
 ```
 
-Then, retrieve the bundles with the command:
-
+Install these new dependencies in your application using composer:
 ```sh
-composer update      # WIN
-composer.phar update # LINUX
+$ php composer.phar update
 ```
 
-### Step 3: Kernel
-
-Enable the bundles in your application kernel:
-
+Register needed bundles in your application kernel:
 ```php
 // app/AppKernel.php
 
@@ -43,30 +37,34 @@ public function registerBundles()
 }
 ```
 
-### Step 4: Configuration
-
-You can simply add the default participation configuration. For this import the config.yml file
-
-``` yaml
+Add the default participation configuration. For this import the config.yml file
+```yaml
 # app/config/config.yml
+imports:
     - { resource: @TmsDocumentGeneratorBundle/Resources/config/config.yml }
+```
+
+Add the default participation routing. For this import the routing.yml file
+```yaml
+# app/config/routing.yml
+tms_document_generator_bundle_api:
+    resource: "@TmsDocumentGeneratorBundle/Resources/config/routing.yml"
 ```
 
 
 Documentation
 -------------
 
-Check the [documentation](https://github.com/Tessi-Tms/TmsDocumentGeneratorBundle/blob/fetcher/Resources/doc) to learn more about the API provided by this bundle.
+* [Introduction](Resources/doc/introduction.md)
+* [Architecture](Resources/doc/class_diagram.png)
+* [API Reference](Resources/doc/api_reference.md)
+* [Data Fetcher](Resources/doc/data_fetcher.md)
+* [Configuration reference](Resources/doc/configuration_reference.md)
 
 Tests
 -----
 
 To execute unit tests:
 ```sh
-$ phpunit -c .
-```
-
-To generate a coverage report:
-```sh
-$ phpunit --coverage-html ../Resource/doc/Coverage .
+$ phpunit --coverage-text
 ```
