@@ -7,7 +7,6 @@ services:
             - @tms_document_generator.fetcher.registry
             - @tms_document_generator.converter.registry
             - @twig
-            - @tms_barcode_generator
 
     # Registry
     tms_document_generator.fetcher.registry:
