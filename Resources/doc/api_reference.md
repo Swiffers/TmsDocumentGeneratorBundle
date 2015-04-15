@@ -1,4 +1,5 @@
-##API Reference
+API Reference
+=============
 
 |API                |Method|Address                     |
 |-------------------|------|----------------------------|
@@ -6,7 +7,8 @@
 |Download a document|POST  |/api/download/{template_id} |
 |Preview a document |POST  |/api/preview/{template_id}  |
 
-#### POST Parameters
+POST Parameters
+---------------
 
 |Key    |Description|Value Format|
 |-------|-----------|------------|
@@ -33,7 +35,8 @@ options =
 }
 ```
 
-####  format supported
+Formats supported
+----------------
 
 |alias|MimeType       |
 |-----|---------------|

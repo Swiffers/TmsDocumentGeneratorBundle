@@ -1,9 +1,11 @@
 Data Fetcher
 ============
 
-* [Default Fetcher](#Default-Fetcher)
-* [Offer Fetcher](#Offer-Fetcher)
-* [Participation Fetcher](#Offer-Fetcher)
+* [Default Fetcher](#default-fetcher)
+* [Offer Fetcher](#offer-fetcher)
+* [Participation Fetcher](#offer-fetcher)
+* [Achieve fetched data in template](#achieve-fetched-data-in-template)
+* [Default Value](#default_value)
 
 Default Fetcher
 ---------------
@@ -22,7 +24,8 @@ which should return the value like:
         )
 ```
 
-###Offer Fetcher
+Offer Fetcher
+-------------
 
 For one merge tag ``offer_1`` with fetcher alias ``offer``,
 When you post in the data ``offer_1`` or ``offer_1.reference``,
@@ -196,7 +199,8 @@ which should return the value like:
         )
 ```
 
-###Participation Fetcher
+Participation Fetcher
+---------------------
 
 For one merge tag ``participation_1`` with fetcher alias ``participation``,
 When you post in the data ``participation_1`` or ``participation_1.id``,
@@ -302,7 +306,8 @@ which should return the value like:
         )
 ```
 
-###Achieve fetched data in template
+Achieve fetched data in template
+--------------------------------
 
 For fetched data:
 ```php
@@ -330,6 +335,7 @@ or
 {% endfor %}
 ```
 
-###Default Value
+Default Value
+-------------
 
 Default Value is only used for a merge tag which is not required and which was not found in the post data.
