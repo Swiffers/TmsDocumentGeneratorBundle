@@ -1,9 +1,9 @@
 Data Fetcher
 ============
 
-* [Default Fetcher](#Default Fetcher)
-* [Offer Fetcher](#Offer Fetcher)
-* [Participation Fetcher](#Offer Fetcher)
+* [Default Fetcher](#Default-Fetcher)
+* [Offer Fetcher](#Offer-Fetcher)
+* [Participation Fetcher](#Offer-Fetcher)
 
 Default Fetcher
 ---------------
