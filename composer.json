@@ -22,6 +22,10 @@
         },
         {
             "type": "vcs",
+            "url": "https://github.com/Tessi-Tms/TmsRestBundle.git"
+        },
+        {
+            "type": "vcs",
             "url": "https://github.com/Tessi-Tms/TmsRestClientBundle.git"
         }
     ],
@@ -33,6 +37,7 @@
         "idci/simple-metadata-bundle": "1.0.*",
         "tms/media-client-bundle": "1.1.*",
         "tms/logger-bundle": "1.0.*",
+        "tms/rest-bundle": "1.2.*",
         "tms/rest-client-bundle": "1.0.*"
     },
     "autoload": {
