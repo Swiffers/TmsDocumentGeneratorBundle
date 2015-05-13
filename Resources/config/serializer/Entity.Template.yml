@@ -1,0 +1,46 @@
+Tms\Bundle\DocumentGeneratorBundle\Entity\Template:
+    exclusion_policy: ALL
+
+    properties:
+        id:
+            expose: true
+            groups: [tms_rest.collection, tms_rest.item]
+
+        name:
+            expose: true
+            groups: [tms_rest.collection, tms_rest.item]
+
+        description:
+            expose: true
+            groups: [tms_rest.item]
+
+        html:
+            expose: true
+            groups: [tms_rest.item]
+
+        css:
+            expose: true
+            groups: [tms_rest.item]
+
+        createdAt:
+            expose: true
+            groups: [tms_rest.collection, tms_rest.item]
+            serialized_name: createdAt
+
+        updatedAt:
+            expose: true
+            groups: [tms_rest.collection, tms_rest.item]
+            serialized_name: updatedAt
+
+        images:
+            expose: true
+            groups: [tms_rest.item]
+
+        tags:
+            expose: true
+            groups: [tms_rest.collection, tms_rest.item]
+
+        mergeTags:
+            expose: true
+            groups: [tms_rest.item]
+            serialized_name: mergeTags

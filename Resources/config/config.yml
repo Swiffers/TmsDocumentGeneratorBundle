@@ -1,16 +1,3 @@
-parameters:
-#    tms.bundle.documentgenerator.example.class: Tms\Bundle\DocumentGeneratorBundle\Example
-
-services:
-#    tms.bundle.documentgenerator.example:
-#        class: %tms.bundle.documentgenerator.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
-#        calls:
-#            - [setService, [@service_id]]
-#        tags:
-#            - { name: twig.extension }
-#            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
-
 # Da Api Client
 da_api_client:
     api:
@@ -31,6 +18,7 @@ da_api_client:
 #                security_token: %api.security_token%
 #                cache_enabled:  true
 
+# Knp snappy PDF Configuration
 knp_snappy:
     pdf:
         enabled:    true
@@ -40,3 +28,52 @@ knp_snappy:
             margin_left: 0
             margin_right: 0
             margin_top: 0
+
+# FOSRest Configuration
+fos_rest:
+    routing_loader:
+        default_format: json
+    param_fetcher_listener: force
+    service:
+        serializer: jms_serializer.serializer
+    serializer:
+        version: ~
+        groups: []
+        serialize_null: false
+
+# JMS Serializer
+jms_serializer:
+    metadata:
+        auto_detection: true
+
+# TMS Rest
+tms_rest:
+#    default:
+#        pagination:
+#            limit:
+#                default: 500
+#                maximum: 1500
+#            sort:
+#                field: id
+#                order: asc
+#            offset:
+#                default: 0
+#            page:
+#                default: 1
+    routes:
+        api_templates_get_templates:
+            pagination:
+                limit:
+                    default: 20
+                    maximum: 1000
+#                sort:
+#                    field: id
+#                    order: asc
+#                offset:
+#                    default: 0
+#                page:
+#                    default: 1
+
+# IDCI Metadata
+idci_simple_metadata:
+    namespaces: [tags]

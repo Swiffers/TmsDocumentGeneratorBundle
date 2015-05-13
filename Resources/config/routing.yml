@@ -1,4 +1,9 @@
 tms_document_generator_api:
-    resource: "@TmsDocumentGeneratorBundle/Controller/Api/"
+    resource: Tms\Bundle\DocumentGeneratorBundle\Controller\Api\GeneratorController
     type:  annotation
+    prefix: /api
+
+tms_document_generator_rest:
+    resource: Tms\Bundle\DocumentGeneratorBundle\Controller\Rest\TemplateController
+    type:  rest
     prefix: /api
