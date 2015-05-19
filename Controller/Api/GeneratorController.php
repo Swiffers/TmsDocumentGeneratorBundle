@@ -21,8 +21,8 @@ class GeneratorController extends Controller
      * HTTP Response with header filed Content-Type as The MIME type of the document generated.
      * Allow to show the document generated direct in the browser.
      *
-     * @Route("/generate/{id}", name="tms_document_generator_generate")
-     * @Method({"POST"})
+     * @Route("/generate/{id}", name="tms_document_generator_api_generate")
+     * @Method({"POST", "GET"})
      *
      * @param Request $request Data and options.
      * @param string  $id      The template document id.
@@ -61,8 +61,8 @@ class GeneratorController extends Controller
      * HTTP Response with header filed: Content-Disposition as Filename: template document id, Extension: corresponding to the MIME type.
      * Allow to raise a "File Download" dialogue box for the MIME type of the document generated in the browser.
      *
-     * @Route("/download/{id}", name="tms_document_generator_download")
-     * @Method({"POST"})
+     * @Route("/download/{id}", name="tms_document_generator_api_download")
+     * @Method({"POST", "GET"})
      *
      * @param Request $request Data and options.
      * @param string  $id      The template document id.
@@ -101,8 +101,8 @@ class GeneratorController extends Controller
      * HTTP Response with header filed: Content-Type as The MIME type of the document generated.
      * Allow to preview(without data) the document generated direct in the browser.
      *
-     * @Route("/preview/{id}", name="tms_document_generator_preview")
-     * @Method({"POST"})
+     * @Route("/preview/{id}", name="tms_document_generator_api_preview")
+     * @Method({"POST", "GET"})
      *
      * @param Request $request Data and options.
      * @param string  $id      The template document id.
@@ -151,16 +151,25 @@ class GeneratorController extends Controller
      */
     private function handleRequest(Request $request, $id, $isPreview = false)
     {
-        $parameters['templateId'] = $id;
-        $parameters['data'] = $request->request->has('data')
-            ? JsonHandler::decode($request->request->get('data'), true)
-            : array()
-        ;
-        $parameters['options'] = $request->request->has('options')
-            ? JsonHandler::decode($request->request->get('options'), true)
-            : array('format' => 'html')
-        ;
-        $parameters['isPreview'] = $isPreview;
+        if ($request->isMethod('POST')) {
+            $parameters['templateId'] = $id;
+            $parameters['data'] = $request->request->has('data')
+                ? JsonHandler::decode($request->request->get('data'), true)
+                : array();
+            $parameters['options'] = $request->request->has('options')
+                ? JsonHandler::decode($request->request->get('options'), true)
+                : array('format' => 'html');
+            $parameters['isPreview'] = $isPreview;
+        } else {
+            $parameters['templateId'] = $id;
+            $parameters['data'] = $request->query->has('data')
+                ? JsonHandler::decode($request->query->get('data'), true)
+                : array();
+            $parameters['options'] = $request->query->has('options')
+                ? JsonHandler::decode($request->query->get('options'), true)
+                : array('format' => 'html');
+            $parameters['isPreview'] = $isPreview;
+        }
 
         return $parameters;
     }

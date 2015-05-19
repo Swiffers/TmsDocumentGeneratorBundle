@@ -9,6 +9,7 @@ use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Util\Codes;
 use JMS\Serializer\SerializationContext;
 use Tms\Bundle\RestBundle\Formatter\AbstractHypermediaFormatter;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Template REST Controller
