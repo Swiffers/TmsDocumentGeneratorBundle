@@ -3,6 +3,7 @@ Data Fetcher
 
 * [Default Fetcher](#default-fetcher)
 * [Offer Fetcher](#offer-fetcher)
+* [Operation Fetcher](#operation-fetcher)
 * [Participation Fetcher](#participation-fetcher)
 * [Achieve fetched data in template](#achieve-fetched-data-in-template)
 * [Default Value](#default-value)
@@ -195,6 +196,50 @@ which should return the value like:
         [createdAt] => 2015-04-09T17:09:12+0200
         [updatedAt] => 2015-04-09T17:09:12+0200
     )
+```
+
+operation Fetcher
+-----------------
+
+For one merge tag ``operation_1`` with fetcher alias ``operation``,
+When you post in the data ``operation_1`` or ``operation_1.reference``,
+the operation fetcher will use the value of reference to crawl the operation information from  TmsOperationManager.
+which should return the value like:
+```php
+Array
+(
+    [defaultImages] => Array
+        (
+            [0] => Array
+                (
+                    [public_uri] => //media-manager.digifid.fr/api/media/2005353137-1404208547-68c623a441e6100c41b7f954b98d9fe3-4607
+                    [mime_type] => image/png
+                    [provider_name] => tms_media_client.storage_provider.tms_media
+                    [provider_reference] => 2005353137-1404208547-68c623a441e6100c41b7f954b98d9fe3-4607
+                    [extension] => png
+                    [created_at] => 2014-07-01T11:55:47+0200
+                    [updated_at] => 2014-07-01T11:55:47+0200
+                )
+
+        )
+
+    [id] => 797
+    [reference] => msdata-18178
+    [customerReference] => 000051#18178#3913
+    [name] => ODR ACCESSOIRES HOME BY SFR
+    [startsAt] => 2015-04-10T00:00:00+0200
+    [endsAt] => 2015-04-27T00:00:00+0200
+    [images] => Array
+        (
+        )
+
+    [operationInsurances] => Array
+        (
+        )
+
+    [createdAt] => 2015-04-09T17:09:12+0200
+    [updatedAt] => 2015-04-09T17:09:12+0200
+)
 ```
 
 Participation Fetcher

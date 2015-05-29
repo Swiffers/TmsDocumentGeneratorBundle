@@ -16,11 +16,11 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Class OfferDataFetcher
+ * Class OperationDataFetcher
  *
  * @package Tms\Bundle\DocumentGeneratorBundle\DataFetcher
  */
-class OfferDataFetcher extends AbstractDataFetcher
+class OperationDataFetcher extends AbstractDataFetcher
 {
     /**
      * @var CrawlerInterface
@@ -50,7 +50,7 @@ class OfferDataFetcher extends AbstractDataFetcher
         try {
             $rawfetchedData = $this->crawler
                 ->go('operation')
-                ->findOne('offers', $parameters['reference'])
+                ->findOne('operations', $parameters['reference'])
                 ->getData();
         } catch (ApiHttpResponseException $e) {
             switch ($e->getHttpCode()) {
